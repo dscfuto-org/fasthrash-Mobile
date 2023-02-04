@@ -1,0 +1,1 @@
+//Here, we declare all our asset/asset paths as variables

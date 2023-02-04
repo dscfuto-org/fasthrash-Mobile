@@ -1,0 +1,1 @@
+//Here, we declare all our Custom Colors as variables
