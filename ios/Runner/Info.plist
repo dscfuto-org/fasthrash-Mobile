@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app requires access to your location to function properly.</string>
+	<key>UIBackgroundModes</key>
+	<string>location</string>
 	<key>CFBundleDisplayName</key>
 	<string>Fastrash</string>
 	<key>CFBundleExecutable</key>
