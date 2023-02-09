@@ -1,10 +1,9 @@
-import 'dart:developer';
-import 'package:geocoder_buddy/geocoder_buddy.dart';
+import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
 class DeviceLocation {
   Location location = Location();
- static  double lat = 0;
+  static double lat = 0;
   static double lng = 0;
 
   late bool _serviceEnabled;
@@ -28,21 +27,14 @@ class DeviceLocation {
     }
     location.onLocationChanged.listen((LocationData currentLocation) async {
       try {
-        GBLatLng pos = GBLatLng(
-            lat: double.parse(currentLocation.latitude.toString()),
-            lng: double.parse(currentLocation.longitude.toString()));
+        debugPrint(currentLocation.latitude!.toString());
+        debugPrint(currentLocation.longitude!.toString());
 
-        print(currentLocation.latitude);
-        print(currentLocation.longitude);
-        log(pos.lat.toString());
-        log(pos.lng.toString());
-        lat = pos.lat;
-        lng = pos.lng;
-      
+        lat = currentLocation.latitude!;
+        lng = currentLocation.longitude!;
       } on Exception catch (e) {
         print('Error coming from $e');
       }
-      
     });
   }
 }

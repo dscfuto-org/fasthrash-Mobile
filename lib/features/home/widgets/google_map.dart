@@ -1,18 +1,19 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:fastrash/features/home/widgets/my_location_button.dart';
 import 'package:fastrash/utils/device_location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MapSample extends StatefulWidget {
-  const MapSample({Key? key}) : super(key: key);
+class GMap extends StatefulWidget {
+  const GMap({Key? key}) : super(key: key);
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<GMap> createState() => GMapState();
 }
 
-class MapSampleState extends State<MapSample> {
+class GMapState extends State<GMap> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   final DeviceLocation deviceLocation = DeviceLocation();
@@ -32,34 +33,36 @@ class MapSampleState extends State<MapSample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: futoLocation,
-        markers: {
-          if (marker != null) marker!,
-        },
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('My Location'),
-        icon: const Icon(Icons.location_searching),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          GoogleMap(
+            mapType: MapType.hybrid,
+            initialCameraPosition: futoLocation,
+            markers: {
+              if (marker != null) marker!,
+            },
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+          ),
+          MyLocationButton(onTap: _myLoaction),
+        ],
       ),
     );
   }
 
-  Future<void> _goToTheLake() async {
+  Future<void> _myLoaction() async {
     _addMaker;
     log('This is the main page lat = ${DeviceLocation.lat} and lng = ${DeviceLocation.lng} ');
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-            target: LatLng(DeviceLocation.lat, DeviceLocation.lng),
-            zoom: 18,
-            tilt: 30),
+          target: LatLng(DeviceLocation.lat, DeviceLocation.lng),
+          zoom: 18,
+          tilt: 30,
+        ),
       ),
     );
   }

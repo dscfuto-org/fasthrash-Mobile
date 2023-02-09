@@ -1,4 +1,5 @@
-import 'package:fastrash/features/home/widgets/google_map.dart';
+import 'package:fastrash/features/dashboard/view/dashboard.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MapSample(),
+      home: const Dashboard(),
     );
   }
 }
