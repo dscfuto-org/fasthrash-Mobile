@@ -1,3 +1,4 @@
+import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -59,7 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: (){
+         // AuthBackend().signUpUser();
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
