@@ -1,6 +1,3 @@
-
-
-
 class EducationModel {
   final String imageUrl;
   final String title;
