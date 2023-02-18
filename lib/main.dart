@@ -1,4 +1,4 @@
-import 'package:fastrash/features/dashboard/view/dashboard.dart';
+
 import 'package:fastrash/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Onboarding_screen()
+      home: const OnBoardingScreen()
     );
   }
 }

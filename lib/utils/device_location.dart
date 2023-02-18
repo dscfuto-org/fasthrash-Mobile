@@ -33,7 +33,7 @@ class DeviceLocation {
         lat = currentLocation.latitude!;
         lng = currentLocation.longitude!;
       } on Exception catch (e) {
-        print('Error coming from $e');
+        ///print('Error coming from $e');
       }
     });
   }

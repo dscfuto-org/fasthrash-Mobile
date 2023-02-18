@@ -7,12 +7,12 @@ class Edit_Profile_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
-            Container(
+            SizedBox(
               height: 300,
               child: Stack(
                 children: [
@@ -35,25 +35,25 @@ class Edit_Profile_screen extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.fromLTRB(1, 2, 2, 1),
+                            padding: const EdgeInsets.fromLTRB(1, 2, 2, 1),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                   // padding: const EdgeInsets.all(2),
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.arrow_back,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {},
                                 ),
-                                Text(
+                                const Text(
                                   'Edit Account',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 ),
                                 TextButton(
-                                  child: Text(
+                                  child: const Text(
                                     'Edit',
                                     style: TextStyle(
                                       fontSize: 18,
@@ -75,7 +75,7 @@ class Edit_Profile_screen extends StatelessWidget {
                           const Spacer(),
                           TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'Change Photo',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
@@ -105,7 +105,7 @@ class Edit_Profile_screen extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   children: <Widget>[
                     
                     FormFeilds(labelText: 'First Name'),
@@ -164,7 +164,7 @@ class FormFeilds extends StatelessWidget {
   String labelText;
   FormFeilds({
     super.key,
-    required String this.labelText,
+    required this.labelText,
   });
 
 

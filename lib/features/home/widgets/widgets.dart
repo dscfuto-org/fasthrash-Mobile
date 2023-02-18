@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:fastrash/utils/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,14 +16,14 @@ class _PickImageState extends State<PickImage> {
   Widget build(BuildContext context) {
     XFile? imageFile;
     final ImagePicker _picker = ImagePicker();
-    void pickImage() async {
-      final imageSelected =
-          //  await ImagePickerHelper.pickImageFromGallery();
-          await _picker.pickImage(source: ImageSource.camera);
-      setState(() {
-        imageFile = imageSelected;
-      });
-    }
+    // void pickImage() async {
+    //   final imageSelected =
+    //       //  await ImagePickerHelper.pickImageFromGallery();
+    //       await _picker.pickImage(source: ImageSource.camera);
+    //   setState(() {
+    //     imageFile = imageSelected;
+    //   });
+    // }
 
     void filePicker() async {
       final selectImage = await _picker.pickImage(source: ImageSource.gallery);

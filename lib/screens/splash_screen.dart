@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Splash_screen extends StatelessWidget {
-  const Splash_screen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,14 +26,12 @@ class Splash_screen extends StatelessWidget {
               ],
             )),
           ),
-          Container(
-            child: Center(
-              child: Text(
-                'edufly',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 60,
-                ),
+          const Center(
+            child: Text(
+              'Fastrash',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 60,
               ),
             ),
           )

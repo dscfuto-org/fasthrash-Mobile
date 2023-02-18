@@ -11,11 +11,12 @@ class Education extends StatelessWidget {
         title: const Text('Education'),
       ),
       body: Column(
+        // ignore: prefer_const_literals_to_create_immutables
         children: [
           const Center(
             child: Text('Education coming soon!'),
           ),
-          PickImage()
+          const PickImage()
         ],
       ),
     );

@@ -1,14 +1,17 @@
+import 'package:fastrash/screens/login_screen.dart';
+import 'package:fastrash/screens/regstration_screen.dart';
+import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class Onboarding_screen extends StatefulWidget {
-  const Onboarding_screen({Key? key}) : super(key: key);
+class OnBoardingScreen extends StatefulWidget {
+  const OnBoardingScreen({Key? key}) : super(key: key);
 
   @override
-  _Onboarding_screenState createState() => _Onboarding_screenState();
+  _OnBoardingScreenState createState() => _OnBoardingScreenState();
 }
 
-class _Onboarding_screenState extends State<Onboarding_screen> {
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final controller = PageController();
 
   @override
@@ -28,7 +31,7 @@ class _Onboarding_screenState extends State<Onboarding_screen> {
           child: Column(
             children: [
               Expanded(
-                flex: 4,
+                flex: 3,
                 child: PageView(controller: controller, children: const [
                   Page(
                     id: 1,
@@ -43,7 +46,7 @@ class _Onboarding_screenState extends State<Onboarding_screen> {
                  Page(id: 3, text1: 'The edufly eBook Store offers you millions', text2: 'Millions of titles across Categories like Children\'s book'),
                 ]),
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 child: Center(
                   child: SmoothPageIndicator(
@@ -53,7 +56,7 @@ class _Onboarding_screenState extends State<Onboarding_screen> {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 1,
                 child: Stack(
                   children: [
                     Container(
@@ -69,6 +72,7 @@ class _Onboarding_screenState extends State<Onboarding_screen> {
                       )),
                     ),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
                           height: 80,
@@ -79,8 +83,8 @@ class _Onboarding_screenState extends State<Onboarding_screen> {
                                 backgroundColor: Colors.white,
                                 foregroundColor: Colors.blue
                             ),
-                            child: const Text('Sign Up as a User'),
-                            onPressed: () => 0,
+                            child: const Text('Register'),
+                            onPressed: () => navigatePush(context, RegistrationScreen()),
                           ),
                         ),
                         Container(
@@ -92,35 +96,35 @@ class _Onboarding_screenState extends State<Onboarding_screen> {
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.blue
                             ),
-                            child: const Text('Sign Up as a Collector'),
-                            onPressed: () => 0,
+                            child: const Text('Login'),
+                            onPressed: () => navigatePush(context, LoginScreen()),
                           ),
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Singnup with email',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.white),
-                                ),
-                              ),
-                              const Text(
-                                '/',
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.white),
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Social media',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.white),
-                                ),
-                              ),
-                            ])
+                        // Row(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       TextButton(
+                        //         onPressed: () {},
+                        //         child: const Text(
+                        //           'Singnup with email',
+                        //           style: TextStyle(
+                        //               fontSize: 15, color: Colors.white),
+                        //         ),
+                        //       ),
+                        //       const Text(
+                        //         '/',
+                        //         style: TextStyle(
+                        //             fontSize: 15, color: Colors.white),
+                        //       ),
+                        //       TextButton(
+                        //         onPressed: () {},
+                        //         child: const Text(
+                        //           'Social media',
+                        //           style: TextStyle(
+                        //               fontSize: 15, color: Colors.white),
+                        //         ),
+                        //       ),
+                        //     ])
                       ],
                     ),
                   ],

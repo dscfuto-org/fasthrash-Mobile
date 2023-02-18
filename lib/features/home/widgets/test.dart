@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TestPicker extends StatefulWidget {
@@ -30,7 +28,7 @@ class _TestPickerState extends State<TestPicker> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Testing Picker image'),
+        title: const Text('Testing Picker image'),
       ),
       body: Container(
             child: imageFile == null
@@ -44,7 +42,7 @@ class _TestPickerState extends State<TestPicker> {
                     onPressed: () {
                       _getFromGallery();
                     },
-                    child: Text("PICK FROM GALLERY"),
+                    child: const Text("PICK FROM GALLERY"),
                   ),
                   Container(
                     height: 40.0,
@@ -54,15 +52,13 @@ class _TestPickerState extends State<TestPicker> {
                     onPressed: () {
                       _getFromGallery();
                     },
-                    child: Text("PICK FROM GALLERY"),
+                    child: const Text("PICK FROM GALLERY"),
                   )
                 ],
               ),
-            ): Container(
-              child: Image.file(
-                imageFile!,
-                fit: BoxFit.cover,
-              ),
+            ): Image.file(
+              imageFile!,
+              fit: BoxFit.cover,
             ))
   
     );
