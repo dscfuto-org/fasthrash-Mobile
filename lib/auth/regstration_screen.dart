@@ -1,12 +1,14 @@
+import 'package:fastrash/auth/login_screen.dart';
+import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 
-class SignIn_screen extends StatelessWidget {
-  const SignIn_screen({Key? key}) : super(key: key);
+class RegistrationScreen extends StatelessWidget {
+  const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const MyStatefulWidget(),
+    return const Scaffold(
+      body: MyStatefulWidget(),
     );
   }
 }
@@ -19,7 +21,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  TextEditingController nameController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -28,37 +30,36 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            Container(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.cancel,
-                  size: 40,
-                  color: Colors.black54,
-                ),
-              ),
-            ),
+            const SizedBox(height: 80,),
             Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'Sign In',
+                  'Sign Up',
                   style: TextStyle(fontSize: 30),
                 )),
-            SizedBox(height: 40),
+            const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(10),
-              child: TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
+              child: const TextField(
+
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'User Name',
                 ),
               ),
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.all(10),
+              child: const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
               child: TextField(
                 obscureText: true,
                 controller: passwordController,
@@ -68,44 +69,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                //forgot password screen
-              },
-              child: Row(
-                children: [
-                  Switch(value: false, onChanged: (value) {}),
-                  const Text(
-                    'Remind me',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  Spacer(),
-                  const Text(
-                    'Forgot Password?',
-                  ),
-                ],
-              ),
-            ),
+            const SizedBox(height: 30,),
             Container(
                 height: 60,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: ElevatedButton(
-                  child: const Text('Login'),
+                  child: const Text('Register'),
                   onPressed: () {
-                    print(nameController.text);
-                    print(passwordController.text);
+                    navigatePush(context, const LoginScreen());
                   },
                 )),
+            const SizedBox(height: 80,),
             Row(
               children: <Widget>[
-                const Text('Don\'t have an account?'),
+                const Text('You have an account?'),
                 TextButton(
                   child: const Text(
-                    'Sign Up',
+                    'Sign In',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
-                    //signup screen
+                    navigatePush(context, const LoginScreen());
                   },
                 )
               ],

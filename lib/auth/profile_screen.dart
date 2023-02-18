@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Profile_screen extends StatelessWidget {
-  const Profile_screen({Key? key}) : super(key: key);
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -38,19 +37,19 @@ class Profile_screen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_back,
                                   color: Colors.white,
                                 ),
                                 onPressed: () {},
                               ),
-                              Text(
+                              const Text(
                                 'My Account',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20),
                               ),
                               TextButton(
-                                child: Text(
+                                child: const Text(
                                   'Edit',
                                   style: TextStyle(
                                     fontSize: 18,
@@ -99,7 +98,7 @@ class Profile_screen extends StatelessWidget {
                           ),
                         )),
                   ),
-                  Container(
+                  SizedBox(
                     height: 40,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
@@ -119,13 +118,13 @@ class Profile_screen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Divider(
                       thickness: 2.0,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 40,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
@@ -145,13 +144,13 @@ class Profile_screen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Divider(
                       thickness: 2.0,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 40,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
@@ -171,8 +170,8 @@ class Profile_screen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: Divider(
                       thickness: 2.0,
                     ),

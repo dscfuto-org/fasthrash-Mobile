@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Edit_Profile_screen extends StatelessWidget {
-  Edit_Profile_screen({Key? key}) : super(key: key);
+class EditProfileScreen extends StatelessWidget {
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: <Widget>[
-            Container(
+            SizedBox(
               height: 300,
               child: Stack(
                 children: [
@@ -35,25 +34,25 @@ class Edit_Profile_screen extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.fromLTRB(1, 2, 2, 1),
+                            padding: const EdgeInsets.fromLTRB(1, 2, 2, 1),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
                                   // padding: const EdgeInsets.all(2),
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.arrow_back,
                                     color: Colors.white,
                                   ),
                                   onPressed: () {},
                                 ),
-                                Text(
+                                const Text(
                                   'Edit Account',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 ),
                                 TextButton(
-                                  child: Text(
+                                  child: const Text(
                                     'Edit',
                                     style: TextStyle(
                                       fontSize: 18,
@@ -75,7 +74,7 @@ class Edit_Profile_screen extends StatelessWidget {
                           const Spacer(),
                           TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'Change Photo',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
@@ -105,15 +104,15 @@ class Edit_Profile_screen extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   children: <Widget>[
                     
-                    FormFeilds(labelText: 'First Name'),
-                    FormFeilds(labelText: 'Last Name'),
-                    FormFeilds(labelText: 'Date of Birth'),
-                    FormFeilds(labelText: 'Mobile'),
-                    FormFeilds(labelText: 'Home'),
-                    FormFeilds(labelText: 'Work'),
+                    const FormFields(labelText: 'First Name'),
+                    const FormFields(labelText: 'Last Name'),
+                    const FormFields(labelText: 'Date of Birth'),
+                    const FormFields(labelText: 'Mobile'),
+                    const FormFields(labelText: 'Home'),
+                    const FormFields(labelText: 'Work'),
 
 
                     Container(
@@ -131,8 +130,8 @@ class Edit_Profile_screen extends StatelessWidget {
                           )),
                     ),
                     
-                    FormFeilds(labelText: 'Street',),
-                    FormFeilds(labelText: 'Town'),
+                    const FormFields(labelText: 'Street',),
+                    const FormFields(labelText: 'Town'),
 
 
                   ]),
@@ -160,12 +159,10 @@ class Edit_Profile_screen extends StatelessWidget {
   }
 }
 
-class FormFeilds extends StatelessWidget {
-  String labelText;
-  FormFeilds({
-    super.key,
-    required String this.labelText,
-  });
+class FormFields extends StatelessWidget {
+  final String labelText;
+  const FormFields({super.key, required this.labelText});
+
 
 
   @override

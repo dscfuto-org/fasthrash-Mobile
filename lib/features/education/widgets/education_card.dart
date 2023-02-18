@@ -12,6 +12,7 @@ class EducationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
       onTap: onTapped,
       child: Card(
@@ -44,6 +45,7 @@ class EducationCard extends StatelessWidget {
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
+
                   ),
                   const SizedBox(height: 5.0),
                 ],

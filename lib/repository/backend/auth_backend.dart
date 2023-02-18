@@ -9,7 +9,6 @@ import 'package:fastrash/repository/dto/organization_regisration_dto.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/repository/model/registration_sucess_model.dart';
 import 'package:fastrash/utils/custom_print.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as client;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,7 +58,7 @@ class AuthBackend {
         DummyData.emailAddress =
             ResponseData.registrationResponse!.email.toString();
       } else {
-        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        ///var resBody = jsonDecode(httpConnectionApi.body.toString());
         // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
 
         // showErrorAlert(context,

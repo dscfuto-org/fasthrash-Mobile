@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:fastrash/utils/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,21 +17,21 @@ class _PickImageState extends State<PickImage> {
   Widget build(BuildContext context) {
     XFile? imageFile;
     final ImagePicker _picker = ImagePicker();
-    void pickImage() async {
-      final imageSelected =
-          //  await ImagePickerHelper.pickImageFromGallery();
-          await _picker.pickImage(source: ImageSource.camera);
-      setState(() {
-        imageFile = imageSelected;
-      });
-    }
+    // void pickImage() async {
+    //   final imageSelected =
+    //       //  await ImagePickerHelper.pickImageFromGallery();
+    //       await _picker.pickImage(source: ImageSource.camera);
+    //   setState(() {
+    //     imageFile = imageSelected;
+    //   });
+    // }
 
-    void filePicker() async {
-      final selectImage = await _picker.pickImage(source: ImageSource.gallery);
-      setState(() {
-        imageFile = selectImage;
-      });
-    }
+    // void filePicker() async {
+    //   final selectImage = await _picker.pickImage(source: ImageSource.gallery);
+    //   setState(() {
+    //     imageFile = selectImage;
+    //   });
+    // }
 
     return SizedBox(
       width: 100,
@@ -40,7 +39,7 @@ class _PickImageState extends State<PickImage> {
         alignment: Alignment.bottomRight,
         children: [
           imageFile == null
-              ? CircleAvatar(
+              ? const CircleAvatar(
                   radius: 50,
                   //const FlutterLogo()
 
@@ -75,7 +74,7 @@ class _PickImageState extends State<PickImage> {
             ),
           ),
           imageFile != null
-              ? Container(
+              ? SizedBox(
                   height: 50,
                   width: 50,
                   child: Image.file(
@@ -85,7 +84,7 @@ class _PickImageState extends State<PickImage> {
                     fit: BoxFit.cover,
                   ),
                 )
-              : Text(
+              : const Text(
                   'null',
                   // style: TextStyle(fontSize: 30),
                 ),

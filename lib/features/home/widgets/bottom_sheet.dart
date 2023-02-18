@@ -1,5 +1,4 @@
 import 'package:fastrash/features/home/widgets/widgets.dart';
-import 'package:fastrash/utils/image_picker.dart';
 import 'package:flutter/material.dart';
 
 actionsModalBottomSheet(

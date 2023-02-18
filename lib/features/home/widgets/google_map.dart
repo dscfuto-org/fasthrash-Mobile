@@ -26,7 +26,7 @@ class GMapState extends State<GMap> {
 
   @override
   void initState() {
-    deviceLocation.getCurrentLocation();
+    ///deviceLocation.getCurrentLocation();
     super.initState();
   }
 
@@ -37,7 +37,7 @@ class GMapState extends State<GMap> {
         alignment: Alignment.center,
         children: [
           GoogleMap(
-            mapType: MapType.hybrid,
+            mapType: MapType.normal,
             initialCameraPosition: futoLocation,
             markers: {
               if (marker != null) marker!,
