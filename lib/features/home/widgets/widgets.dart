@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -55,8 +56,15 @@ class _PickImageState extends State<PickImage> {
                   ),
                 ),
           InkWell(
-            onTap: () {
-              filePicker();
+            onTap: () async {
+              final selectImage =
+                  await _picker.pickImage(source: ImageSource.gallery);
+              log(selectImage!.name.toString());
+              setState(() {
+                imageFile = selectImage;
+                log('Main image1: ' + imageFile!.name.toString());
+              });
+              log('Main image2: ' + imageFile!.path.toString());
             },
             child: const Align(
               alignment: Alignment.bottomRight,
@@ -65,6 +73,21 @@ class _PickImageState extends State<PickImage> {
               ),
             ),
           ),
+          imageFile != null
+              ? Container(
+                  height: 50,
+                  width: 50,
+                  child: Image.file(
+                    File(
+                      imageFile!.path,
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                )
+              : Text(
+                  'null',
+                  // style: TextStyle(fontSize: 30),
+                ),
         ],
       ),
     );
