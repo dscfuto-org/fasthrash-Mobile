@@ -4,9 +4,9 @@ import 'package:fastrash/features/home/view/home.dart';
 import 'package:fastrash/features/profile/view/profile.dart';
 import 'package:flutter/material.dart';
 
-List<Widget> navBar = const[
+List<Widget> navBar = const [
   HomeView(),
   HistoryView(),
-  Education(),
+  EducationView(),
   ProfileView(),
 ];
