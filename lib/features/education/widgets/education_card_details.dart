@@ -15,14 +15,15 @@ class EducationCardDetails extends StatelessWidget {
           title: Text(
             educationModel.title,
           ),
+          centerTitle: true,
         ),
         body: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
             const SizedBox(
-              height: 10,
+              height: 15,
             ),
-            Image.network(
+            Image.asset(
               educationModel.imageUrl,
               fit: BoxFit.cover,
               height: 150.0,
@@ -32,6 +33,7 @@ class EducationCardDetails extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 5.0),
                     Text(
                       educationModel.title,
                       style: const TextStyle(

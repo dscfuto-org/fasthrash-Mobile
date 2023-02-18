@@ -6,7 +6,8 @@ class EducationCard extends StatelessWidget {
   final VoidCallback onTapped;
   const EducationCard({
     super.key,
-    required this.educationModel, required this.onTapped,
+    required this.educationModel,
+    required this.onTapped,
   });
 
   @override
@@ -18,7 +19,7 @@ class EducationCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network(
+            Image.asset(
               educationModel.imageUrl,
               fit: BoxFit.cover,
               height: 150.0,
@@ -41,15 +42,10 @@ class EducationCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 16.0,
                     ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 5.0),
-                  Text(
-                    educationModel.date,
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.grey,
-                    ),
-                  ),
                 ],
               ),
             ),
