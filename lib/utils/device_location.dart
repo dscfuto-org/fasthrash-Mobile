@@ -1,3 +1,4 @@
+import 'package:fastrash/utils/custom_print.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
@@ -33,7 +34,7 @@ class DeviceLocation {
         lat = currentLocation.latitude!;
         lng = currentLocation.longitude!;
       } on Exception catch (e) {
-        ///print('Error coming from $e');
+        logger.v('Error coming from $e');
       }
     });
   }

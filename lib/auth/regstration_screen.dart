@@ -1,4 +1,4 @@
-import 'package:fastrash/screens/login_screen.dart';
+import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 

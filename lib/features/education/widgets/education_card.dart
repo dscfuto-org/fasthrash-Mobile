@@ -22,28 +22,28 @@ class EducationCard extends StatelessWidget {
             height: 150.0,
           ),
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   educationModel.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
                 Text(
                   educationModel.description,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
                 Text(
                   educationModel.date,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14.0,
                     color: Colors.grey,
                   ),

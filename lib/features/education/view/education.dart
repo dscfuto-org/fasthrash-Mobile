@@ -1,6 +1,5 @@
 import 'package:fastrash/features/education/model/education_model.dart';
 import 'package:fastrash/features/education/widgets/education_card.dart';
-import 'package:fastrash/features/home/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class EducationView extends StatelessWidget {

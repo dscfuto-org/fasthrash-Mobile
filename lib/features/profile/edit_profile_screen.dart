@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Edit_Profile_screen extends StatelessWidget {
-  Edit_Profile_screen({Key? key}) : super(key: key);
+class EditProfileScreen extends StatelessWidget {
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,12 +107,12 @@ class Edit_Profile_screen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   children: <Widget>[
                     
-                    FormFeilds(labelText: 'First Name'),
-                    FormFeilds(labelText: 'Last Name'),
-                    FormFeilds(labelText: 'Date of Birth'),
-                    FormFeilds(labelText: 'Mobile'),
-                    FormFeilds(labelText: 'Home'),
-                    FormFeilds(labelText: 'Work'),
+                    const FormFields(labelText: 'First Name'),
+                    const FormFields(labelText: 'Last Name'),
+                    const FormFields(labelText: 'Date of Birth'),
+                    const FormFields(labelText: 'Mobile'),
+                    const FormFields(labelText: 'Home'),
+                    const FormFields(labelText: 'Work'),
 
 
                     Container(
@@ -131,8 +130,8 @@ class Edit_Profile_screen extends StatelessWidget {
                           )),
                     ),
                     
-                    FormFeilds(labelText: 'Street',),
-                    FormFeilds(labelText: 'Town'),
+                    const FormFields(labelText: 'Street',),
+                    const FormFields(labelText: 'Town'),
 
 
                   ]),
@@ -160,12 +159,10 @@ class Edit_Profile_screen extends StatelessWidget {
   }
 }
 
-class FormFeilds extends StatelessWidget {
-  String labelText;
-  FormFeilds({
-    super.key,
-    required this.labelText,
-  });
+class FormFields extends StatelessWidget {
+  final String labelText;
+  const FormFields({super.key, required this.labelText});
+
 
 
   @override

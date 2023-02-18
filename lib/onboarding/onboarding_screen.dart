@@ -1,5 +1,7 @@
-import 'package:fastrash/screens/login_screen.dart';
-import 'package:fastrash/screens/regstration_screen.dart';
+
+import 'package:fastrash/auth/login_screen.dart';
+import 'package:fastrash/auth/regstration_screen.dart';
+import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -33,17 +35,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Expanded(
                 flex: 3,
                 child: PageView(controller: controller, children: const [
+
                   Page(
                     id: 1,
-                    text1: 'Welcome to edufly School ebooks store',
-                    text2: 'Welcome to edufly School ebooks store',
+                    text1: 'Have Trash? Schedule a Pickup',
+                    text2: 'Select a collector of your choice and preferred time of pickup, take a snapshot and confirm pickup ',
                   ),
                   Page(
                       id: 2,
                       text1:
-                          'Find out about your children\'s book with a click',
-                      text2: 'Choosing the right books at one place'),
-                 Page(id: 3, text1: 'The edufly eBook Store offers you millions', text2: 'Millions of titles across Categories like Children\'s book'),
+                          'Choose a Trash Collector',
+                      text2: 'Many Collectors will be available in your location, Select preferred collector'),
+                 Page(id: 3, text1: 'Earn Incentives', text2: 'Earn some incentive for every bottle recycled while keeping the environment in good condition!'),
                 ]),
               ),
               SizedBox(
@@ -60,13 +63,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 child: Stack(
                   children: [
                     Container(
-                      decoration: const BoxDecoration(
+                      decoration:const  BoxDecoration(
                           gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomLeft,
-                        colors: [
-                          Color(0xff2F83D9),
-                          Color(0xff00E0AA),
+                        colors:  [
+                          AppColors.green,
+                          AppColors.yellow,
                         ],
                         // transform: GradientRotation(pi/4)
                       )),
@@ -84,7 +87,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                 foregroundColor: Colors.blue
                             ),
                             child: const Text('Register'),
-                            onPressed: () => navigatePush(context, RegistrationScreen()),
+                            onPressed: () => navigatePush(context, const RegistrationScreen()),
                           ),
                         ),
                         Container(
@@ -97,7 +100,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               foregroundColor: Colors.blue
                             ),
                             child: const Text('Login'),
-                            onPressed: () => navigatePush(context, LoginScreen()),
+                            onPressed: () => navigatePush(context, const LoginScreen()),
                           ),
                         ),
                         // Row(
@@ -188,7 +191,7 @@ class Page extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      text2,
+                      text2, textAlign: TextAlign.center,
                     ),
                     const SizedBox(
                       height: 10,

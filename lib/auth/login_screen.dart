@@ -1,5 +1,5 @@
+import 'package:fastrash/auth/regstration_screen.dart';
 import 'package:fastrash/features/dashboard/view/dashboard.dart';
-import 'package:fastrash/screens/regstration_screen.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 

@@ -26,12 +26,12 @@ class _PickImageState extends State<PickImage> {
     //   });
     // }
 
-    void filePicker() async {
-      final selectImage = await _picker.pickImage(source: ImageSource.gallery);
-      setState(() {
-        imageFile = selectImage;
-      });
-    }
+    // void filePicker() async {
+    //   final selectImage = await _picker.pickImage(source: ImageSource.gallery);
+    //   setState(() {
+    //     imageFile = selectImage;
+    //   });
+    // }
 
     return SizedBox(
       width: 100,
@@ -39,7 +39,7 @@ class _PickImageState extends State<PickImage> {
         alignment: Alignment.bottomRight,
         children: [
           imageFile == null
-              ? CircleAvatar(
+              ? const CircleAvatar(
                   radius: 50,
                   //const FlutterLogo()
 
@@ -74,7 +74,7 @@ class _PickImageState extends State<PickImage> {
             ),
           ),
           imageFile != null
-              ? Container(
+              ? SizedBox(
                   height: 50,
                   width: 50,
                   child: Image.file(
@@ -84,7 +84,7 @@ class _PickImageState extends State<PickImage> {
                     fit: BoxFit.cover,
                   ),
                 )
-              : Text(
+              : const Text(
                   'null',
                   // style: TextStyle(fontSize: 30),
                 ),
