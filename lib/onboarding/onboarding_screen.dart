@@ -2,8 +2,10 @@
 import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/auth/regstration_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
+import 'package:fastrash/utils/buttons.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -27,14 +29,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: const BoxDecoration(color: Colors.white70),
+          decoration: const BoxDecoration(color: Colors.white),
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               Expanded(
                 flex: 3,
-                child: PageView(controller: controller, children: const [
+                child: PageView(
+                    controller: controller, children: const [
 
                   Page(
                     id: 1,
@@ -55,6 +58,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: SmoothPageIndicator(
                     controller: controller,
                     count: 3,
+                    effect: const WormEffect(dotColor: AppColors.green, activeDotColor: AppColors.yellow),
                   ),
                 ),
               ),
@@ -63,72 +67,57 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 child: Stack(
                   children: [
                     Container(
-                      decoration:const  BoxDecoration(
-                          gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomLeft,
-                        colors:  [
-                          AppColors.green,
-                          AppColors.yellow,
-                        ],
-                        // transform: GradientRotation(pi/4)
-                      )),
+                      // decoration:const  BoxDecoration(
+                      //     gradient: LinearGradient(
+                      //   begin: Alignment.topCenter,
+                      //   end: Alignment.bottomLeft,
+                      //   colors:  [
+                      //     AppColors.green,
+                      //     AppColors.yellow,
+                      //   ],
+                      //   // transform: GradientRotation(pi/4)
+                      // )),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 80,
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.all(10),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.blue
-                            ),
-                            child: const Text('Register'),
-                            onPressed: () => navigatePush(context, const RegistrationScreen()),
-                          ),
-                        ),
-                        Container(
-                          height: 80,
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.all(10),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.blue
-                            ),
-                            child: const Text('Login'),
-                            onPressed: () => navigatePush(context, const LoginScreen()),
-                          ),
-                        ),
-                        // Row(
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     children: [
-                        //       TextButton(
-                        //         onPressed: () {},
-                        //         child: const Text(
-                        //           'Singnup with email',
-                        //           style: TextStyle(
-                        //               fontSize: 15, color: Colors.white),
-                        //         ),
-                        //       ),
-                        //       const Text(
-                        //         '/',
-                        //         style: TextStyle(
-                        //             fontSize: 15, color: Colors.white),
-                        //       ),
-                        //       TextButton(
-                        //         onPressed: () {},
-                        //         child: const Text(
-                        //           'Social media',
-                        //           style: TextStyle(
-                        //               fontSize: 15, color: Colors.white),
-                        //         ),
-                        //       ),
-                        //     ])
-                      ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+
+                          AppLargeButton(textColor: Colors.white, onTap: (){
+                            navigatePush(context, const RegistrationScreen());
+                          }, text: "Register"),
+                          //Spacer(),
+                          AppLargeButton(textColor: Colors.white, backgroundColor: AppColors.yellow,
+                              onTap: (){ navigatePush(context, const LoginScreen());}, text: "Login"),
+
+                          // Row(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       TextButton(
+                          //         onPressed: () {},
+                          //         child: const Text(
+                          //           'Singnup with email',
+                          //           style: TextStyle(
+                          //               fontSize: 15, color: Colors.white),
+                          //         ),
+                          //       ),
+                          //       const Text(
+                          //         '/',
+                          //         style: TextStyle(
+                          //             fontSize: 15, color: Colors.white),
+                          //       ),
+                          //       TextButton(
+                          //         onPressed: () {},
+                          //         child: const Text(
+                          //           'Social media',
+                          //           style: TextStyle(
+                          //               fontSize: 15, color: Colors.white),
+                          //         ),
+                          //       ),
+                          //     ])
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -174,29 +163,33 @@ class Page extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
-                      child: Text(
-                        text1,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          fontSize: 25,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
+                        child: Text(
+                          text1,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: AppColors.green,
+                            fontSize: 25.sp, fontWeight: FontWeight.bold
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      text2, textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    )
-                  ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        text2, textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14.sp, ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

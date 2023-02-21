@@ -1,8 +1,8 @@
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/onboarding/onboarding_screen.dart';
+import 'package:fastrash/utils/device_location.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     //getCurrentLocation();
+    DeviceLocation().getCurrentLocation();
     checkUser();
 
   }
@@ -37,35 +38,37 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.green,
       body: Stack(
         children: <Widget>[
-          SizedBox(
+          Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            // decoration: const BoxDecoration(
-            //     gradient: LinearGradient(
-            //   begin: Alignment.topRight,
-            //   end: Alignment.bottomLeft,
-            //   colors: [
-            //     AppColors.green,
-            //     AppColors.yellow,
-            //   ],
-            // )),
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                AppColors.green,
+                AppColors.yellow,
+              ],
+            )),
           ),
-          Center(
-            child: GradientText(
-              'Fastrash'.toUpperCase(),
-              style: const TextStyle(
+          const Center(
+            child: Text(
+              'Fastrash',
+              style: TextStyle(
                 fontSize: 40.0,
+                color: Colors.white,
                 fontWeight: FontWeight.bold
               ),
-              gradientType: GradientType.linear,
-              gradientDirection: GradientDirection.ttb,
-              radius: .4,
-              colors: const [
-               AppColors.green,
-               AppColors.yellow,
-              ],
+              // gradientType: GradientType.linear,
+              // gradientDirection: GradientDirection.ttb,
+              // radius: .4,
+              // colors: const [
+              //  AppColors.green,
+              //  AppColors.yellow,
+              // ],
             ),
           )
         ],

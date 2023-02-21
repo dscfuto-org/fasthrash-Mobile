@@ -1,10 +1,12 @@
 import 'package:fastrash/features/home/widgets/widgets.dart';
+import 'package:fastrash/utils/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 actionsModalBottomSheet(
   BuildContext context,
 ) {
-  double sheetHeight = 300;
+  double sheetHeight = 600.h;
   showModalBottomSheet(
       context: context,
       isDismissible: true,
@@ -14,6 +16,7 @@ actionsModalBottomSheet(
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter stateSetter) {
             return Container(
+              padding: EdgeInsets.all(15.r),
                 height: sheetHeight,
                 decoration: const BoxDecoration(
                     color: Colors.white,
@@ -21,37 +24,32 @@ actionsModalBottomSheet(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
                     )),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      color: Colors.black45,
-                      height: 5,
-                      width: 100,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const PickImage(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text('Input data count'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Submit'),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        color: Colors.black45,
+                        height: 5,
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const PickImage(),
+
+                      SizedBox(
+                        height: 50.h,
+                      ),
+                      AppLargeButton(textColor: Colors.white, onTap: (){}, text: "Submit"),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
                 ));
           },
         );
