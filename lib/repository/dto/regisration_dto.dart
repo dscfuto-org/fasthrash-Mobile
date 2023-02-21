@@ -1,12 +1,12 @@
 class RegistrationDto {
-  final String? firstName;
-  final String? lastName;
-  final String? location;
-  final String? email;
-  final String? phoneNumber;
-  final String? password;
-  final String? role;
-  const RegistrationDto(
+  late  String? firstName;
+  late  String? lastName;
+  late  String? location;
+  late  String? email;
+  late  String? phoneNumber;
+  late  String? password;
+  late  String? role;
+  RegistrationDto(
       {this.firstName,
       this.lastName,
       this.location,
