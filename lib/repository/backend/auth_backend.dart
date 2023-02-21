@@ -9,6 +9,7 @@ import 'package:fastrash/repository/dto/organization_regisration_dto.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/repository/model/registration_sucess_model.dart';
 import 'package:fastrash/utils/custom_print.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as client;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,7 @@ class AuthBackend {
 
 //Single User SignUp
   Future<void> signUpUser(
+    BuildContext context,
     RegistrationDto registrationDto,
   ) async {
     const url = http + baseURL + userRegistrationPath;
