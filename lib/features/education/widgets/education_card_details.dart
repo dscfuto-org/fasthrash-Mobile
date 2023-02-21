@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fastrash/features/education/model/education_model.dart';
 import 'package:flutter/material.dart';
 
@@ -48,6 +50,7 @@ class EducationCardDetails extends StatelessWidget {
                         educationModel.description,
                         style: const TextStyle(
                           fontSize: 16.0,
+                          height: 1.5,
                         ),
                         textAlign: TextAlign.justify,
                       ),

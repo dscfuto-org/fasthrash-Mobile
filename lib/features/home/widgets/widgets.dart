@@ -52,7 +52,7 @@ class _PickImageState extends State<PickImage> {
                 )
               : Image.file(
                   File(
-                    imageFile!.path,
+                    imageFile.path,
                   ),
                 ),
           InkWell(
