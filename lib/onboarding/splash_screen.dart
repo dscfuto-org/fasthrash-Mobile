@@ -1,5 +1,6 @@
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/onboarding/onboarding_screen.dart';
+import 'package:fastrash/utils/device_location.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -19,6 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     //getCurrentLocation();
+    DeviceLocation().getCurrentLocation();
     checkUser();
 
   }

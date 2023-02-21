@@ -1,6 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
+import 'package:fastrash/constants/app_colors.dart';
+import 'package:fastrash/utils/custom_print.dart';
+import 'package:fastrash/utils/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PickImage extends StatefulWidget {
@@ -13,10 +16,14 @@ class PickImage extends StatefulWidget {
 }
 
 class _PickImageState extends State<PickImage> {
+
+  File? _image;
+  final picker = ImagePicker();
+  bool useLocation = false;
+  
   @override
   Widget build(BuildContext context) {
-    XFile? imageFile;
-    final ImagePicker _picker = ImagePicker();
+
     // void pickImage() async {
     //   final imageSelected =
     //       //  await ImagePickerHelper.pickImageFromGallery();
@@ -33,63 +40,80 @@ class _PickImageState extends State<PickImage> {
     //   });
     // }
 
-    return SizedBox(
-      width: 100,
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          imageFile == null
-              ? const CircleAvatar(
-                  radius: 50,
-                  //const FlutterLogo()
 
-                  // Image.file(
+    initiateCapture() async {
+      final pickedFile = await picker.pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 50
 
-                  //     File(
-                  //       imageFile!.path,
-                  //     ),
-                  //   ),
+      );
+
+      setState(() {
+        if (pickedFile != null) {
+          _image = File(pickedFile.path);
+          ///_imageName = File(pickedFile.name);
+          // personalProfileDto.image = base64Encode(
+          //   _image!.readAsBytesSync(),
+          // );
+          logger.v('Image Path $_image');
+          final bytes = _image!.readAsBytesSync().lengthInBytes;
+          final kb = bytes / 1024;
+          logger.v(kb.toString() + "KB");
+          ///logger.v(personalProfileDto.image.runtimeType);
+          ///updateImageReq();
+        } else {}
+      });
+    }
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InkWell(
+          onTap: ()=> initiateCapture(),
+          child: CircleAvatar(
+            radius: 70.r,
+            backgroundColor: AppColors.green,
+            child: SizedBox(
+                height: 160.h, width: 160.w,
+                child: ClipOval(
+                  child: (_image != null)
+                      ? Image.file(
+                    _image!,
+                    fit: BoxFit.cover,
+                  )   :
+                  const Icon(Icons.add_a_photo),
                 )
-              : Image.file(
-                  File(
-                    imageFile!.path,
-                  ),
-                ),
-          InkWell(
-            onTap: () async {
-              final selectImage =
-                  await _picker.pickImage(source: ImageSource.gallery);
-              log(selectImage!.name.toString());
-              setState(() {
-                imageFile = selectImage;
-                log('Main image1: ' + imageFile!.name.toString());
-              });
-              log('Main image2: ' + imageFile!.path.toString());
-            },
-            child: const Align(
-              alignment: Alignment.bottomRight,
-              child: Icon(
-                Icons.add_a_photo,
-              ),
             ),
           ),
-          imageFile != null
-              ? SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: Image.file(
-                    File(
-                      imageFile!.path,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : const Text(
-                  'null',
-                  // style: TextStyle(fontSize: 30),
-                ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        customButton("Quantity in Key"),
+        customButton("Description"),
+        useLocation ? Container() : customButton("Enter Address"),
+
+
+        const SizedBox(
+          height: 10,
+        ),
+        Container(
+          color: Colors.white,
+          child: SwitchListTile(
+            title: Text('Use Current Location',style: TextStyle(fontSize: 14.sp),),
+            value: useLocation,
+            activeColor: AppColors.yellow,
+            inactiveTrackColor: Colors.grey,
+            onChanged: (bool value) {
+              setState(() {
+                useLocation = value;
+              });
+            },
+            secondary: const Icon(Icons.location_on, color: AppColors.yellow,),
+            controlAffinity: ListTileControlAffinity.trailing,
+          ),
+        ),
+      ],
     );
   }
 }

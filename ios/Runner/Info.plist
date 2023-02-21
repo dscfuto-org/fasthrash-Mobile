@@ -4,10 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app requires access to your location to function properly.</string>
-	<key>UIBackgroundModes</key>
-	<string>location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>UIBackgroundModes</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>NSLocationAlwaysUsageDescription</string>
 	<key>NSPhotoLibraryUsageDescription</key>
   	<string>Upload images for screen background</string>
   	<key>NSCameraUsageDescription</key>
