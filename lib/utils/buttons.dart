@@ -33,7 +33,7 @@ class AppLargeButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             width:1.w,
-            color:AppColors.green,
+            color:backgroundColor,
           ),
         ),
         child: Center(

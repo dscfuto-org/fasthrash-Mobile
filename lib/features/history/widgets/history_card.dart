@@ -116,7 +116,7 @@ class HistoryCard extends StatelessWidget {
                           /// textDirection: TextDirection.ltr,
                           style: TextStyle(
                               color: Colors.black,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontSize: 15.sp,
                               height: 1.5,
                               fontWeight: FontWeight.bold),
@@ -133,7 +133,7 @@ class HistoryCard extends StatelessWidget {
                             color: Colors.black,
                             fontSize: 15.0,
                             height: 1.2,
-                            fontFamily: 'Euclid Circular A',
+                            fontFamily: 'DMSans',
                           ),
                         ),
                         Badge(
@@ -151,7 +151,7 @@ class HistoryCard extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
-                                  fontFamily: 'Euclid Circular A',
+                                  fontFamily: 'DMSans',
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -173,7 +173,7 @@ class HistoryCard extends StatelessWidget {
                             color: Colors.black,
                             fontSize: 13.0,
                             height: 1.2,
-                            fontFamily: 'Euclid Circular A',
+                            fontFamily: 'DMSans',
                           ),
                         ),
                         const Text(
@@ -185,7 +185,7 @@ class HistoryCard extends StatelessWidget {
                             color: Colors.black,
                             fontSize: 13.0,
                             height: 1.2,
-                            //fontFamily: 'Euclid Circular A',
+                            //fontFamily: 'DMSans',
                           ),
                         ),
                         // Text(

@@ -89,10 +89,9 @@ class _PickImageState extends State<PickImage> {
         const SizedBox(
           height: 10,
         ),
-        customButton("Quantity in Key"),
+        customButton("Quantity in KG"),
         customButton("Description"),
         useLocation ? Container() : customButton("Enter Address"),
-
 
         const SizedBox(
           height: 10,
@@ -100,7 +99,7 @@ class _PickImageState extends State<PickImage> {
         Container(
           color: Colors.white,
           child: SwitchListTile(
-            title: Text('Use Current Location',style: TextStyle(fontSize: 14.sp),),
+            title: Text('Use Current Address',style: TextStyle(fontSize: 14.sp),),
             value: useLocation,
             activeColor: AppColors.yellow,
             inactiveTrackColor: Colors.grey,

@@ -87,7 +87,7 @@
 //               "Booking Details",
 //               style: TextStyle(
 //                   color: Colors.black,
-//                   fontFamily: 'Euclid Circular A',
+//                   fontFamily: 'DMSans',
 //                   fontSize: 20.0,
 //                   height: 1.5,
 //                   fontWeight: FontWeight.bold),
@@ -150,7 +150,7 @@
 //                                   color: Colors.red
 //                                       .withOpacity(0.7),
 //                                   fontFamily:
-//                                   'Euclid Circular A',
+//                                   'DMSans',
 //                                   fontWeight: FontWeight.bold,
 //                                 ),
 //                               ),
@@ -160,12 +160,12 @@
 //                           //   leading:Image(image: AssetImage(trash), height: 20,),
 //                           //   title: Text("Delete", style: TextStyle(
 //                           //     color: Colors.red.withOpacity(0.7),
-//                           //     fontFamily: 'Euclid Circular A',
+//                           //     fontFamily: 'DMSans',
 //                           //     fontWeight: FontWeight.bold,
 //                           //
 //                           //   ),),
 //                           //   // subtitle:Text("See room details",style: TextStyle(
-//                           //   //   fontFamily: 'Euclid Circular A',
+//                           //   //   fontFamily: 'DMSans',
 //                           //   // ),),
 //                           //
 //                           // ),
@@ -201,14 +201,14 @@
 //                           "Rooms",
 //                           style: TextStyle(
 //                             color: Colors.black,
-//                             fontFamily: 'Euclid Circular A',
+//                             fontFamily: 'DMSans',
 //                             fontWeight: FontWeight.bold,
 //                           ),
 //                         ),
 //                         subtitle: const Text(
 //                           "See room details",
 //                           style: TextStyle(
-//                             fontFamily: 'Euclid Circular A',
+//                             fontFamily: 'DMSans',
 //                           ),
 //                         ),
 //                         trailing: Icon(
@@ -230,14 +230,14 @@
 //                       color: Colors.black,
 //                       fontSize: 15.0,
 //                       height: 1.2,
-//                       fontFamily: 'Euclid Circular A',
+//                       fontFamily: 'DMSans',
 //                     ),
 //                   ),
 //                   Text(
 //                     "#JFURU8${widget.bookingHistoryModel.id}3",
 //                     style: const TextStyle(
 //                         color: Colors.black,
-//                         fontFamily: 'Euclid Circular A',
+//                         fontFamily: 'DMSans',
 //                         fontSize: 20.0,
 //                         height: 1.5,
 //                         fontWeight: FontWeight.bold),
@@ -391,7 +391,7 @@
 //             //       style: TextStyle(
 //             //         color: Colors.black,
 //             //         fontSize: deviceW / 35,
-//             //         fontFamily: 'Euclid Circular A',
+//             //         fontFamily: 'DMSans',
 //             //         fontWeight: FontWeight.bold,
 //             //       ),
 //             //     ),
@@ -446,7 +446,7 @@
 //                         style: TextStyle(
 //                             color: Colors.white,
 //                             fontSize: deviceW / 30,
-//                             fontFamily: 'Euclid Circular A',
+//                             fontFamily: 'DMSans',
 //                             fontWeight: FontWeight.bold),
 //                       ),
 //                     ),
@@ -468,7 +468,7 @@
 //                         style: TextStyle(
 //                             color: Colors.white,
 //                             fontSize: deviceW / 30,
-//                             fontFamily: 'Euclid Circular A',
+//                             fontFamily: 'DMSans',
 //                             fontWeight: FontWeight.bold),
 //                       ),
 //                     ),
@@ -510,7 +510,7 @@
 //                       style: TextStyle(
 //                           color: Colors.white,
 //                           fontSize: deviceW / 30,
-//                           fontFamily: 'Euclid Circular A',
+//                           fontFamily: 'DMSans',
 //                           fontWeight: FontWeight.bold),
 //                     ),
 //                   ),
@@ -526,7 +526,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
@@ -570,7 +570,7 @@
 //                                 textDirection: TextDirection.ltr,
 //                                 style: const TextStyle(
 //                                     color: Colors.black,
-//                                     fontFamily: 'Euclid Circular A',
+//                                     fontFamily: 'DMSans',
 //                                     fontSize: 20.0,
 //                                     height: 1.5,
 //                                     fontWeight: FontWeight.bold)
@@ -597,7 +597,7 @@
 //                                   color: Colors.black,
 //                                   fontSize: 15.0,
 //                                   height: 1.2,
-//                                   fontFamily: 'Euclid Circular A',
+//                                   fontFamily: 'DMSans',
 //                                 ),
 //                               ),
 //                             ],
@@ -633,7 +633,7 @@
 //                                             color: Colors.black54,
 //                                             fontSize: deviceW / 30,
 //                                             fontFamily:
-//                                             'Euclid Circular A',
+//                                             'DMSans',
 //                                             fontWeight: FontWeight.bold,
 //                                           ),
 //                                         ),
@@ -670,7 +670,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
@@ -682,7 +682,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black54,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                   ),
 //                 ),
 //                 Text(
@@ -693,7 +693,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black54,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                   ),
 //                 ),
 //               ],
@@ -706,7 +706,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
@@ -717,7 +717,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black54,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                   ),
 //                 ),
 //               ],
@@ -730,7 +730,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
@@ -739,7 +739,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black54,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                   ),
 //                 ),
 //               ],
@@ -752,7 +752,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
@@ -761,7 +761,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black54,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                   ),
 //                 ),
 //               ],
@@ -774,7 +774,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
@@ -786,7 +786,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black54,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                   ),
 //                 ),
 //               ],
@@ -799,7 +799,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black,
 //                     fontSize: deviceW / 35,
-//                     fontFamily: 'Euclid Circular A',
+//                     fontFamily: 'DMSans',
 //                     fontWeight: FontWeight.bold,
 //                   ),
 //                 ),
@@ -808,7 +808,7 @@
 //                   style: TextStyle(
 //                     color: Colors.black54,
 //                     fontSize: deviceW / 35,
-//                     // fontFamily: 'Euclid Circular A',
+//                     // fontFamily: 'DMSans',
 //                   ),
 //                 ),
 //               ],

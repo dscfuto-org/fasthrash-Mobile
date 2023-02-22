@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           // You can use the library anywhere in the app even in theme
           theme: ThemeData(
             primarySwatch: Colors.green,
-            fontFamily: 'Poppins',
+            fontFamily: 'DMSans',
             // textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.0.sp, displayColor: Colors.black),
           ),
           home: const SplashScreen(),

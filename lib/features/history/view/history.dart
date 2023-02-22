@@ -44,7 +44,7 @@ class HistoryView extends StatelessWidget {
                               'Collections',
                               style: TextStyle(
                                 fontSize: 12.sp,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'DMSans',
                               ),
                             ),
                           ),
@@ -58,7 +58,7 @@ class HistoryView extends StatelessWidget {
                             'Deposits',
                             style: TextStyle(
                               fontSize: 12.sp,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'DMSans',
                             ),
                           ),
                         ),
@@ -95,7 +95,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -117,7 +117,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -139,7 +139,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -160,7 +160,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -212,7 +212,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -234,7 +234,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -256,7 +256,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -277,7 +277,7 @@ class HistoryView extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 10.sp,
-                              fontFamily: 'Euclid Circular A',
+                              fontFamily: 'DMSans',
                               fontWeight: FontWeight.bold),
                         ),
                       ),
