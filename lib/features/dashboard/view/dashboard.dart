@@ -2,6 +2,7 @@ import 'package:fastrash/features/education/view/education.dart';
 import 'package:fastrash/features/history/view/history.dart';
 import 'package:fastrash/features/home/view/home.dart';
 import 'package:fastrash/features/profile/my_account_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -26,8 +27,8 @@ class _DashboardState extends State<Dashboard> {
           color: Colors.white54,
           child: const TabBar(
             isScrollable: false,
-            labelColor: Colors.blueAccent,
-            unselectedLabelColor: Colors.grey,
+            labelColor: Colors.green,
+            unselectedLabelColor: Colors.black,
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorPadding: EdgeInsets.all(5.0),
             indicatorColor: Colors.transparent,
@@ -36,19 +37,20 @@ class _DashboardState extends State<Dashboard> {
             tabs: [
               Tab(
                 text: "Home",
-                icon: Icon(Icons.home),
+                icon: Icon(CupertinoIcons.home),
               ),
               Tab(
                 text: "History",
+                //icon: Icon(Icons.history),
                 icon: Icon(Icons.history),
               ),
               Tab(
                 text: "Education",
-                icon: Icon(Icons.cast_for_education),
+                icon: Icon(CupertinoIcons.news),
               ),
               Tab(
                 text: "Profile",
-                icon: Icon(Icons.person),
+                icon: Icon(CupertinoIcons.person),
               ),
             ],
           ),
@@ -58,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
             HomeView(),
             HistoryView(),
             EducationView(),
-            MyAccountScreen(),
+            ProfileScreen(),
           ],
         ),
       ),

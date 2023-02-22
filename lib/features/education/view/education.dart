@@ -15,23 +15,27 @@ class EducationView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Education'),
-        centerTitle: true,
+        centerTitle: true, elevation: 0,
+        automaticallyImplyLeading: false,
       ),
-      body: ListView.builder(
-          itemCount: educationData.length,
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            final selectedIndex = educationData[index];
-            return EducationCard(
-              onTapped: () => navigatePush(
-                context,
-                EducationCardDetails(
-                  educationModel: selectedIndex,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+            itemCount: educationData.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              final selectedIndex = educationData[index];
+              return EducationCard(
+                onTapped: () => navigatePush(
+                  context,
+                  EducationCardDetails(
+                    educationModel: selectedIndex,
+                  ),
                 ),
-              ),
-              educationModel: educationData[index],
-            );
-          }),
+                educationModel: educationData[index],
+              );
+            }),
+      ),
     );
   }
 }

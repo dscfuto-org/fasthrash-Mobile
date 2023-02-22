@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:fastrash/features/education/model/education_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EducationCardDetails extends StatelessWidget {
   final EducationModel educationModel;
@@ -22,13 +21,10 @@ class EducationCardDetails extends StatelessWidget {
         body: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            const SizedBox(
-              height: 15,
-            ),
-            Image.asset(
+                    Image.asset(
               educationModel.imageUrl,
               fit: BoxFit.cover,
-              height: 150.0,
+              height: 250.h,
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
