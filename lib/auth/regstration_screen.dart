@@ -2,8 +2,10 @@ import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/utils/custom_print.dart';
+import 'package:fastrash/utils/dropdown_widget.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
+import 'package:fastrash/utils/get_widgets.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -23,7 +25,8 @@ class MyStatefulWidget extends StatefulWidget {
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _MyStatefulWidgetState extends State<MyStatefulWidget>
+    with DashBoardWidgets {
   final GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController passwordController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -37,6 +40,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    const String role = 'Sign Up as';
+    DashBoardDropDownFormField roleSelect = createDropDownList(
+      role,
+      'Sign Up as',
+      const [
+        'Individual',
+        'Organization',
+      ],
+    );
+
     return Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
@@ -119,13 +132,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     FocusScope.of(context).requestFocus(FocusNode());
     if (!formKey.currentState!.validate()) {
     } else {
-      registrationDto.firstName=firstNameController.text;
-      registrationDto.lastName= lastNameController.text;
-      registrationDto.location= locationController.text;
-      registrationDto.email=emailController.text;
-      registrationDto.phoneNumber=phoneController.text;
-      registrationDto.password=passwordController.text;
-      registrationDto.role=roleController.text;
+      registrationDto.firstName = firstNameController.text;
+      registrationDto.lastName = lastNameController.text;
+      registrationDto.location = locationController.text;
+      registrationDto.email = emailController.text;
+      registrationDto.phoneNumber = phoneController.text;
+      registrationDto.password = passwordController.text;
+      registrationDto.role = roleController.text;
 
       setState(() {
         //isLoading = true;
