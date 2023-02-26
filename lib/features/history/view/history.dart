@@ -168,7 +168,7 @@ class HistoryView extends StatelessWidget {
                   ],),
               ),
               SizedBox(
-                height: 560.h,
+                height: 550.h,
                 child: ListView.builder(
                   itemCount: 10,
                   physics: const BouncingScrollPhysics(),
@@ -285,7 +285,7 @@ class HistoryView extends StatelessWidget {
                   ],),
               ),
               SizedBox(
-                height: 560.h,
+                height: 550.h,
                 child: ListView.builder(
                   itemCount: 10,
                   physics: const BouncingScrollPhysics(),
