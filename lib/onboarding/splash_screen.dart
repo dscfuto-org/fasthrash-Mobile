@@ -79,6 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
   submitLogin() async {
     logger.i("Call Login API");
     try {
+        logger.wtf("SignIn Auto");
       await AuthBackend().signInAuto(context, loginDto);
     } catch (e) {
       logger.e(e);

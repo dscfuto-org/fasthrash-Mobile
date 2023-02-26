@@ -240,7 +240,7 @@ class AuthBackend {
       logger.i(httpConnectionApi.body);
       logger.wtf(httpConnectionApi.statusCode);
 
-      if (httpConnectionApi.statusCode == 201) {
+      if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.loginResponseModel = LoginResponseModel.fromJson(resBody);
         DummyData.emailAddress =
@@ -269,6 +269,7 @@ class AuthBackend {
         //     message: "${ResponseData.failureResponse!.message.toString()}");
         navigateReplace(context, const LoginScreen());
 
+
       }
     } on Exception catch (e) {
       // displayLongToastMessage(somethingWentWrongText,  );
@@ -281,13 +282,13 @@ class AuthBackend {
   saveUserEmail(localUserEmail) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("Email", localUserEmail);
-    logger.i("saved Email Address");
+    logger.i("saved Email Address ${DummyData.emailAddress}");
   }
 
   saveUserPassword(localPassword) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("Password", localPassword);
-    logger.i("saved Password");
+    logger.i("saved Password ${DummyData.password}" );
 
   }
 

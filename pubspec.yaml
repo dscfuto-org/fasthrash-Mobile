@@ -43,6 +43,7 @@ dependencies:
   smooth_page_indicator: ^1.0.1
   step_progress_indicator: ^1.0.2
   dropdownfield: ^1.0.3
+  flutter_spinkit: any
   #simple_gradient_text: ^1.2.4
   intl: ^0.17.0
   badges: ^2.0.2

@@ -97,7 +97,7 @@ class _EmailFormFieldState extends State<EmailFormField> {
                         borderSide: BorderSide(
                             color: isEmailCorrect == false
                                 ? AppColors.red
-                                : AppColors.dark)),
+                                : AppColors.green)),
                     hintText: widget.title,
                     hintStyle: kSubtitleStyle.copyWith(
                         color: AppColors.dark,
@@ -224,12 +224,12 @@ class _PhoneFormFieldState extends State<PhoneFormField> {
                         borderSide: BorderSide(
                             color: isValidState == false
                                 ? AppColors.red
-                                : AppColors.dark)),
+                                : AppColors.green)),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           color: isValidState == false
                               ? AppColors.red
-                              : AppColors.dark,
+                              : AppColors.green,
                           width: 0.3),
                     ),
                     border: OutlineInputBorder(
@@ -237,13 +237,13 @@ class _PhoneFormFieldState extends State<PhoneFormField> {
                           width: 7.0,
                           color: isValidState == false
                               ? AppColors.red
-                              : AppColors.dark),
+                              : AppColors.green),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: isValidState == false
                                 ? AppColors.red
-                                : AppColors.dark)),
+                                : AppColors.green)),
                     hintText: widget.title,
                     hintStyle: kSubtitleStyle.copyWith(
                         color: AppColors.dark,
@@ -374,12 +374,12 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                         borderSide: BorderSide(
                             color: isValidState == false
                                 ? AppColors.red
-                                : AppColors.dark)),
+                                : AppColors.green)),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.dark, width: 0.3),
+                      borderSide: BorderSide(color: AppColors.green, width: 0.3),
                     ),
                     border: const OutlineInputBorder(
-                      borderSide: BorderSide(width: 7.0, color: AppColors.dark),
+                      borderSide: BorderSide(width: 7.0, color: AppColors.green),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
 
@@ -387,7 +387,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                         borderSide: BorderSide(
                             color: isValidState == false
                                 ? AppColors.red
-                                : AppColors.dark)),
+                                : AppColors.green)),
                     //fillColor: Color(0xfff3f3f4),
 
                     hintText: widget.title,

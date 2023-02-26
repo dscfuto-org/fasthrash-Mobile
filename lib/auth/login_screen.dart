@@ -1,11 +1,13 @@
 import 'package:fastrash/auth/regstration_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
+import 'package:fastrash/constants/strings.dart';
 import 'package:fastrash/features/dashboard/view/dashboard.dart';
 import 'package:fastrash/repository/backend/alerts_backend.dart';
 import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/dto/login_dto.dart';
 import 'package:fastrash/utils/custom_print.dart';
+import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:fastrash/utils/text_fields.dart';
@@ -102,7 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 30,
               ),
 
-              submitButton(),
+              isLoading
+                  ? const Center(child: loaderOne)
+                  :submitButton(),
               const SizedBox(
                 height: 80,
               ),
@@ -172,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
           enabled: true,
           validator: (value) {
             if (value!.isEmpty) {
-              return "fieldRequired";
+              return fieldRequired;
             }
             return null;
           },
@@ -223,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
               //border: InputBorder.none,
               //fillColor: Color(0xfff3f3f4),
               errorStyle:
-                  kTitleStyle.copyWith(fontSize: 12.0, color: AppColors.green),
+                  kTitleStyle.copyWith(fontSize: 12.0, color: AppColors.red),
               filled: false)),
     );
   }
