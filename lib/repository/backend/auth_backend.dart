@@ -279,6 +279,73 @@ class AuthBackend {
     }
   }
 
+  Future<void> resetPassword(BuildContext context,
+      // LoginDto loginDto
+
+      ) async {
+    final url = http + baseURL + resetPasswordPath + ResponseData.loginResponseModel!.id.toString();
+
+    logger.i(url);
+    logger.i(json.encode({
+      "email": "vicemmanuel7@gmail.com"
+
+    }));
+
+    try {
+      final httpConnectionApi = await client.post(
+        Uri.parse(url),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+
+        },
+        body: json.encode({
+          "email": "vicemmanuel7@gmail.com"
+
+        }),
+      ).timeout(const Duration(seconds: 60));
+
+      logger.i(httpConnectionApi.body);
+      logger.wtf(httpConnectionApi.statusCode);
+
+      // if (httpConnectionApi.statusCode == 200) {
+      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
+      //   ResponseData.loginResponseModel = LoginResponseModel.fromJson(resBody);
+      //   DummyData.emailAddress =
+      //       ResponseData.loginResponseModel!.email.toString();
+      //   DummyData.accessToken =
+      //       ResponseData.loginResponseModel!.token.toString();
+      //   logger.wtf(DummyData.accessToken);
+      //
+      //
+      //   saveUserEmail(loginDto.email);
+      //   getUserEmail();
+      //   saveUserPassword(loginDto.password);
+      //   getUserPassword();
+      //   saveAccessToken(ResponseData.loginResponseModel!.token);
+      //   getAccessToken();
+      //   saveAppTme();
+      //
+      //   navigatePush(context, const Dashboard());
+      //
+      //
+      // } else {
+      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
+      //   // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+      //
+      //   // showErrorAlert(context,
+      //   //     message: "${ResponseData.failureResponse!.message.toString()}");
+      //   navigateReplace(context, const LoginScreen());
+      //
+      //
+      // }
+    } on Exception catch (e) {
+      // displayLongToastMessage(somethingWentWrongText,  );
+
+      logger.e(e);
+      rethrow;
+    }
+  }
+
   saveUserEmail(localUserEmail) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("Email", localUserEmail);
