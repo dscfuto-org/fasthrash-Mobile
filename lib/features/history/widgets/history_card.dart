@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,13 +136,13 @@ class HistoryCard extends StatelessWidget {
                             fontFamily: 'DMSans',
                           ),
                         ),
-                        Badge(
+                        badge.Badge(
                           elevation: 0,
                           badgeColor: AppColors.green,
                           toAnimate: false,
                           borderRadius: BorderRadius.circular(20),
                           padding: const EdgeInsets.all(4),
-                          shape: BadgeShape.square,
+                          shape: badge.BadgeShape.square,
                           badgeContent: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 2.0),
                             child: Text(

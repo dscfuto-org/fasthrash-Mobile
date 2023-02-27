@@ -21,10 +21,7 @@ class EducationCardDetails extends StatelessWidget {
         body: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            // const SizedBox(
-            //   height: 15,
-            // ),
-            Image.asset(
+                    Image.asset(
               educationModel.imageUrl,
               fit: BoxFit.cover,
               height: 250.h,
@@ -49,6 +46,7 @@ class EducationCardDetails extends StatelessWidget {
                         educationModel.description,
                         style: const TextStyle(
                           fontSize: 16.0,
+                          height: 1.5,
                         ),
                         textAlign: TextAlign.justify,
                       ),
