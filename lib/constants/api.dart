@@ -15,4 +15,5 @@ const String organizationLoginPath = "/api/auth/org/register";
 const String organizationDeletePath ="/api/auth/org/delete/{id}";
 
 /// Alerts
-const String alertsPath ="/api/alerts";
+const String createAlertsPath ="/api/alerts/create";
+const String getAlertsPath ="/api/alerts/";

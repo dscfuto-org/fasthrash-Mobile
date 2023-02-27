@@ -1,125 +1,150 @@
 class RegistrationSuccessModel {
-  final String? firstName;
-  final String? lastName;
-  final String? location;
-  final String? email;
-  final String? phoneNumber;
-  final String? password;
-  final String? role;
-  final String? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? V;
-  const RegistrationSuccessModel(
-      {this.firstName,
-      this.lastName,
-      this.location,
-      this.email,
-      this.phoneNumber,
-      this.password,
-      this.role,
-      this.id,
-      this.createdAt,
-      this.updatedAt,
-      this.V});
-  RegistrationSuccessModel copyWith(
-      {String? firstName,
-      String? lastName,
-      String? location,
-      String? email,
-      String? phoneNumber,
-      String? password,
-      String? role,
-      String? id,
-      String? createdAt,
-      String? updatedAt,
-      int? V}) {
-    return RegistrationSuccessModel(
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
-        location: location ?? this.location,
-        email: email ?? this.email,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        password: password ?? this.password,
-        role: role ?? this.role,
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        V: V ?? this.V);
+  RegistrationSuccessModel({
+      Message? message,}){
+    _message = message;
+}
+
+  RegistrationSuccessModel.fromJson(dynamic json) {
+    _message = json['message'] != null ? Message.fromJson(json['message']) : null;
+  }
+  Message? _message;
+RegistrationSuccessModel copyWith({  Message? message,
+}) => RegistrationSuccessModel(  message: message ?? _message,
+);
+  Message? get message => _message;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (_message != null) {
+      map['message'] = _message?.toJson();
+    }
+    return map;
   }
 
-  Map<String, Object?> toJson() {
-    return {
-      'firstName': firstName,
-      'lastName': lastName,
-      'location': location,
-      'email': email,
-      'phoneNumber': phoneNumber,
-      'password': password,
-      'role': role,
-      'id': id,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
-      'V': V
-    };
+}
+
+class Message {
+  Message({
+      String? firstName, 
+      String? lastName, 
+      String? location, 
+      String? email, 
+      String? phoneNumber, 
+      String? password, 
+      String? passwordConfirm, 
+      String? role, 
+      List<dynamic>? histories, 
+      String? id, 
+      String? createdAt, 
+      String? updatedAt, 
+      num? v,}){
+    _firstName = firstName;
+    _lastName = lastName;
+    _location = location;
+    _email = email;
+    _phoneNumber = phoneNumber;
+    _password = password;
+    _passwordConfirm = passwordConfirm;
+    _role = role;
+    _histories = histories;
+    _id = id;
+    _createdAt = createdAt;
+    _updatedAt = updatedAt;
+    _v = v;
+}
+
+  Message.fromJson(dynamic json) {
+    _firstName = json['firstName'];
+    _lastName = json['lastName'];
+    _location = json['location'];
+    _email = json['email'];
+    _phoneNumber = json['phoneNumber'];
+    _password = json['password'];
+    _passwordConfirm = json['passwordConfirm'];
+    _role = json['role'];
+    if (json['histories'] != null) {
+      _histories = [];
+      json['histories'].forEach((v) {
+        // _histories?.add(Dynamic.fromJson(v));
+      });
+    }
+    _id = json['_id'];
+    _createdAt = json['createdAt'];
+    _updatedAt = json['updatedAt'];
+    _v = json['__v'];
+  }
+  String? _firstName;
+  String? _lastName;
+  String? _location;
+  String? _email;
+  String? _phoneNumber;
+  String? _password;
+  String? _passwordConfirm;
+  String? _role;
+  List<dynamic>? _histories;
+  String? _id;
+  String? _createdAt;
+  String? _updatedAt;
+  num? _v;
+Message copyWith({  String? firstName,
+  String? lastName,
+  String? location,
+  String? email,
+  String? phoneNumber,
+  String? password,
+  String? passwordConfirm,
+  String? role,
+  List<dynamic>? histories,
+  String? id,
+  String? createdAt,
+  String? updatedAt,
+  num? v,
+}) => Message(  firstName: firstName ?? _firstName,
+  lastName: lastName ?? _lastName,
+  location: location ?? _location,
+  email: email ?? _email,
+  phoneNumber: phoneNumber ?? _phoneNumber,
+  password: password ?? _password,
+  passwordConfirm: passwordConfirm ?? _passwordConfirm,
+  role: role ?? _role,
+  histories: histories ?? _histories,
+  id: id ?? _id,
+  createdAt: createdAt ?? _createdAt,
+  updatedAt: updatedAt ?? _updatedAt,
+  v: v ?? _v,
+);
+  String? get firstName => _firstName;
+  String? get lastName => _lastName;
+  String? get location => _location;
+  String? get email => _email;
+  String? get phoneNumber => _phoneNumber;
+  String? get password => _password;
+  String? get passwordConfirm => _passwordConfirm;
+  String? get role => _role;
+  List<dynamic>? get histories => _histories;
+  String? get id => _id;
+  String? get createdAt => _createdAt;
+  String? get updatedAt => _updatedAt;
+  num? get v => _v;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['firstName'] = _firstName;
+    map['lastName'] = _lastName;
+    map['location'] = _location;
+    map['email'] = _email;
+    map['phoneNumber'] = _phoneNumber;
+    map['password'] = _password;
+    map['passwordConfirm'] = _passwordConfirm;
+    map['role'] = _role;
+    if (_histories != null) {
+      map['histories'] = _histories?.map((v) => v.toJson()).toList();
+    }
+    map['_id'] = _id;
+    map['createdAt'] = _createdAt;
+    map['updatedAt'] = _updatedAt;
+    map['__v'] = _v;
+    return map;
   }
 
-  static RegistrationSuccessModel fromJson(Map<String, Object?> json) {
-    return RegistrationSuccessModel(
-        firstName:
-            json['firstName'] == null ? null : json['firstName'] as String,
-        lastName: json['lastName'] == null ? null : json['lastName'] as String,
-        location: json['location'] == null ? null : json['location'] as String,
-        email: json['email'] == null ? null : json['email'] as String,
-        phoneNumber:
-            json['phoneNumber'] == null ? null : json['phoneNumber'] as String,
-        password: json['password'] == null ? null : json['password'] as String,
-        role: json['role'] == null ? null : json['role'] as String,
-        id: json['id'] == null ? null : json['id'] as String,
-        createdAt:
-            json['createdAt'] == null ? null : json['createdAt'] as String,
-        updatedAt:
-            json['updatedAt'] == null ? null : json['updatedAt'] as String,
-        V: json['V'] == null ? null : json['V'] as int);
-  }
-
-  @override
-  String toString() {
-    return '''RegistrationSuccessModel(
-                firstName:$firstName,
-lastName:$lastName,
-location:$location,
-email:$email,
-phoneNumber:$phoneNumber,
-password:$password,
-role:$role,
-id:$id,
-createdAt:$createdAt,
-updatedAt:$updatedAt,
-V:$V
-    ) ''';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is RegistrationSuccessModel &&
-        other.runtimeType == runtimeType &&
-        other.firstName == firstName &&
-        other.lastName == lastName &&
-        other.location == location &&
-        other.email == email &&
-        other.phoneNumber == phoneNumber &&
-        other.password == password &&
-        other.role == role &&
-        other.id == id &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt &&
-        other.V == V;
-  }
-
-  @override
-  int get hashCode {
-    return Object.hash(runtimeType, firstName, lastName, location, email,
-        phoneNumber, password, role, id, createdAt, updatedAt, V);
-  }
 }
