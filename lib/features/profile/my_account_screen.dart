@@ -1,5 +1,6 @@
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/repository/backend/alerts_backend.dart';
+import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -128,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           colors: [AppColors.yellow, AppColors.yellow])),
                   child: InkWell(
                     onTap: (){
-                      Alerts().getAlertsId();
+                      AuthBackend().resetPassword(context,);
                     },
                     child: const Text(
                       "Collector",
@@ -140,6 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               )),
+
           // Positioned(
           //     top: deviceH/9.4,
           //     right: deviceW/2.9,
@@ -153,6 +155,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //       ),
           //     )
           // ),
+          // InkWell(
+          //     onTap: (){
+          //       AuthBackend().deleteAcc();
+          //     },
+          //     child: Text('Test delete',))
         ],
       ),
     );

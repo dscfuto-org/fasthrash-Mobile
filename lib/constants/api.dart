@@ -1,4 +1,6 @@
 //This is where we declare all our api path in form of a string variable
+import 'package:fastrash/repository/data/response_data.dart';
+
 const String http = 'https://';
 
 const String baseURL = "fastrash-1337.ew.r.appspot.com";
@@ -7,12 +9,14 @@ const String baseURL = "fastrash-1337.ew.r.appspot.com";
 /// User Auth
 const String userRegistrationPath = "/api/auth/register";
 const String userLoginPath = "/api/auth/login";
-const String userDeletePath ="/api/auth/delete/{id}";
+String userDeletePath ="/api/auth/org/delete/${ResponseData.loginResponseModel!.id}";
+String resetPasswordPath = "/api/auth/resetpassword/";
+
 
 /// Organization Auth
 const String organizationRegistrationPath = "/api/auth/org/register";
 const String organizationLoginPath = "/api/auth/org/register";
-const String organizationDeletePath ="/api/auth/org/delete/{id}";
+ String organizationDeletePath ="/api/auth/org/delete/${ResponseData.loginResponseModel!.id}";
 
 /// Alerts
 const String createAlertsPath ="/api/alerts/create";
