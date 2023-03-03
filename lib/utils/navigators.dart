@@ -7,6 +7,7 @@ navigateReplace(BuildContext context, Widget widget) {
       context, CupertinoPageRoute(builder: (context) => widget));
 }
 
+
 ///This method ensures navigation and does not kill the previous activity
 navigatePush(BuildContext context, Widget widget) {
 

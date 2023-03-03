@@ -1,3 +1,4 @@
+import 'package:fastrash/auth/forgot_password.dart';
 import 'package:fastrash/auth/regstration_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/constants/strings.dart';
@@ -27,6 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
   var isLoading = false;
   LoginDto loginDto = LoginDto();
+
+  var _textName;
+  void updateFormText(value){
+    setState(() {
+      _textName = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
               Form(key: _formKey, child: _emailPasswordWidget()),
               TextButton(
                 onPressed: () {
-                  Alerts().getAlerts();
+                  navigatePush(context, ForgotPasswordScreen());
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children:  [
                     // Switch(value: false, onChanged: (value) {}),
                     // const Text(
                     //   'Remind me',
@@ -97,6 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Forgot Password?',
                     ),
+
+                    // Text(
+                    //   'Forgot Password? is $_textName',
+                    // ),
                   ],
                 ),
               ),
@@ -179,6 +191,10 @@ class _LoginScreenState extends State<LoginScreen> {
               return fieldRequired;
             }
             return null;
+          },
+          onChanged: (value){
+           updateFormText(value);
+
           },
           style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w400, fontSize: 14),

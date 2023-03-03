@@ -28,8 +28,10 @@ class DeviceLocation {
     }
     location.onLocationChanged.listen((LocationData currentLocation) async {
       try {
-        debugPrint(currentLocation.latitude!.toString());
-        debugPrint(currentLocation.longitude!.toString());
+        // debugPrint(currentLocation.latitude!.toString());
+        // debugPrint(currentLocation.longitude!.toString());
+        // logger.wtf(currentLocation.latitude!.toString());
+        // logger.wtf(currentLocation.longitude!.toString());
 
         lat = currentLocation.latitude!;
         lng = currentLocation.longitude!;

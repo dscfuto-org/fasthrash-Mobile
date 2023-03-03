@@ -11,6 +11,7 @@ import 'package:fastrash/repository/dto/organization_regisration_dto.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/repository/model/login_response_model.dart';
 import 'package:fastrash/repository/model/registration_sucess_model.dart';
+import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,8 +22,8 @@ class AuthBackend {
   late SharedPreferences sharedPreferences;
 
 //Single User SignUp
-  Future<void> signUpUser(BuildContext context,
-      RegistrationDto registrationDto) async {
+  Future<void> signUpUser(
+      BuildContext context, RegistrationDto registrationDto) async {
     const url = http + baseURL + userRegistrationPath;
     logger.i(url);
     logger.i(json.encode({
@@ -39,20 +40,20 @@ class AuthBackend {
     try {
       final httpConnectionApi = await client
           .post(
-        Uri.parse(url),
-        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-        body: json.encode({
-          "firstName": registrationDto.firstName.toString().trim(),
-          "lastName": registrationDto.lastName.toString().trim(),
-          "location": registrationDto.location.toString().trim(),
-          "email": registrationDto.email.toString().trim(),
-          "phoneNumber": registrationDto.phoneNumber.toString().trim(),
-          "password": registrationDto.password.toString().trim(),
-          "passwordConfirm":
-          registrationDto.passwordConfirm.toString().trim(),
-          "role": registrationDto.role.toString().trim()
-        }),
-      )
+            Uri.parse(url),
+            headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+            body: json.encode({
+              "firstName": registrationDto.firstName.toString().trim(),
+              "lastName": registrationDto.lastName.toString().trim(),
+              "location": registrationDto.location.toString().trim(),
+              "email": registrationDto.email.toString().trim(),
+              "phoneNumber": registrationDto.phoneNumber.toString().trim(),
+              "password": registrationDto.password.toString().trim(),
+              "passwordConfirm":
+                  registrationDto.passwordConfirm.toString().trim(),
+              "role": registrationDto.role.toString().trim()
+            }),
+          )
           .timeout(const Duration(seconds: 60));
 
       logger.w(httpConnectionApi.body);
@@ -70,8 +71,13 @@ class AuthBackend {
         getUserEmail();
         getUserPassword();
         getUserPhoneNo();
-        navigatePush(context, const LoginScreen());
-      } else {
+        showRegisterAlert(context, 'Registration Successfully',
+            message: 'Proceed to Login', isDismissible: true);
+        //navigatePush(context, const LoginScreen());
+      } else if (httpConnectionApi.statusCode == 201) {
+        showFailureAlert(context, 'Email is already taken!',
+            message: 'Kindly provide another email', isDismissible: true);
+
         ///var resBody = jsonDecode(httpConnectionApi.body.toString());
         // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
 
@@ -93,11 +99,11 @@ class AuthBackend {
     logger.i(url);
     logger.i(json.encode({
       "businessName":
-      organizationRegistrationDto.businessName.toString().trim(),
+          organizationRegistrationDto.businessName.toString().trim(),
       "location": organizationRegistrationDto.location.toString().trim(),
       "size": organizationRegistrationDto.size.toString().trim(),
       "yearsOfOperation":
-      organizationRegistrationDto.yearsOfOperation.toString().trim(),
+          organizationRegistrationDto.yearsOfOperation.toString().trim(),
       "email": organizationRegistrationDto.email.toString().trim(),
       "password": organizationRegistrationDto.password.toString().trim(),
     }));
@@ -105,22 +111,22 @@ class AuthBackend {
     try {
       final httpConnectionApi = await client
           .post(
-        Uri.parse(url),
-        headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-        body: json.encode({
-          "businessName":
-          organizationRegistrationDto.businessName.toString().trim(),
-          "location":
-          organizationRegistrationDto.location.toString().trim(),
-          "size": organizationRegistrationDto.size.toString().trim(),
-          "yearsOfOperation": organizationRegistrationDto.yearsOfOperation
-              .toString()
-              .trim(),
-          "email": organizationRegistrationDto.email.toString().trim(),
-          "password":
-          organizationRegistrationDto.password.toString().trim(),
-        }),
-      )
+            Uri.parse(url),
+            headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+            body: json.encode({
+              "businessName":
+                  organizationRegistrationDto.businessName.toString().trim(),
+              "location":
+                  organizationRegistrationDto.location.toString().trim(),
+              "size": organizationRegistrationDto.size.toString().trim(),
+              "yearsOfOperation": organizationRegistrationDto.yearsOfOperation
+                  .toString()
+                  .trim(),
+              "email": organizationRegistrationDto.email.toString().trim(),
+              "password":
+                  organizationRegistrationDto.password.toString().trim(),
+            }),
+          )
           .timeout(const Duration(seconds: 60));
 
       logger.w(httpConnectionApi.body);
@@ -167,15 +173,15 @@ class AuthBackend {
     try {
       final httpConnectionApi = await client
           .post(
-        Uri.parse(url),
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-        },
-        body: json.encode({
-          "email": loginDto.email.toString().trim(),
-          "password": loginDto.password.toString().trim(),
-        }),
-      )
+            Uri.parse(url),
+            headers: {
+              HttpHeaders.contentTypeHeader: 'application/json',
+            },
+            body: json.encode({
+              "email": loginDto.email.toString().trim(),
+              "password": loginDto.password.toString().trim(),
+            }),
+          )
           .timeout(const Duration(seconds: 60));
 
       logger.w(httpConnectionApi.body);
@@ -187,10 +193,10 @@ class AuthBackend {
         ResponseData.loginResponseModel = LoginResponseModel.fromJson(resBody);
         DummyData.emailAddress =
             ResponseData.loginResponseModel!.email.toString();
-        DummyData.password =
-            loginDto.password.toString();
+        DummyData.password = loginDto.password.toString();
 
-        DummyData.accessToken =  ResponseData.loginResponseModel!.token.toString();
+        DummyData.accessToken =
+            ResponseData.loginResponseModel!.token.toString();
 
         saveUserEmail(DummyData.emailAddress.toString().trim());
 
@@ -199,14 +205,19 @@ class AuthBackend {
         saveAppTme();
         getUserEmail();
         getUserPassword();
-        navigatePush(context, const Dashboard());
-      } else {
+        navigateReplace(context, const Dashboard());
+      } else if (httpConnectionApi.statusCode == 401) {
         ///var resBody = jsonDecode(httpConnectionApi.body.toString());
+        showFailureAlert(context, 'Login Unsuccessful',
+            message: 'Email or Password is incorrect', isDismissible: true);
         // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
 
         // showErrorAlert(context,
         //     message: ResponseData.failureResponse!.message.toString());
-      }
+      } else if (httpConnectionApi.statusCode == 404) {
+        showFailureAlert(context, 'Login Failed',
+            message: 'Account details does not exist', isDismissible: true);
+      } else {}
     } on Exception catch (e) {
       logger.wtf('login Not Working');
 
@@ -225,17 +236,18 @@ class AuthBackend {
     }));
 
     try {
-      final httpConnectionApi = await client.post(
-        Uri.parse(url),
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-
-        },
-        body: json.encode({
-          "email": loginDto.email.toString().trim(),
-          "password": loginDto.password.toString().trim(),
-        }),
-      ).timeout(const Duration(seconds: 60));
+      final httpConnectionApi = await client
+          .post(
+            Uri.parse(url),
+            headers: {
+              HttpHeaders.contentTypeHeader: 'application/json',
+            },
+            body: json.encode({
+              "email": loginDto.email.toString().trim(),
+              "password": loginDto.password.toString().trim(),
+            }),
+          )
+          .timeout(const Duration(seconds: 60));
 
       logger.i(httpConnectionApi.body);
       logger.wtf(httpConnectionApi.statusCode);
@@ -249,7 +261,6 @@ class AuthBackend {
             ResponseData.loginResponseModel!.token.toString();
         logger.wtf(DummyData.accessToken);
 
-
         saveUserEmail(loginDto.email);
         getUserEmail();
         saveUserPassword(loginDto.password);
@@ -259,8 +270,6 @@ class AuthBackend {
         saveAppTme();
 
         navigatePush(context, const Dashboard());
-
-
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
@@ -268,8 +277,6 @@ class AuthBackend {
         // showErrorAlert(context,
         //     message: "${ResponseData.failureResponse!.message.toString()}");
         navigateReplace(context, const LoginScreen());
-
-
       }
     } on Exception catch (e) {
       // displayLongToastMessage(somethingWentWrongText,  );
@@ -279,65 +286,52 @@ class AuthBackend {
     }
   }
 
-  Future<void> resetPassword(BuildContext context,
+  Future<void> resetPassword(BuildContext context, email
       // LoginDto loginDto
 
       ) async {
-    final url = http + baseURL + resetPasswordPath + ResponseData.loginResponseModel!.id.toString();
-
+    final url = http + baseURL + resetPasswordPath;
+    // + ResponseData.loginResponseModel!.id.toString();
     logger.i(url);
-    logger.i(json.encode({
-      "email": "vicemmanuel7@gmail.com"
-
-    }));
+    logger.i(json.encode({"email": email.toString().trim()}));
 
     try {
-      final httpConnectionApi = await client.post(
-        Uri.parse(url),
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-
-        },
-        body: json.encode({
-          "email": "vicemmanuel7@gmail.com"
-
-        }),
-      ).timeout(const Duration(seconds: 60));
+      final httpConnectionApi = await client
+          .post(
+            Uri.parse(url),
+            headers: {
+              HttpHeaders.contentTypeHeader: 'application/json',
+            },
+            body: json.encode({"email": email.toString().trim()}),
+          )
+          .timeout(const Duration(seconds: 60));
 
       logger.i(httpConnectionApi.body);
       logger.wtf(httpConnectionApi.statusCode);
 
-      // if (httpConnectionApi.statusCode == 200) {
-      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
-      //   ResponseData.loginResponseModel = LoginResponseModel.fromJson(resBody);
-      //   DummyData.emailAddress =
-      //       ResponseData.loginResponseModel!.email.toString();
-      //   DummyData.accessToken =
-      //       ResponseData.loginResponseModel!.token.toString();
-      //   logger.wtf(DummyData.accessToken);
-      //
-      //
-      //   saveUserEmail(loginDto.email);
-      //   getUserEmail();
-      //   saveUserPassword(loginDto.password);
-      //   getUserPassword();
-      //   saveAccessToken(ResponseData.loginResponseModel!.token);
-      //   getAccessToken();
-      //   saveAppTme();
-      //
-      //   navigatePush(context, const Dashboard());
-      //
-      //
-      // } else {
-      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
-      //   // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-      //
-      //   // showErrorAlert(context,
-      //   //     message: "${ResponseData.failureResponse!.message.toString()}");
-      //   navigateReplace(context, const LoginScreen());
-      //
-      //
-      // }
+      if (httpConnectionApi.statusCode == 200) {
+        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        ResponseData.loginResponseModel = LoginResponseModel.fromJson(resBody);
+
+        showSuccessAlert(context, 'Email Sent Successfully',
+            message:
+                'Reset Link has be sent to $email, kindly check your mail to continue',
+            isDismissible: true);
+
+        // await navigatePush(context, LoginScreen());
+
+      } else {
+        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+
+        // showErrorAlert(context,
+        //     message: "${ResponseData.failureResponse!.message.toString()}");
+        // navigateReplace(context, const LoginScreen());
+        showFailureAlert(context, 'Account email $email does not exist',
+            message:
+                'Kindly ensure to input the correct email address for your account.',
+            isDismissible: true);
+      }
     } on Exception catch (e) {
       // displayLongToastMessage(somethingWentWrongText,  );
 
@@ -355,8 +349,7 @@ class AuthBackend {
   saveUserPassword(localPassword) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("Password", localPassword);
-    logger.i("saved Password ${DummyData.password}" );
-
+    logger.i("saved Password ${DummyData.password}");
   }
 
   getUserEmail() async {

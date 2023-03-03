@@ -233,20 +233,23 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   }
 
 
-  Widget _confrimPasswordField(String title, TextEditingController textEditingController,
+  Widget confirmPasswordField(String title, TextEditingController textEditingController,
       {bool isPassword = false}) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+          obscureText: isPassword ? _obscureText : false,
           enabled: true,
           validator: (value) {
             if (value!.isEmpty) {
               return fieldRequired;
-            }else if(passwordController.text != passwordConfirmController.text){
-              return 'Password Does Not Match';
             }
             return null;
           },
+          // onChanged: (value){
+          //   updateFormText(value);
+          //
+          // },
           style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w400, fontSize: 14),
           controller: textEditingController,
@@ -257,15 +260,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
               // contentPadding:
               //     EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
               focusedBorder: focusedBorder(),
-              enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.green, width: 0.3),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.grey, width: 0.3),
               ),
-              focusedErrorBorder:  const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.green, ),
-              ) ,
               border: const OutlineInputBorder(
                 borderSide: BorderSide(width: 7.0, color: AppColors.green),
               ),
+              hintText: title,
+              hintStyle: kSubtitleStyle.copyWith(
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14),
               suffixIcon: SizedBox(
                 height: 17.5,
                 width: 17.5,
@@ -288,11 +293,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
                       : null,
                 ),
               ),
-              hintText: title,
-              hintStyle: kSubtitleStyle.copyWith(
-                  color: AppColors.dark,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14),
+              // icon: Image.asset("name"),
+              //border: InputBorder.none,
+              //fillColor: Color(0xfff3f3f4),
               errorStyle:
               kTitleStyle.copyWith(fontSize: 12.0, color: AppColors.red),
               filled: false)),
@@ -320,7 +323,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
             // PasswordFormField(
             //     title: ,
             //     textEditingController: ),
-            _confrimPasswordField('Confirm Password', passwordConfirmController, isPassword: true)
+           // _confrimPasswordField('Confirm Password', passwordConfirmController, isPassword: true),
+            confirmPasswordField('Confirm Password', passwordConfirmController, isPassword: true)
 
           ],
         ));

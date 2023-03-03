@@ -1,5 +1,6 @@
 
 
+import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/onboarding/splash_screen.dart';
 
 import 'package:flutter/material.dart';

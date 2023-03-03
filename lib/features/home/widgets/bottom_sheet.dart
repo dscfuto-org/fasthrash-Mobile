@@ -44,7 +44,7 @@ actionsModalBottomSheet(
                       SizedBox(
                         height: 50.h,
                       ),
-                      AppLargeButton(textColor: Colors.white, onTap: (){}, text: "Submit"),
+
                       const SizedBox(
                         height: 15,
                       ),
