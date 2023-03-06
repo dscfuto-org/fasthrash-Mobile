@@ -269,9 +269,9 @@ class AuthBackend {
         getAccessToken();
         saveAppTme();
 
-        navigatePush(context, const Dashboard());
+        navigateReplace(context, const Dashboard());
       } else {
-        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        ///var resBody = jsonDecode(httpConnectionApi.body.toString());
         // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
 
         // showErrorAlert(context,
@@ -321,7 +321,7 @@ class AuthBackend {
         // await navigatePush(context, LoginScreen());
 
       } else {
-        var resBody = jsonDecode(httpConnectionApi.body.toString());
+       // var resBody = jsonDecode(httpConnectionApi.body.toString());
         // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
 
         // showErrorAlert(context,

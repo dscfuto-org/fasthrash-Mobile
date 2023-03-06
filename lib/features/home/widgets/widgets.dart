@@ -173,9 +173,7 @@ class _PickImageState extends State<PickImage> {
     if (!_formKey.currentState!.validate()) {
     } else {
       alertsDto.quantity = int.parse(quantityTextController.text);
-      alertsDto.address = useLocation?"${DeviceLocation.lat} ${DeviceLocation.lng}": locationAddressController.text;
-      alertsDto.locationlatitude = DeviceLocation.lat;
-      alertsDto.locationlongitude = DeviceLocation.lng;
+      alertsDto.location = useLocation?"${DeviceLocation.lat} ${DeviceLocation.lng}": locationAddressController.text;
       alertsDto.status = 'pending';
       image = image;
       // alertsDto.image = _image as String?;
@@ -185,8 +183,7 @@ class _PickImageState extends State<PickImage> {
       });
       logger.wtf('Alerts');
       logger.wtf("Image::::::: $image");
-      logger.wtf( alertsDto.quantity);
-      logger.wtf( alertsDto.address);
+      logger.wtf( alertsDto.location);
       try {
 
         // await Alerts().createAlerts(context, alertsDto, image: );

@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 ///This method ensures navigation and kills the previous activity
-navigateReplace(BuildContext context, Widget widget) {
+ navigateReplace(BuildContext context, Widget widget) {
   Navigator.pushReplacement(
       context, CupertinoPageRoute(builder: (context) => widget));
 }

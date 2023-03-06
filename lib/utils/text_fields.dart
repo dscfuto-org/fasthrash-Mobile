@@ -11,7 +11,7 @@ required TextEditingController textEditingController, bool isDigits = false
     padding: const EdgeInsets.all(10),
     child: TextFormField(
       controller: textEditingController,
-     keyboardType:  isDigits?TextInputType.numberWithOptions(decimal: false):TextInputType.text,
+     keyboardType:  isDigits?const TextInputType.numberWithOptions(decimal: false):TextInputType.text,
       validator: (value) {
         if (value!.isEmpty) {
           return fieldRequired;

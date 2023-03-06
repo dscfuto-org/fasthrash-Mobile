@@ -115,8 +115,8 @@ class UserLocationMapState extends State<UserLocationMap> {
         mapType: MapType.normal,
         myLocationEnabled: true,
         compassEnabled: false,
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: false,
+        zoomControlsEnabled: true,
+        myLocationButtonEnabled: true,
         initialCameraPosition: _kGooglePlex,
         zoomGesturesEnabled: false,
         onMapCreated: (GoogleMapController controller) {

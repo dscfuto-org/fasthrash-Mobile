@@ -1,13 +1,8 @@
 import 'package:fastrash/auth/login_screen.dart';
-import 'package:fastrash/auth/reset_password/reset_password_email_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
-import 'package:fastrash/features/profile/edit_profile_screen.dart';
-import 'package:fastrash/repository/backend/alerts_backend.dart';
-import 'package:fastrash/repository/backend/auth_backend.dart';
+import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
-import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -124,8 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         buildTile(
                             Icons.email,
                             "Location",
-                            ResponseData.loginResponseModel!.location
-                                .toString(),
+                            DummyData.address.toString(),
                             context),
                         buildLogOutTile(Icons.logout, 'Log Out', context)
                       ],
@@ -179,29 +173,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               )),
 
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 35),
-              child: Container(
-                height: 40,
-                width: 40,
-                decoration:
-                    BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                child: IconButton(
-                    color: Colors.yellow,
-                    onPressed: () {
-                      //navigatePush(context, EditProfileScreen());
-                      _actionModal(context);
-                    },
-                    icon: const Icon(
-                      CupertinoIcons.pen,
-                      color: AppColors.green,
-                    )),
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.topRight,
+          //   child: Padding(
+          //     padding:
+          //         const EdgeInsets.symmetric(horizontal: 10.0, vertical: 35),
+          //     child: Container(
+          //       height: 40,
+          //       width: 40,
+          //       decoration:
+          //           BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+          //       child: IconButton(
+          //           color: Colors.yellow,
+          //           onPressed: () {
+          //             //navigatePush(context, EditProfileScreen());
+          //             _actionModal(context);
+          //           },
+          //           icon: const Icon(
+          //             CupertinoIcons.pen,
+          //             color: AppColors.green,
+          //           )),
+          //     ),
+          //   ),
+          // ),
           // Positioned(
           //     top: deviceH/9.4,
           //     right: deviceW/2.9,
@@ -225,57 +219,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _actionModal(context) {
-    showModalBottomSheet(
-        context: context,
-        // backgroundColor: const Color.fromRGBO(54, 183, 255, 0.9),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20), topLeft: Radius.circular(20))),
-        builder: (BuildContext bc) {
-          return Container(
-            height: MediaQuery.of(context).size.height * .24,
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(
-                          CupertinoIcons.clear,
-                          size: 20,
-                          color: AppColors.red,
-                        )),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Icon(CupertinoIcons.creditcard),
-                      // Icon(CupertinoIcons.square_list),
-                      // Icon(CupertinoIcons.archivebox),
-                      optionSelect(context,
-                          title: 'Edit Profile',
-                          iconData: CupertinoIcons.person,
-                          onTap: () {}),
-                      // optionSelect(context, title: 'Security', iconData: CupertinoIcons.lock, onTap: (){}),
-                      optionSelect(context,
-                          title: 'Security',
-                          iconData: CupertinoIcons.lock, onTap: () {
-                        navigatePush(context, ResetPasswordEmailScreen());
-                      }),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  // void _actionModal(context) {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       // backgroundColor: const Color.fromRGBO(54, 183, 255, 0.9),
+  //       shape: const RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.only(
+  //               topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+  //       builder: (BuildContext bc) {
+  //         return SizedBox(
+  //           height: MediaQuery.of(context).size.height * .24,
+  //           child: Padding(
+  //             padding:
+  //                 const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+  //             child: Column(
+  //               children: [
+  //                 Align(
+  //                   alignment: Alignment.topRight,
+  //                   child: IconButton(
+  //                       onPressed: () {
+  //                         Navigator.of(context).pop();
+  //                       },
+  //                       icon: const Icon(
+  //                         CupertinoIcons.clear,
+  //                         size: 20,
+  //                         color: AppColors.red,
+  //                       )),
+  //                 ),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     // Icon(CupertinoIcons.creditcard),
+  //                     // Icon(CupertinoIcons.square_list),
+  //                     // Icon(CupertinoIcons.archivebox),
+  //                     optionSelect(context,
+  //                         title: 'Edit Profile',
+  //                         iconData: CupertinoIcons.person,
+  //                         onTap: () {}),
+  //                     // optionSelect(context, title: 'Security', iconData: CupertinoIcons.lock, onTap: (){}),
+  //                     optionSelect(context,
+  //                         title: 'Security',
+  //                         iconData: CupertinoIcons.lock, onTap: () {
+  //                       navigatePush(context, const ResetPasswordEmailScreen());
+  //                     }),
+  //                   ],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
 
   optionSelect(BuildContext context,
       {required String title,
@@ -366,13 +360,14 @@ Widget buildTile(IconData icon, String title, String subtitle, context) {
                   ),
                 ),
                 Container(
+                  width: MediaQuery.of(context).size.width/1.4,
                   margin: const EdgeInsets.only(left: 15.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        title,
+                        title, maxLines: 4,
                         style: TextStyle(
                             // textStyle: Theme.of(context).textTheme.display1,
                             fontSize: deviceW / 25,
@@ -421,7 +416,7 @@ Widget buildLogOutTile(IconData icon, String title, context) {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
+                          SizedBox(
                               height: 100,
                               width: 100,
                               child: Lottie.asset("assets/animations/logout_anim.json", )),
@@ -443,13 +438,13 @@ Widget buildLogOutTile(IconData icon, String title, context) {
                           await prefs.remove('Email');
                           await prefs.remove('Password');
                           await prefs.remove('firstTimeOnApp');
-                          await Future.delayed(Duration(seconds: 2));
+                          await Future.delayed(const Duration(seconds: 2));
 
 
                           Navigator.of(context).pushAndRemoveUntil(
                             // the new route
                             MaterialPageRoute(
-                              builder: (BuildContext context) => LoginScreen(),
+                              builder: (BuildContext context) => const LoginScreen(),
                             ),
                             (Route route) => false,
                           );
