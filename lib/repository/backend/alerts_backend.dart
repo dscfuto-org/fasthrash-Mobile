@@ -20,10 +20,13 @@ class Alerts {
     logger.i(url);
     logger.i(json.encode({
       "description":
-          "I have some waste at ${alertsDto.location} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
+          "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
       "status": alertsDto.status.toString(),
       "image": image,
-      "location": alertsDto.location.toString(),
+      "address": alertsDto.address.toString(),
+      "location.longitude": alertsDto.locationlongitude.toString(),
+      "location.latitude": alertsDto.locationlatitude.toString(),
+      "role": ResponseData.loginResponseModel!.role.toString(),
       "quantity": alertsDto.quantity.toString()
     }));
 
@@ -45,10 +48,13 @@ class Alerts {
       request.files.add(imageMultipartFile);
       logger.wtf(imageMultipartFile);
       request.fields['description'] =
-          "I have some waste at ${alertsDto.location} that needs to be collected, it weighs about ${alertsDto.quantity} kg...";
+          "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...";
       request.fields['status'] = alertsDto.status.toString();
-      request.fields['location'] = alertsDto.location.toString();
+      request.fields['address'] = alertsDto.address.toString();
       request.fields['quantity'] = alertsDto.quantity.toString();
+      request.fields['location.longitude'] = alertsDto.locationlongitude.toString();
+      request.fields['location.latitude'] = alertsDto.locationlatitude.toString();
+      request.fields['role'] = ResponseData.loginResponseModel!.role.toString();
       var response = await request.send();
       //for getting and decoding the response into json format
       var responseD = await client.Response.fromStream(response);
