@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:fastrash/constants/api.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/alerts_dto.dart';
-import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as client;
@@ -16,58 +15,53 @@ class Alerts {
     File image,
   ) async {
     const url = http + baseURL + createAlertsPath;
-    var httpConnectionApi;
     logger.i(url);
     logger.i(json.encode({
       "description":
           "I have some waste at ${alertsDto.location} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
       "status": alertsDto.status.toString(),
-      "image": image,
+      "image": image.path.toString(),
       "location": alertsDto.location.toString(),
       "quantity": alertsDto.quantity.toString()
     }));
 
     try {
-      final request = client.MultipartRequest(
-        "POST",
-        Uri.parse(url),
-      );
+      final request = client.MultipartRequest("POST", Uri.parse(url),);
       Map<String, String> headers = {
-        "Content-Type": "multipart/form-data",
-        'accept': 'application/json',
+        "Content-Type": "application/json",
+        //'accept': 'application/json',
       };
 
       request.headers.addAll(headers);
       var imageMultipartFile = await client.MultipartFile.fromPath(
           'image', image.path,
           filename: image.path.split("/").last);
-
-      request.files.add(imageMultipartFile);
-      logger.wtf(imageMultipartFile);
-      request.fields['description'] =
-          "I have some waste at ${alertsDto.location} that needs to be collected, it weighs about ${alertsDto.quantity} kg...";
+      request.fields['description'] = "I have some waste at ${alertsDto.location} that needs to be collected, it weighs about ${alertsDto.quantity} kg...";
       request.fields['status'] = alertsDto.status.toString();
       request.fields['location'] = alertsDto.location.toString();
       request.fields['quantity'] = alertsDto.quantity.toString();
-      var response = await request.send();
+      logger.wtf(request.fields);
+      request.files.add(imageMultipartFile);
+      logger.wtf(imageMultipartFile);
+      var response =await request.send();
+
       //for getting and decoding the response into json format
       var responseD = await client.Response.fromStream(response);
-      final responseData = json.decode(responseD.body);
-      httpConnectionApi = responseD.statusCode;
-      logger.wtf(httpConnectionApi);
+      // final responseData = json.decode(responseD.body);
+      logger.wtf(responseD.statusCode);
       logger.wtf(responseD.body);
-      if (httpConnectionApi == 200 || httpConnectionApi == 201) {
-        showFailureAlert(context, 'Success',
-            message: 'Kindly provide another email', isDismissible: true);
-      } else {
-        showFailureAlert(context, 'Alert creation failed',
-            message: 'Kindly select an Image to upload', isDismissible: true);
-        var resBody = jsonDecode(httpConnectionApi.body.toString());
-        // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-
-        // showErrorAlert(context,
-        //     message: ResponseData.failureResponse!.message.toString());
-      }
+      // if (httpConnectionApi == 200 || httpConnectionApi == 201) {
+      //   showFailureAlert(context, 'Success',
+      //       message: 'Kindly provide another email', isDismissible: true);
+      // } else {
+      //   showFailureAlert(context, 'Alert creation failed',
+      //       message: 'Kindly select an Image to upload', isDismissible: true);
+      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
+      //   // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+      //
+      //   // showErrorAlert(context,
+      //   //     message: ResponseData.failureResponse!.message.toString());
+      // }
     } on Exception catch (e) {
       // showErrorAlert(context, message: somethingWentWrongText);
       logger.wtf('Error');

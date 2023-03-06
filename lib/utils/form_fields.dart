@@ -271,24 +271,24 @@ class PasswordFormField extends StatefulWidget {
     this.weakGradient = const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: const [
-          const Color(0xffff3346),
-          const Color(0xFFFFCDD2),
+        colors: [
+          Color(0xffff3346),
+          Color(0xFFFFCDD2),
         ]),
     this.fairGradient = const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: const [
-          const Color(0xFFFFCDD2),
-          const Color(0xfffff633),
+        colors: [
+          Color(0xFFFFCDD2),
+          Color(0xfffff633),
         ]),
     this.strongGradient = const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: const [
-          const Color(0xFFFFCDD2),
-          const Color(0xfffff633),
-          const Color(0xff39ff33),
+        colors: [
+          Color(0xFFFFCDD2),
+          Color(0xfffff633),
+          Color(0xff39ff33),
         ]),
     this.unselectedColor = const Color(0xFFD6D6D6),
   });
@@ -375,7 +375,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                             color: isValidState == false
                                 ? AppColors.red
                                 : AppColors.green)),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.green, width: 0.3),
                     ),
                     border: const OutlineInputBorder(
@@ -409,12 +409,12 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                         },
                         child: isPassword
                             ? obscureText
-                                ? Icon(
+                                ? const Icon(
                                     Icons.visibility,
                                     color: AppColors.dark,
                                     size: 17.5,
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.visibility_off,
                                     color: AppColors.dark,
                                     size: 17.5,
@@ -429,7 +429,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                         fontSize: 10.0, color: AppColors.red),
                     filled: false)),
           ),
-          SizedBox(
+          const SizedBox(
             /// height: widget.spacebetween,
             height: 10,
           ),
@@ -437,7 +437,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
             width: deviceW,
             child: Visibility(
               visible:
-                  widget.textEditingController.text.length != 0 ? true : false,
+                  widget.textEditingController.text.isNotEmpty ? true : false,
               child: StepProgressIndicator(
                 totalSteps: 9,
                 currentStep: check == "weak"

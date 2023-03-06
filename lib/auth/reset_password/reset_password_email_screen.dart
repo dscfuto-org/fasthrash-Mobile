@@ -2,7 +2,6 @@ import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/constants/strings.dart';
 import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
-import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:fastrash/utils/text_fields.dart';
@@ -38,31 +37,27 @@ class _ResetPasswordEmailScreenState extends State<ResetPasswordEmailScreen> {
               // ),
               Padding(
                 padding: const EdgeInsets.only(top: 100.0),
-                child: Container(
-                  child: Center(
-                      child: Image.asset(
-                    'assets/images/forgot.png',
-                    width: double.infinity,
-                    height: 250,
-                  )),
-                ),
+                child: Center(
+                    child: Image.asset(
+                  'assets/images/forgot.png',
+                  width: double.infinity,
+                  height: 250,
+                )),
               ),
 
-              Container(
-                child: Center(
-                    child: Column(children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: Text(
-                      'Reset Password',
-                      style: kTitleStyle.copyWith(fontSize: 23),
-                    ),
-                  )
-                ])),
-              ),
+              Center(
+                  child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Text(
+                    'Reset Password',
+                    style: kTitleStyle.copyWith(fontSize: 23),
+                  ),
+                )
+              ])),
               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                       left: 20.0, right: 20.0, top: 10.0, bottom: 25.0),
                   child: Text(
                     'Easily reset your account password. Make sure to check your mail',
@@ -71,13 +66,11 @@ class _ResetPasswordEmailScreenState extends State<ResetPasswordEmailScreen> {
                   ),
                 ),
               ),
-              Container(
-                child: Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Form(
-                        key: _formKey,
-                        child: _entryField('Email', emailController))),
-              ),
+              Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Form(
+                      key: _formKey,
+                      child: _entryField('Email', emailController))),
               isLoading
                   ? const Center(child: loaderOne)
                   :submitButton()
@@ -86,8 +79,7 @@ class _ResetPasswordEmailScreenState extends State<ResetPasswordEmailScreen> {
         ));
   }
 
-  Widget _entryField(String title, TextEditingController textEditingController,
-      {bool isPassword = false}) {
+  Widget _entryField(String title, TextEditingController textEditingController) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
@@ -104,7 +96,7 @@ class _ResetPasswordEmailScreenState extends State<ResetPasswordEmailScreen> {
           cursorColor: AppColors.green,
           decoration: InputDecoration(
               isDense: true,
-              contentPadding: EdgeInsets.all(20),
+              contentPadding: const EdgeInsets.all(20),
               // contentPadding:
               //     EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
               focusedBorder: focusedBorder(),
@@ -132,7 +124,7 @@ class _ResetPasswordEmailScreenState extends State<ResetPasswordEmailScreen> {
 
   submitButton() {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         height: 60,
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ElevatedButton(

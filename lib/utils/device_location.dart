@@ -1,5 +1,6 @@
+import 'package:fastrash/repository/backend/location_backend.dart';
 import 'package:fastrash/utils/custom_print.dart';
-import 'package:flutter/material.dart';
+import 'package:geocoder_buddy/geocoder_buddy.dart';
 import 'package:location/location.dart';
 
 class DeviceLocation {
@@ -28,16 +29,24 @@ class DeviceLocation {
     }
     location.onLocationChanged.listen((LocationData currentLocation) async {
       try {
-        // debugPrint(currentLocation.latitude!.toString());
-        // debugPrint(currentLocation.longitude!.toString());
-        // logger.wtf(currentLocation.latitude!.toString());
-        // logger.wtf(currentLocation.longitude!.toString());
+
+        GBLatLng pos = GBLatLng(
+            lat:  double.parse(currentLocation.latitude.toString()),
+            lng:  double.parse(currentLocation.longitude.toString()));
 
         lat = currentLocation.latitude!;
         lng = currentLocation.longitude!;
+
+        // print(currentLocation.latitude);
+        // print(currentLocation.longitude);
+
+        await LocationBackend().getCurrentLocationDetails(pos);
+
       } on Exception catch (e) {
-        logger.v('Error coming from $e');
+        logger.e(e);
       }
+      //print(DummyData.address.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
     });
   }
 }

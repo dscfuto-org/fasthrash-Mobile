@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/repository/backend/alerts_backend.dart';
+import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/dto/alerts_dto.dart';
 import 'package:fastrash/utils/buttons.dart';
 import 'package:fastrash/utils/custom_print.dart';
@@ -23,12 +24,12 @@ class PickImage extends StatefulWidget {
 class _PickImageState extends State<PickImage> {
  File? image;
   final picker = ImagePicker();
-  bool useLocation = false;
+ /// bool useLocation = false;
   final GlobalKey<FormState> _formKey = GlobalKey();
   // TextEditingController quantityController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController quantityTextController = TextEditingController();
-  TextEditingController locationAddressController = TextEditingController();
+  TextEditingController quantityTextController = TextEditingController(text: 0.toString());
+  TextEditingController locationAddressController = TextEditingController(text:  DummyData.address);
   TextEditingController titleController = TextEditingController();
   AlertsDto alertsDto = AlertsDto();
   var isLoading = false;
@@ -105,30 +106,30 @@ class _PickImageState extends State<PickImage> {
         // useLocation ? Container() : customButton("Enter Address", textEditingController: locationAddressController),
         form(),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
-        Container(
-          color: Colors.white,
-          child: SwitchListTile(
-            title: Text(
-              'Use Current Address',
-              style: TextStyle(fontSize: 14.sp),
-            ),
-            value: useLocation,
-            activeColor: AppColors.yellow,
-            inactiveTrackColor: Colors.grey,
-            onChanged: (bool value) {
-              setState(() {
-                useLocation = value;
-              });
-            },
-            secondary: const Icon(
-              Icons.location_on,
-              color: AppColors.yellow,
-            ),
-            controlAffinity: ListTileControlAffinity.trailing,
-          ),
-        ),
+        // Container(
+        //   color: Colors.white,
+        //   child: SwitchListTile(
+        //     title: Text(
+        //       'Use Current Address',
+        //       style: TextStyle(fontSize: 14.sp),
+        //     ),
+        //     value: useLocation,
+        //     activeColor: AppColors.yellow,
+        //     inactiveTrackColor: Colors.grey,
+        //     onChanged: (bool value) {
+        //       setState(() {
+        //         useLocation = value;
+        //       });
+        //     },
+        //     secondary: const Icon(
+        //       Icons.location_on,
+        //       color: AppColors.yellow,
+        //     ),
+        //     controlAffinity: ListTileControlAffinity.trailing,
+        //   ),
+        // ),
         const SizedBox(
           height: 3,
         ),
@@ -143,13 +144,8 @@ class _PickImageState extends State<PickImage> {
       child: Column(
         children: [
 
-          customButton("Quantity in KG",
-              textEditingController: quantityTextController, isDigits: true),
-
-          useLocation
-              ? Container()
-              : customButton("Enter Location Address",
-                  textEditingController: locationAddressController),
+          customButton("Quantity in KG", textEditingController: quantityTextController, isDigits: true, ),
+          customButton("Enter Location Address", textEditingController: locationAddressController),
 
 
         ],
@@ -158,24 +154,38 @@ class _PickImageState extends State<PickImage> {
   }
 
   submitButton() {
-    return AppLargeButton(
-        textColor: Colors.white,
-        onTap: () {
-          _submitRequest();
-        },
-        text: "Submit");
+    return Padding(
+      padding:  EdgeInsets.symmetric(horizontal: 10.w),
+      child: AppLargeButton(
+          textColor: Colors.white,
+          onTap: () {
+            if (image != null){
+              image = image;
+              _submitRequest();
+            }else {
+              /// todo: add an snackbar to tell the user to upload image
+            }
+
+          },
+          text: "Submit"),
+    );
   }
 
   //Control Statement
+ /*   */
   Future<void> _submitRequest() async {
     logger.wtf('Alerts');
     FocusScope.of(context).requestFocus(FocusNode());
     if (!_formKey.currentState!.validate()) {
     } else {
       alertsDto.quantity = int.parse(quantityTextController.text);
-      alertsDto.location = useLocation?"${DeviceLocation.lat} ${DeviceLocation.lng}": locationAddressController.text;
+      /// todo: split to lat and long
+      /// todo: add address to DTO; alertsDto.address = locationAddressController.text;
+      /// alertsDto.location = "${DeviceLocation.lat} ${DeviceLocation.lng}"
+      ///locationAddressController.text;
       alertsDto.status = 'pending';
-      image = image;
+      /// add an
+
       // alertsDto.image = _image as String?;
 
       setState(() {
