@@ -1,4 +1,5 @@
 import 'package:fastrash/features/education/model/education_model.dart';
+import 'package:fastrash/utils/formate_long_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,6 +12,7 @@ class EducationCardDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String decription = FormateLongText.formateLongText(longText: educationModel.description );
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -21,7 +23,7 @@ class EducationCardDetails extends StatelessWidget {
         body: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-                    Image.asset(
+            Image.asset(
               educationModel.imageUrl,
               fit: BoxFit.cover,
               height: 250.h,
@@ -43,7 +45,7 @@ class EducationCardDetails extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        educationModel.description,
+                       decription,
                         style: const TextStyle(
                           fontSize: 16.0,
                           height: 1.5,

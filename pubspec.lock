@@ -131,7 +131,8 @@ packages:
     dependency: "direct main"
     description:
       name: dropdownfield
-      url: "https://pub.dartlang.org"
+      sha256: "4eadceb464737ba9a3a18573c0fcdb13191ba701f30a94db28949e4722207f55"
+      url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
   fake_async:
@@ -192,7 +193,8 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_spinkit
-      url: "https://pub.dartlang.org"
+      sha256: "77a2117c0517ff909221f3160b8eb20052ab5216107581168af574ac1f05dff8"
+      url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
   flutter_test:
@@ -566,12 +568,13 @@ packages:
       name: stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.0"
+    version: "1.11.0"
   step_progress_indicator:
     dependency: "direct main"
     description:
       name: step_progress_indicator
-      url: "https://pub.dartlang.org"
+      sha256: b51bb1fcfc78454359f0658c5a2c21548c3825ebf76e826308e9ca10f383bbb8
+      url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
   stream_channel:
