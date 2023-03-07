@@ -1,9 +1,10 @@
-
 import 'package:fastrash/constants/app_colors.dart';
+import 'package:fastrash/repository/backend/alerts_backend.dart';
+import 'package:fastrash/repository/backend/auth_backend.dart';
+import 'package:fastrash/repository/data/response_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,7 +19,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final deviceH = MediaQuery.of(context).size.height;
     final deviceW = MediaQuery.of(context).size.width;
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-
       statusBarColor: AppColors.green,
       statusBarIconBrightness: Brightness.light,
     ));
@@ -29,28 +29,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: <Widget>[
           Container(),
           Container(
-            height: deviceH/3.5,
-            decoration: const BoxDecoration(
-                color: AppColors.green
-            ),
+            height: deviceH / 3.5,
+            decoration: const BoxDecoration(color: AppColors.green),
             child: Center(
-              child:  Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     height: 90,
                     alignment: Alignment.center,
                     child: CircleAvatar(
-                      radius: deviceH/15,
-                      child: Icon(Icons.person, size: 50.r,),
+                      radius: deviceH / 15,
+                      child: Icon(
+                        Icons.person,
+                        size: 50.r,
+                      ),
                       // backgroundImage: AssetImage(
                       //   assetUserIcon,
                       // ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
-                  const Text("Marshall Mathers", style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: Colors.white),),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    ResponseData.loginResponseModel!.firstName.toString()+" "+ResponseData.loginResponseModel!.lastName.toString(),
+                    style: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
 
                   // SmoothStarRating(
                   //   rating: 3,
@@ -62,38 +73,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   //   ///isReadOnly: true,
                   // ),
                   // Text("Neon Taxi", style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.white),)
-
                 ],
               ),
             ),
           ),
 
           Positioned(
-              top: deviceH/3.2,
+              top: deviceH / 3.2,
               child: SizedBox(
-                  width: deviceW, height: deviceH/1.65,
+                  width: deviceW,
+                  height: deviceH / 1.65,
                   child: Column(
                     children: [
-                      SizedBox(height: 30.h,),
-                      buildTile(Icons.person, "Name", "Marshall Mathers", context),
-                      buildTile(Icons.phone, "Phone Number", "09039075524", context),
-                      buildTile(Icons.email, "Email", "marshall@fastrash.com", context),
-                      buildTile(Icons.email, "Location", "Ihiagwa, Imo", context),
-
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      buildTile(
+                          Icons.person, "Name",  ResponseData.loginResponseModel!.firstName.toString()+" "+ResponseData.loginResponseModel!.lastName.toString(), context),
+                      buildTile(
+                          Icons.phone, "Phone Number", ResponseData.loginResponseModel!.phoneNumber.toString(), context),
+                      buildTile(Icons.email, "Email", ResponseData.loginResponseModel!.email.toString(),
+                          context),
+                      buildTile(
+                          Icons.email, "Location",   ResponseData.loginResponseModel!.location.toString(), context),
                     ],
-                  )
-              )),
-          Positioned( left: 0 , top: deviceH/3.2, child: Padding(
-            padding: const EdgeInsets.only(left: 15.0, bottom: 10),
-            child: Text("Account Info",style: TextStyle(fontSize: deviceW/25, fontWeight: FontWeight.bold,
-                color: AppColors.green),),
-          ),),
+                  ))),
           Positioned(
-              top: deviceH/4,
-              left: deviceW/4,
+            left: 0,
+            top: deviceH / 3.2,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0, bottom: 10),
+              child: Text(
+                "Account Info",
+                style: TextStyle(
+                    fontSize: deviceW / 25,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.green),
+              ),
+            ),
+          ),
+          Positioned(
+              top: deviceH / 4,
+              left: deviceW / 4,
               child: SizedBox(
-                width: deviceW/2,
-                child:  Container(
+                width: deviceW / 2,
+                child: Container(
                   width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   alignment: Alignment.center,
@@ -103,13 +127,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
                           colors: [AppColors.yellow, AppColors.yellow])),
-                  child: const Text(
-                    "Collector",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                  child: InkWell(
+                    onTap: (){
+                      AuthBackend().resetPassword(context,);
+                    },
+                    child: const Text(
+                      "Collector",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                   ),
                 ),
-              )
-          ),
+              )),
+
           // Positioned(
           //     top: deviceH/9.4,
           //     right: deviceW/2.9,
@@ -123,20 +155,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //       ),
           //     )
           // ),
-
+          // InkWell(
+          //     onTap: (){
+          //       AuthBackend().deleteAcc();
+          //     },
+          //     child: Text('Test delete',))
         ],
       ),
     );
   }
 }
 
-Widget buildTile( IconData icon, String title, String subtitle, context){
+Widget buildTile(IconData icon, String title, String subtitle, context) {
   final deviceH = MediaQuery.of(context).size.height;
   final deviceW = MediaQuery.of(context).size.width;
   return Padding(
     padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 15),
     child: Container(
-      height:deviceH/10,
+      height: deviceH / 10,
       decoration: BoxDecoration(
         boxShadow: const [
           BoxShadow(
@@ -180,18 +216,19 @@ Widget buildTile( IconData icon, String title, String subtitle, context){
                       Text(
                         title,
                         style: TextStyle(
-                          // textStyle: Theme.of(context).textTheme.display1,
-                            fontSize: deviceW/25,
+                            // textStyle: Theme.of(context).textTheme.display1,
+                            fontSize: deviceW / 25,
                             fontWeight: FontWeight.w700,
                             color: AppColors.green),
                       ),
-                      Text( subtitle,
+                      Text(
+                        subtitle,
                         style: TextStyle(
                           // textStyle: Theme.of(context).textTheme.display1,
-                            fontSize: deviceW/30,
-                            fontWeight: FontWeight.w400,
-                            ///color: AppColors.yellow
+                          fontSize: deviceW / 30,
+                          fontWeight: FontWeight.w400,
 
+                          ///color: AppColors.yellow
                         ),
                       ),
                     ],

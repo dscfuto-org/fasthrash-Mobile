@@ -4,6 +4,7 @@ class DummyData {
   //static String localUserID;
   static String?emailAddress;
   static String?password;
+  static String?phone;
   static String?accessToken;
 
   static dynamic address;
