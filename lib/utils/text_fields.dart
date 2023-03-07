@@ -1,12 +1,23 @@
 
+import 'package:fastrash/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_colors.dart';
 
-Widget customButton (labelText){
+Widget customButton (labelText, {
+required TextEditingController textEditingController, bool isDigits = false
+}){
   return Container(
     padding: const EdgeInsets.all(10),
-    child: TextField(
+    child: TextFormField(
+      controller: textEditingController,
+     keyboardType:  isDigits?const TextInputType.numberWithOptions(decimal: false):TextInputType.text,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return fieldRequired;
+        }
+        return null;
+      },
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: labelText,

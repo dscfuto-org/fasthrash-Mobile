@@ -1,8 +1,7 @@
+import 'package:fastrash/auth/forgot_password.dart';
 import 'package:fastrash/auth/regstration_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/constants/strings.dart';
-import 'package:fastrash/features/dashboard/view/dashboard.dart';
-import 'package:fastrash/repository/backend/alerts_backend.dart';
 import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/dto/login_dto.dart';
@@ -27,6 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
   var isLoading = false;
   LoginDto loginDto = LoginDto();
+
+  var textName ="";
+  void updateFormText(value){
+    setState(() {
+      textName = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +89,11 @@ class _LoginScreenState extends State<LoginScreen> {
               Form(key: _formKey, child: _emailPasswordWidget()),
               TextButton(
                 onPressed: () {
-                  Alerts().getAlerts();
+                  navigatePush(context, const ForgotPasswordScreen());
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children:  const [
                     // Switch(value: false, onChanged: (value) {}),
                     // const Text(
                     //   'Remind me',
@@ -97,6 +103,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Forgot Password?',
                     ),
+
+                    // Text(
+                    //   'Forgot Password? is $textName',
+                    // ),
                   ],
                 ),
               ),
@@ -180,17 +190,21 @@ class _LoginScreenState extends State<LoginScreen> {
             }
             return null;
           },
+          onChanged: (value){
+           updateFormText(value);
+
+          },
           style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w400, fontSize: 14),
           controller: textEditingController,
           cursorColor: AppColors.green,
           decoration: InputDecoration(
               isDense: true,
-              contentPadding: EdgeInsets.all(20),
+              contentPadding: const EdgeInsets.all(20),
               // contentPadding:
               //     EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
               focusedBorder: focusedBorder(),
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: AppColors.grey, width: 0.3),
               ),
               border: const OutlineInputBorder(
@@ -210,12 +224,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: isPassword
                       ? _obscureText
-                          ? Icon(
+                          ? const Icon(
                               Icons.visibility,
                               color: AppColors.grey,
                               size: 17.5,
                             )
-                          : Icon(
+                          : const Icon(
                               Icons.visibility_off,
                               color: AppColors.grey,
                               size: 17.5,
@@ -236,7 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       children: <Widget>[
         _entryField("Email", emailController),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         _entryField(

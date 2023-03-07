@@ -15,7 +15,7 @@ const loaderOne =  Padding(
   padding:  EdgeInsets.all(18.0),
   child: SpinKitCircle(
     color: AppColors.green,
-    size: 40,
+    size: 50,
   ),
 );
 

@@ -1,38 +1,38 @@
 class AlertsDto {
   AlertsDto({
-      this.title, 
       this.description, 
+      this.status, 
       this.image, 
       this.location, 
       this.quantity,});
 
   AlertsDto.fromJson(dynamic json) {
-    title = json['title'];
     description = json['description'];
+    status = json['status'];
     image = json['image'];
     location = json['location'];
     quantity = json['quantity'];
   }
-  String? title;
   String? description;
+  String? status;
   String? image;
   String? location;
   num? quantity;
-AlertsDto copyWith({  String? title,
-  String? description,
+AlertsDto copyWith({  String? description,
+  String? status,
   String? image,
   String? location,
   num? quantity,
-}) => AlertsDto(  title: title ?? this.title,
-  description: description ?? this.description,
+}) => AlertsDto(  description: description ?? this.description,
+  status: status ?? this.status,
   image: image ?? this.image,
   location: location ?? this.location,
   quantity: quantity ?? this.quantity,
 );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['title'] = title;
     map['description'] = description;
+    map['status'] = status;
     map['image'] = image;
     map['location'] = location;
     map['quantity'] = quantity;

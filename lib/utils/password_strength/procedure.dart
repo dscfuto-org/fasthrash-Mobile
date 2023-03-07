@@ -62,7 +62,7 @@ String strengthPassword(String password) {
 }
 
 //list of common password written
-final _dictionary = Set.from([
+final _dictionary = {
   '123456',
   'password',
   '12345678',
@@ -10063,4 +10063,4 @@ final _dictionary = Set.from([
   'bubbles1',
   'brook',
   'brady',
-]);
+};

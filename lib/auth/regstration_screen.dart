@@ -4,14 +4,12 @@ import 'package:fastrash/constants/strings.dart';
 import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/utils/custom_print.dart';
-import 'package:fastrash/utils/dropdown_widget.dart';
 import 'package:fastrash/utils/form_fields.dart';
 import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:fastrash/utils/text_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:fastrash/utils/get_widgets.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -31,8 +29,7 @@ class MyStatefulWidget extends StatefulWidget {
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget>
-    with DashBoardWidgets {
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordConfirmController = TextEditingController();
@@ -67,15 +64,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
 
   @override
   Widget build(BuildContext context) {
-    const String role = 'Sign Up as';
-    DashBoardDropDownFormField roleSelect = createDropDownList(
-      role,
-      'Sign Up as',
-      const [
-        'Individual',
-        'Organization',
-      ],
-    );
+    // const String role = 'Sign Up as';
+    // DashBoardDropDownFormField roleSelect = createDropDownList(
+    //   role,
+    //   'Sign Up as',
+    //   const [
+    //     'Individual',
+    //     'Organization',
+    //   ],
+    // );
 
     return Padding(
         padding: const EdgeInsets.all(10),
@@ -186,7 +183,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
           cursorColor: AppColors.green,
           decoration: InputDecoration(
               isDense: true,
-              contentPadding: EdgeInsets.all(20),
+              contentPadding: const EdgeInsets.all(20),
               // contentPadding:
               //     EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
               focusedBorder: focusedBorder(),
@@ -208,12 +205,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
                   },
                   child: isPassword
                       ? _obscureText
-                      ? Icon(
+                      ? const Icon(
                     Icons.visibility,
                     color: AppColors.grey,
                     size: 17.5,
                   )
-                      : Icon(
+                      : const Icon(
                     Icons.visibility_off,
                     color: AppColors.grey,
                     size: 17.5,
@@ -233,39 +230,44 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   }
 
 
-  Widget _confrimPasswordField(String title, TextEditingController textEditingController,
+  Widget confirmPasswordField(String title, TextEditingController textEditingController,
       {bool isPassword = false}) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+          obscureText: isPassword ? _obscureText : false,
           enabled: true,
           validator: (value) {
             if (value!.isEmpty) {
               return fieldRequired;
-            }else if(passwordController.text != passwordConfirmController.text){
-              return 'Password Does Not Match';
             }
             return null;
           },
+          // onChanged: (value){
+          //   updateFormText(value);
+          //
+          // },
           style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w400, fontSize: 14),
           controller: textEditingController,
           cursorColor: AppColors.green,
           decoration: InputDecoration(
               isDense: true,
-              contentPadding: EdgeInsets.all(20),
+              contentPadding: const EdgeInsets.all(20),
               // contentPadding:
               //     EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
               focusedBorder: focusedBorder(),
               enabledBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.green, width: 0.3),
+                borderSide: BorderSide(color: AppColors.grey, width: 0.3),
               ),
-              focusedErrorBorder:  const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.green, ),
-              ) ,
               border: const OutlineInputBorder(
                 borderSide: BorderSide(width: 7.0, color: AppColors.green),
               ),
+              hintText: title,
+              hintStyle: kSubtitleStyle.copyWith(
+                  color: AppColors.grey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14),
               suffixIcon: SizedBox(
                 height: 17.5,
                 width: 17.5,
@@ -275,12 +277,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
                   },
                   child: isPassword
                       ? _obscureText
-                      ? Icon(
+                      ? const Icon(
                     Icons.visibility,
                     color: AppColors.grey,
                     size: 17.5,
                   )
-                      : Icon(
+                      : const Icon(
                     Icons.visibility_off,
                     color: AppColors.grey,
                     size: 17.5,
@@ -288,11 +290,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
                       : null,
                 ),
               ),
-              hintText: title,
-              hintStyle: kSubtitleStyle.copyWith(
-                  color: AppColors.dark,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14),
+              // icon: Image.asset("name"),
+              //border: InputBorder.none,
+              //fillColor: Color(0xfff3f3f4),
               errorStyle:
               kTitleStyle.copyWith(fontSize: 12.0, color: AppColors.red),
               filled: false)),
@@ -320,7 +320,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
             // PasswordFormField(
             //     title: ,
             //     textEditingController: ),
-            _confrimPasswordField('Confirm Password', passwordConfirmController, isPassword: true)
+           // _confrimPasswordField('Confirm Password', passwordConfirmController, isPassword: true),
+            confirmPasswordField('Confirm Password', passwordConfirmController, isPassword: true)
 
           ],
         ));
@@ -386,10 +387,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
             if (value == null) {
               return fieldRequired;
             }
+            return null;
           },
           decoration: InputDecoration(
               isDense: true,
-              contentPadding: EdgeInsets.all(18),
+              contentPadding: const EdgeInsets.all(18),
               // contentPadding:
               //     EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w),
               focusedBorder: focusedBorder(),
@@ -416,7 +418,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
           onChanged: (String? newValue) {
             setState(() {
               selectedValue = newValue!;
-              print(selectedValue);
+              logger.w(selectedValue);
             });
           }),
     );

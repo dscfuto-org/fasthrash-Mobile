@@ -1,12 +1,11 @@
 import 'package:fastrash/features/home/widgets/widgets.dart';
-import 'package:fastrash/utils/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 actionsModalBottomSheet(
   BuildContext context,
 ) {
-  double sheetHeight = 600.h;
+  double sheetHeight = 500.h;
   showModalBottomSheet(
       context: context,
       isDismissible: true,
@@ -44,7 +43,7 @@ actionsModalBottomSheet(
                       SizedBox(
                         height: 50.h,
                       ),
-                      AppLargeButton(textColor: Colors.white, onTap: (){}, text: "Submit"),
+
                       const SizedBox(
                         height: 15,
                       ),
