@@ -61,9 +61,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 10,
                   ),
                   Text(
-                    ResponseData.loginResponseModel!.firstName.toString() +
+                    ResponseData.profileResponseModel!.data!.user!.firstName.toString() +
                         " " +
-                        ResponseData.loginResponseModel!.lastName.toString(),
+                        ResponseData.profileResponseModel!.data!.user!.lastName.toString(),
                     style: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
@@ -99,22 +99,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         buildTile(
                             Icons.person,
                             "Name",
-                            ResponseData.loginResponseModel!.firstName
+                            ResponseData.profileResponseModel!.data!.user!.firstName
                                     .toString() +
                                 " " +
-                                ResponseData.loginResponseModel!.lastName
+                                ResponseData.profileResponseModel!.data!.user!.lastName
                                     .toString(),
                             context),
                         buildTile(
                             Icons.phone,
                             "Phone Number",
-                            ResponseData.loginResponseModel!.phoneNumber
+                            ResponseData.profileResponseModel!.data!.user!.phoneNumber
                                 .toString(),
                             context),
                         buildTile(
                             Icons.email,
                             "Email",
-                            ResponseData.loginResponseModel!.email.toString(),
+                            ResponseData.profileResponseModel!.data!.user!.email.toString(),
                             context),
                         buildTile(
                             Icons.email,
@@ -157,10 +157,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: InkWell(
                     onTap: () {},
                     child: Text(
-                      ResponseData.loginResponseModel!.role
+                      ResponseData.profileResponseModel!.data!.user!.role
                               .toString()[0]
                               .toUpperCase() +
-                          ResponseData.loginResponseModel!.role
+                          ResponseData.profileResponseModel!.data!.user!.role
                               .toString()
                               .substring(1)
                               .toLowerCase(),

@@ -9,14 +9,11 @@ const String baseURL = "fastrash-1337.ew.r.appspot.com";
 /// User Auth
 const String userRegistrationPath = "/api/auth/register";
 const String userLoginPath = "/api/auth/login";
+const String fetchProfilePath = "/api/auth/profile/";
 String userDeletePath ="/api/auth/org/delete/${ResponseData.loginResponseModel!.id}";
 String resetPasswordPath = "/api/auth/resetpassword/";
 
 
-/// Organization Auth
-const String organizationRegistrationPath = "/api/auth/org/register";
-const String organizationLoginPath = "/api/auth/org/register";
- String organizationDeletePath ="/api/auth/org/delete/${ResponseData.loginResponseModel!.id}";
 
 /// Alerts
 const String createAlertsPath ="/api/alerts/create";

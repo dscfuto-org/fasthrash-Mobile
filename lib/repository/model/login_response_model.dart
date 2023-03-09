@@ -1,77 +1,32 @@
+/// message : "Authorization successful"
+/// id : "63f85e50705601e9e6e003d9"
+/// token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpY2VtbWFudWVsN0BnbWFpbC5jb20iLCJ1c2VySUQiOiI2M2Y4NWU1MDcwNTYwMWU5ZTZlMDAzZDkiLCJpYXQiOjE2Nzg0NTQyODQsImV4cCI6MTY3ODQ2MTQ4NH0.QaPfWchnVI4EY5-t_L0BErFj6vQ28JcX021YK0oSvNk"
+
 class LoginResponseModel {
   LoginResponseModel({
       this.message, 
       this.id, 
-      this.firstName, 
-      this.lastName, 
-      this.location, 
-      this.email, 
-      this.phoneNumber, 
-      this.role, 
-      this.history, 
       this.token,});
 
   LoginResponseModel.fromJson(dynamic json) {
     message = json['message'];
     id = json['id'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    location = json['location'];
-    email = json['email'];
-    phoneNumber = json['phoneNumber'];
-    role = json['role'];
-    if (json['history'] != null) {
-      history = [];
-      json['history'].forEach((v) {
-        // history?.add(Dynamic.fromJson(v));
-      });
-    }
     token = json['token'];
   }
   String? message;
   String? id;
-  String? firstName;
-  String? lastName;
-  String? location;
-  String? email;
-  String? phoneNumber;
-  String? role;
-  List<dynamic>? history;
   String? token;
 LoginResponseModel copyWith({  String? message,
   String? id,
-  String? firstName,
-  String? lastName,
-  String? location,
-  String? email,
-  String? phoneNumber,
-  String? role,
-  List<dynamic>? history,
   String? token,
 }) => LoginResponseModel(  message: message ?? this.message,
   id: id ?? this.id,
-  firstName: firstName ?? this.firstName,
-  lastName: lastName ?? this.lastName,
-  location: location ?? this.location,
-  email: email ?? this.email,
-  phoneNumber: phoneNumber ?? this.phoneNumber,
-  role: role ?? this.role,
-  history: history ?? this.history,
   token: token ?? this.token,
 );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['message'] = message;
     map['id'] = id;
-    map['firstName'] = firstName;
-    map['lastName'] = lastName;
-    map['location'] = location;
-    map['email'] = email;
-    map['phoneNumber'] = phoneNumber;
-    map['role'] = role;
-    if (history != null) {
-      map['history'] = history?.map((v) => v.toJson()).toList();
-    }
     map['token'] = token;
     return map;
   }

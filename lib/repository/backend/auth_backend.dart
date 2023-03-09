@@ -7,9 +7,9 @@ import 'package:fastrash/features/dashboard/view/dashboard.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/login_dto.dart';
-import 'package:fastrash/repository/dto/organization_regisration_dto.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/repository/model/login_response_model.dart';
+import 'package:fastrash/repository/model/profile_response_model.dart';
 import 'package:fastrash/repository/model/registration_sucess_model.dart';
 import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
@@ -92,72 +92,6 @@ class AuthBackend {
     }
   }
 
-  //Organization SignUp/ Registration
-  Future<void> signUpOrganization(
-      OrganizationRegistrationDto organizationRegistrationDto) async {
-    const url = http + baseURL + organizationRegistrationPath;
-    logger.i(url);
-    logger.i(json.encode({
-      "businessName":
-          organizationRegistrationDto.businessName.toString().trim(),
-      "location": organizationRegistrationDto.location.toString().trim(),
-      "size": organizationRegistrationDto.size.toString().trim(),
-      "yearsOfOperation":
-          organizationRegistrationDto.yearsOfOperation.toString().trim(),
-      "email": organizationRegistrationDto.email.toString().trim(),
-      "password": organizationRegistrationDto.password.toString().trim(),
-    }));
-
-    try {
-      final httpConnectionApi = await client
-          .post(
-            Uri.parse(url),
-            headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-            body: json.encode({
-              "businessName":
-                  organizationRegistrationDto.businessName.toString().trim(),
-              "location":
-                  organizationRegistrationDto.location.toString().trim(),
-              "size": organizationRegistrationDto.size.toString().trim(),
-              "yearsOfOperation": organizationRegistrationDto.yearsOfOperation
-                  .toString()
-                  .trim(),
-              "email": organizationRegistrationDto.email.toString().trim(),
-              "password":
-                  organizationRegistrationDto.password.toString().trim(),
-            }),
-          )
-          .timeout(const Duration(seconds: 60));
-
-      logger.w(httpConnectionApi.body);
-      logger.wtf(httpConnectionApi.statusCode);
-
-      // if (httpConnectionApi.statusCode == 201) {
-      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
-      //   ResponseData.registrationResponse =
-      //       RegistrationSuccessModel.fromJson(resBody);
-      //   DummyData.emailAddress =
-      //       ResponseData.registrationResponse!.email.toString();
-      // } else {
-      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
-      //   // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-
-      //   // showErrorAlert(context,
-      //   //     message: ResponseData.failureResponse!.message.toString());
-      // }
-    } on Exception catch (e) {
-      // showErrorAlert(context, message: somethingWentWrongText);
-      logger.wtf('Error');
-      logger.e(e);
-      rethrow;
-    }
-  }
-
-  /*
-  LOGIN SESSION FOR
-    i) User
-    ii) Organization
-  */
 
   // User Login Session
 
@@ -191,20 +125,21 @@ class AuthBackend {
       if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.loginResponseModel = LoginResponseModel.fromJson(resBody);
-        DummyData.emailAddress =
-            ResponseData.loginResponseModel!.email.toString();
+       /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
         DummyData.password = loginDto.password.toString();
 
         DummyData.accessToken =
             ResponseData.loginResponseModel!.token.toString();
 
-        saveUserEmail(DummyData.emailAddress.toString().trim());
+        saveUserEmail(loginDto.email);
+        saveUserPassword(loginDto.password);
 
         saveAccessToken(ResponseData.loginResponseModel!.token);
-        saveUserPassword(DummyData.password.toString().trim());
+
         saveAppTme();
         getUserEmail();
         getUserPassword();
+        await fetchProfile(context, ResponseData.loginResponseModel!.id.toString());
         navigateReplace(context, const Dashboard());
       } else if (httpConnectionApi.statusCode == 401) {
         ///var resBody = jsonDecode(httpConnectionApi.body.toString());
@@ -255,19 +190,19 @@ class AuthBackend {
       if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.loginResponseModel = LoginResponseModel.fromJson(resBody);
-        DummyData.emailAddress =
-            ResponseData.loginResponseModel!.email.toString();
-        DummyData.accessToken =
-            ResponseData.loginResponseModel!.token.toString();
+       /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
+        DummyData.accessToken = ResponseData.loginResponseModel!.token.toString();
         logger.wtf(DummyData.accessToken);
 
         saveUserEmail(loginDto.email);
-        getUserEmail();
         saveUserPassword(loginDto.password);
+        getUserEmail();
+
         getUserPassword();
         saveAccessToken(ResponseData.loginResponseModel!.token);
         getAccessToken();
         saveAppTme();
+        await fetchProfile(context, ResponseData.loginResponseModel!.id.toString());
 
         navigateReplace(context, const Dashboard());
       } else {
@@ -278,6 +213,42 @@ class AuthBackend {
         //     message: "${ResponseData.failureResponse!.message.toString()}");
         navigateReplace(context, const LoginScreen());
       }
+    } on Exception catch (e) {
+      // displayLongToastMessage(somethingWentWrongText,  );
+
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+
+  Future<void> fetchProfile(BuildContext context, id) async {
+    final url = http + baseURL + fetchProfilePath + id;
+
+    logger.i(url);
+
+    try {
+      final httpConnectionApi = await client
+          .get(
+        Uri.parse(url),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
+      ).timeout(const Duration(seconds: 60));
+
+      logger.i(httpConnectionApi.body);
+      logger.wtf(httpConnectionApi.statusCode);
+
+      if (httpConnectionApi.statusCode == 200) {
+        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        ResponseData.profileResponseModel = ProfileResponseModel.fromJson(resBody);
+        /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
+
+        navigateReplace(context, const Dashboard());
+      }
+      // else {
+      //
+      // }
     } on Exception catch (e) {
       // displayLongToastMessage(somethingWentWrongText,  );
 

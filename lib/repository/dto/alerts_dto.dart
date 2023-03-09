@@ -1,32 +1,56 @@
+/// description : "I have some waste at [location] that needs to be collected, it weighs about [weight] kg..."
+/// status : "pending | accepted | collected"
+/// image : "file"
+/// location.longitude : 121.13
+/// location.latitude : 32.5
+/// address : "address"
+/// role : "user | collector"
+/// quantity : 7
+
 class AlertsDto {
   AlertsDto({
       this.description, 
       this.status, 
       this.image, 
-      this.location, 
+      this.locationlongitude, 
+      this.locationlatitude, 
+      this.address, 
+      this.role, 
       this.quantity,});
 
   AlertsDto.fromJson(dynamic json) {
     description = json['description'];
     status = json['status'];
     image = json['image'];
-    location = json['location'];
+    locationlongitude = json['location.longitude'];
+    locationlatitude = json['location.latitude'];
+    address = json['address'];
+    role = json['role'];
     quantity = json['quantity'];
   }
   String? description;
   String? status;
   String? image;
-  String? location;
+  num? locationlongitude;
+  num? locationlatitude;
+  String? address;
+  String? role;
   num? quantity;
 AlertsDto copyWith({  String? description,
   String? status,
   String? image,
-  String? location,
+  num? locationlongitude,
+  num? locationlatitude,
+  String? address,
+  String? role,
   num? quantity,
 }) => AlertsDto(  description: description ?? this.description,
   status: status ?? this.status,
   image: image ?? this.image,
-  location: location ?? this.location,
+  locationlongitude: locationlongitude ?? this.locationlongitude,
+  locationlatitude: locationlatitude ?? this.locationlatitude,
+  address: address ?? this.address,
+  role: role ?? this.role,
   quantity: quantity ?? this.quantity,
 );
   Map<String, dynamic> toJson() {
@@ -34,7 +58,10 @@ AlertsDto copyWith({  String? description,
     map['description'] = description;
     map['status'] = status;
     map['image'] = image;
-    map['location'] = location;
+    map['location.longitude'] = locationlongitude;
+    map['location.latitude'] = locationlatitude;
+    map['address'] = address;
+    map['role'] = role;
     map['quantity'] = quantity;
     return map;
   }

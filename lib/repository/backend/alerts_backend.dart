@@ -16,32 +16,41 @@ class Alerts {
   ) async {
     const url = http + baseURL + createAlertsPath;
     logger.i(url);
-    logger.i(json.encode({
-      "description":
-          "I have some waste at ${alertsDto.location} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
-      "status": alertsDto.status.toString(),
-      "image": image.path.toString(),
-      "location": alertsDto.location.toString(),
-      "quantity": alertsDto.quantity.toString()
-    }));
+    // logger.i(json.encode({
+    //   "description":
+    //       "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
+    //   "status": alertsDto.status.toString(),
+    //   "image": image.path.toString(),
+    //   "quantity": int.parse(alertsDto.quantity.toString()),
+    //   "location.longitude": alertsDto.locationlongitude,
+    //   "location.latitude": alertsDto.locationlatitude,
+    //   "address": alertsDto.address.toString(),
+    //   "role": alertsDto.role.toString(),
+    // }));
 
     try {
       final request = client.MultipartRequest("POST", Uri.parse(url),);
       Map<String, String> headers = {
-        "Content-Type": "application/json",
-        //'accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        'accept': 'application/json',
+      };
+      Map<String, String> field = {
+          "description": "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
+          "status": alertsDto.status.toString(),
+          "quantity": int.parse(alertsDto.quantity.toString()).toString(),
+          "location.longitude": alertsDto.locationlongitude.toString(),
+          "location.latitude": alertsDto.locationlatitude.toString(),
+          "address": alertsDto.address.toString(),
+          "role": ResponseData.profileResponseModel!.data!.user!.role.toString(),
       };
 
       request.headers.addAll(headers);
       var imageMultipartFile = await client.MultipartFile.fromPath(
-          'image', image.path,
+          'file', image.path,
           filename: image.path.split("/").last);
-      request.fields['description'] = "I have some waste at ${alertsDto.location} that needs to be collected, it weighs about ${alertsDto.quantity} kg...";
-      request.fields['status'] = alertsDto.status.toString();
-      request.fields['location'] = alertsDto.location.toString();
-      request.fields['quantity'] = alertsDto.quantity.toString();
-      logger.wtf(request.fields);
+
       request.files.add(imageMultipartFile);
+      request.fields.addAll(field);
       logger.wtf(imageMultipartFile);
       var response =await request.send();
 
