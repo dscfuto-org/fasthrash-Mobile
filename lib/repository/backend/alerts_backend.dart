@@ -17,16 +17,16 @@ class Alerts {
   ) async {
     const url = http + baseURL + createAlertsPath;
     var httpConnectionApi;
-    logger.i(url);
+    logger.e(url);
     logger.i(json.encode({
       "description":
           "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
       "status": alertsDto.status.toString(),
-      "image": image,
+      "image": image.toString(),
       "address": alertsDto.address.toString(),
       "location.longitude": alertsDto.locationlongitude.toString(),
       "location.latitude": alertsDto.locationlatitude.toString(),
-      "role": ResponseData.loginResponseModel!.role.toString(),
+      "role": alertsDto.role,
       "quantity": alertsDto.quantity.toString()
     }));
 
@@ -36,8 +36,8 @@ class Alerts {
         Uri.parse(url),
       );
       Map<String, String> headers = {
-        "Content-Type": "multipart/form-data",
-        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'accept': 'multipart/form-data',
       };
 
       request.headers.addAll(headers);
@@ -54,7 +54,7 @@ class Alerts {
       request.fields['quantity'] = alertsDto.quantity.toString();
       request.fields['location.longitude'] = alertsDto.locationlongitude.toString();
       request.fields['location.latitude'] = alertsDto.locationlatitude.toString();
-      request.fields['role'] = ResponseData.loginResponseModel!.role.toString();
+      request.fields['role'] = alertsDto.role.toString();
       var response = await request.send();
       //for getting and decoding the response into json format
       var responseD = await client.Response.fromStream(response);

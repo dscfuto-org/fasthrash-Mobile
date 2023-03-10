@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/repository/backend/alerts_backend.dart';
+import 'package:fastrash/repository/data/dummy_data.dart';
+import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/alerts_dto.dart';
 import 'package:fastrash/utils/buttons.dart';
 import 'package:fastrash/utils/custom_print.dart';
@@ -21,7 +23,7 @@ class PickImage extends StatefulWidget {
 }
 
 class _PickImageState extends State<PickImage> {
- File? image;
+  File? image;
   final picker = ImagePicker();
   bool useLocation = false;
   final GlobalKey<FormState> _formKey = GlobalKey();
@@ -142,16 +144,12 @@ class _PickImageState extends State<PickImage> {
       key: _formKey,
       child: Column(
         children: [
-
           customButton("Quantity in KG",
               textEditingController: quantityTextController, isDigits: true),
-
           useLocation
               ? Container()
               : customButton("Enter Location Address",
                   textEditingController: locationAddressController),
-
-
         ],
       ),
     );
@@ -173,7 +171,12 @@ class _PickImageState extends State<PickImage> {
     if (!_formKey.currentState!.validate()) {
     } else {
       alertsDto.quantity = int.parse(quantityTextController.text);
-      alertsDto.location = useLocation?"${DeviceLocation.lat} ${DeviceLocation.lng}": locationAddressController.text;
+      alertsDto.address = useLocation
+          ? DummyData.address.toString()
+          : locationAddressController.text;
+      alertsDto.locationlatitude = DeviceLocation.lat;
+      alertsDto.locationlongitude = DeviceLocation.lng;
+      alertsDto.role = 'user';
       alertsDto.status = 'pending';
       image = image;
       // alertsDto.image = _image as String?;
@@ -183,13 +186,10 @@ class _PickImageState extends State<PickImage> {
       });
       logger.wtf('Alerts');
       logger.wtf("Image::::::: $image");
-      logger.wtf( alertsDto.location);
+      // logger.wtf( alertsDto.location);
       try {
-
         // await Alerts().createAlerts(context, alertsDto, image: );
-        await Alerts().createAlerts(context, alertsDto,  image!);
-
-
+        await Alerts().createAlerts(context, alertsDto, image!);
       } catch (e) {
         setState(() {
           isLoading = false;
