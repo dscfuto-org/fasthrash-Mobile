@@ -331,6 +331,114 @@ Future<void> showRegisterAlert(BuildContext context, String title, {
       });
 }
 
+Future<void> showCreateAlert(BuildContext context, String title, {
+  required String message, required bool isDismissible,
+  btnOnePressed, btnOneText,
+}) async {
+  final width = MediaQuery.of(context).size.width;
+  final deviceH = MediaQuery.of(context).size.height;
+  showDialog(
+      barrierDismissible: isDismissible,
+      context: context,
+      builder: (ctx) {
+        return Container(
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            contentPadding: EdgeInsets.zero,
+            content: SizedBox(
+              height: deviceH/3.0,
+              width: width,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: deviceH/8,
+                    child: Lottie.asset("assets/animations/success_lottie.json"),
+                  ),
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Satoshi',
+                        fontSize: 14,
+                        height: 1.5,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    message,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
+                      height: 1.2,
+                      fontFamily: 'Satoshi',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MaterialButton(
+                    onPressed: () async {
+                      await navigateBack(context);
+                      btnOnePressed();
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.all(15),
+                      // alignment: Alignment.centerRight,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: AppColors.green),
+                      child: Center(
+                        child: Text(
+                          'Proceed',
+                          style: TextStyle(
+                              fontSize: 14.sp,
+                              fontFamily: "Satoshi",
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // SizedBox(height: 20,),
+                  // MaterialButton(
+                  //   onPressed: btnTwoPressed,
+                  //   child: Container(
+                  //     height: 60,
+                  //     width: MediaQuery.of(context).size.width * 0.4,
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.grey.withOpacity(0.2),
+                  //       borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  //     ),
+                  //     child: Center(
+                  //       child: Text(
+                  //         btnTwoText.toString(),
+                  //         style: TextStyle(
+                  //             color: Colors.red,
+                  //             fontSize: 16.0,
+                  //             fontWeight: FontWeight.bold
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  //
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
 Future<void> showFailureAlert(BuildContext context, String title, {
   required String message, required bool isDismissible,
   btnOnePressed, btnOneText,

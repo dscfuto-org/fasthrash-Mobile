@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:fastrash/constants/api.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/alerts_dto.dart';
+import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as client;
@@ -59,18 +60,15 @@ class Alerts {
       // final responseData = json.decode(responseD.body);
       logger.wtf(responseD.statusCode);
       logger.wtf(responseD.body);
-      // if (httpConnectionApi == 200 || httpConnectionApi == 201) {
-      //   showFailureAlert(context, 'Success',
-      //       message: 'Kindly provide another email', isDismissible: true);
-      // } else {
-      //   showFailureAlert(context, 'Alert creation failed',
-      //       message: 'Kindly select an Image to upload', isDismissible: true);
-      //   var resBody = jsonDecode(httpConnectionApi.body.toString());
-      //   // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-      //
-      //   // showErrorAlert(context,
-      //   //     message: ResponseData.failureResponse!.message.toString());
-      // }
+      if (responseD.statusCode == 200 || responseD.statusCode == 201) {
+       showCreateAlert(context, 'Success', message: 'Your trash alert has been created successfully', isDismissible: true);
+      } else {
+        showFailureAlert(context, 'Error', message: 'There was an error creating alert', isDismissible: true);
+        // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+
+        // showErrorAlert(context,
+        //     message: ResponseData.failureResponse!.message.toString());
+      }
     } on Exception catch (e) {
       // showErrorAlert(context, message: somethingWentWrongText);
       logger.wtf('Error');
