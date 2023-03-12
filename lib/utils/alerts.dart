@@ -166,7 +166,7 @@ Future<void> showSuccessAlert(BuildContext context, String title, {
                   ),
                   MaterialButton(
                     onPressed: () async {
-                      await navigateReplace(context, const LoginScreen());
+                      navigateBack(context);
                       btnOnePressed();
                     },
                     child: Container(
@@ -476,14 +476,17 @@ Future<void> showFailureAlert(BuildContext context, String title, {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    message,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.sp,
-                      height: 1.2,
-                      fontFamily: 'Satoshi',
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      message,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.sp,
+                        height: 1.2,
+                        fontFamily: 'Satoshi',
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -573,8 +576,8 @@ Future<void> showAlertDialogThenNavigateReplace(BuildContext context,
       });
 }
 
-// displayToastMessage(String message, BuildContext context)
-// {Fluttertoast.showToast(msg: message);}
+displayShortToastMessage(String message, BuildContext context)
+{Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);}
 
 
 displayLongToastMessage(String message)

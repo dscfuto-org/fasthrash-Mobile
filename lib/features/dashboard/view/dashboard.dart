@@ -1,7 +1,9 @@
 import 'package:fastrash/features/education/view/education.dart';
-import 'package:fastrash/features/history/view/history.dart';
+import 'package:fastrash/features/history/view/user_history_screen.dart';
+import 'package:fastrash/features/history/view/collector_history_screen.dart';
 import 'package:fastrash/features/home/view/home.dart';
 import 'package:fastrash/features/profile/my_account_screen.dart';
+import 'package:fastrash/repository/data/response_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -55,12 +57,13 @@ class _DashboardState extends State<Dashboard> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            HomeView(),
-            HistoryView(),
-            EducationView(),
-            ProfileScreen(),
+            const HomeView(),
+            ResponseData.profileResponseModel!.data!.user!.role.toString() == "user" ?
+            const UserHistoryScreen(): const CollectorHistoryScreen(),
+            const EducationView(),
+            const ProfileScreen(),
           ],
         ),
       ),

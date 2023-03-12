@@ -8,6 +8,7 @@ import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/login_dto.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
+import 'package:fastrash/repository/model/failure_response_model.dart';
 import 'package:fastrash/repository/model/login_response_model.dart';
 import 'package:fastrash/repository/model/profile_response_model.dart';
 import 'package:fastrash/repository/model/registration_sucess_model.dart';
@@ -75,14 +76,12 @@ class AuthBackend {
             message: 'Proceed to Login', isDismissible: true);
         //navigatePush(context, const LoginScreen());
       } else if (httpConnectionApi.statusCode == 201) {
-        showFailureAlert(context, 'Email is already taken!',
-            message: 'Kindly provide another email', isDismissible: true);
 
-        ///var resBody = jsonDecode(httpConnectionApi.body.toString());
-        // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
 
-        // showErrorAlert(context,
-        //     message: ResponseData.failureResponse!.message.toString());
+        showFailureAlert(context,"Error Creating Account" ,
+            message: ResponseData.failureResponse!.message.toString(), isDismissible: true);
       }
     } on Exception catch (e) {
       // showErrorAlert(context, message: somethingWentWrongText);
@@ -140,19 +139,12 @@ class AuthBackend {
         getUserEmail();
         getUserPassword();
         await fetchProfile(context, ResponseData.loginResponseModel!.id.toString());
-        navigateReplace(context, const Dashboard());
-      } else if (httpConnectionApi.statusCode == 401) {
+       /// navigateReplace(context, const Dashboard());
+      } else {
         ///var resBody = jsonDecode(httpConnectionApi.body.toString());
         showFailureAlert(context, 'Login Unsuccessful',
             message: 'Email or Password is incorrect', isDismissible: true);
-        // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-
-        // showErrorAlert(context,
-        //     message: ResponseData.failureResponse!.message.toString());
-      } else if (httpConnectionApi.statusCode == 404) {
-        showFailureAlert(context, 'Login Failed',
-            message: 'Account details does not exist', isDismissible: true);
-      } else {}
+      }
     } on Exception catch (e) {
       logger.wtf('login Not Working');
 
@@ -203,14 +195,7 @@ class AuthBackend {
         getAccessToken();
         saveAppTme();
         await fetchProfile(context, ResponseData.loginResponseModel!.id.toString());
-
-        navigateReplace(context, const Dashboard());
       } else {
-        ///var resBody = jsonDecode(httpConnectionApi.body.toString());
-        // ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-
-        // showErrorAlert(context,
-        //     message: "${ResponseData.failureResponse!.message.toString()}");
         navigateReplace(context, const LoginScreen());
       }
     } on Exception catch (e) {
@@ -233,6 +218,7 @@ class AuthBackend {
         Uri.parse(url),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
         },
       ).timeout(const Duration(seconds: 60));
 
@@ -243,12 +229,8 @@ class AuthBackend {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.profileResponseModel = ProfileResponseModel.fromJson(resBody);
         /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
-
         navigateReplace(context, const Dashboard());
       }
-      // else {
-      //
-      // }
     } on Exception catch (e) {
       // displayLongToastMessage(somethingWentWrongText,  );
 
@@ -261,7 +243,7 @@ class AuthBackend {
       // LoginDto loginDto
 
       ) async {
-    final url = http + baseURL + resetPasswordPath;
+    const url = http + baseURL + resetPasswordPath;
     // + ResponseData.loginResponseModel!.id.toString();
     logger.i(url);
     logger.i(json.encode({"email": email.toString().trim()}));

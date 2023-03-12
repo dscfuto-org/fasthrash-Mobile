@@ -4,6 +4,7 @@ import 'package:fastrash/repository/backend/alerts_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/alerts_dto.dart';
+import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/buttons.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/device_location.dart';
@@ -25,12 +26,11 @@ class PickImage extends StatefulWidget {
 class _PickImageState extends State<PickImage> {
   File? image;
   final picker = ImagePicker();
-  bool useLocation = false;
   final GlobalKey<FormState> _formKey = GlobalKey();
   // TextEditingController quantityController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController quantityTextController = TextEditingController();
-  TextEditingController locationAddressController = TextEditingController();
+  TextEditingController locationAddressController = TextEditingController(text:  DummyData.address.toString());
   TextEditingController titleController = TextEditingController();
   AlertsDto alertsDto = AlertsDto();
   var isLoading = false;
@@ -109,28 +109,28 @@ class _PickImageState extends State<PickImage> {
         const SizedBox(
           height: 10,
         ),
-        Container(
-          color: Colors.white,
-          child: SwitchListTile(
-            title: Text(
-              'Use Current Address',
-              style: TextStyle(fontSize: 14.sp),
-            ),
-            value: useLocation,
-            activeColor: AppColors.yellow,
-            inactiveTrackColor: Colors.grey,
-            onChanged: (bool value) {
-              setState(() {
-                useLocation = value;
-              });
-            },
-            secondary: const Icon(
-              Icons.location_on,
-              color: AppColors.yellow,
-            ),
-            controlAffinity: ListTileControlAffinity.trailing,
-          ),
-        ),
+        // Container(
+        //   color: Colors.white,
+        //   child: SwitchListTile(
+        //     title: Text(
+        //       'Use Current Address',
+        //       style: TextStyle(fontSize: 14.sp),
+        //     ),
+        //     value: useLocation,
+        //     activeColor: AppColors.yellow,
+        //     inactiveTrackColor: Colors.grey,
+        //     onChanged: (bool value) {
+        //       setState(() {
+        //         useLocation = value;
+        //       });
+        //     },
+        //     secondary: const Icon(
+        //       Icons.location_on,
+        //       color: AppColors.yellow,
+        //     ),
+        //     controlAffinity: ListTileControlAffinity.trailing,
+        //   ),
+        // ),
         const SizedBox(
           height: 3,
         ),
@@ -146,9 +146,7 @@ class _PickImageState extends State<PickImage> {
         children: [
           customButton("Quantity in KG",
               textEditingController: quantityTextController, isDigits: true),
-          useLocation
-              ? Container()
-              : customButton("Enter Location Address",
+        customButton("Enter Location Address",
                   textEditingController: locationAddressController),
         ],
       ),
@@ -159,7 +157,11 @@ class _PickImageState extends State<PickImage> {
     return AppLargeButton(
         textColor: Colors.white,
         onTap: () {
-          _submitRequest();
+         if(image != null ){
+           _submitRequest();
+         } else {
+           displayLongToastMessage("Please  Select Image");
+         }
         },
         text: "Submit");
   }
@@ -171,9 +173,7 @@ class _PickImageState extends State<PickImage> {
     if (!_formKey.currentState!.validate()) {
     } else {
       alertsDto.quantity = int.parse(quantityTextController.text);
-      alertsDto.address = useLocation
-          ? DummyData.address.toString()
-          : locationAddressController.text;
+      alertsDto.address = locationAddressController.text;
       alertsDto.locationlatitude = DeviceLocation.lat;
       alertsDto.locationlongitude = DeviceLocation.lng;
       alertsDto.role = 'user';
@@ -189,7 +189,13 @@ class _PickImageState extends State<PickImage> {
       // logger.wtf( alertsDto.location);
       try {
         // await Alerts().createAlerts(context, alertsDto, image: );
-        await Alerts().createAlerts(context, alertsDto, image!);
+
+        if(ResponseData.profileResponseModel!.data!.user!.role.toString() == "user"){
+         await Alerts().createUTCAlerts(context, alertsDto, image!);
+        } else {
+          await Alerts().createCTOAlerts(context, alertsDto, image!);
+        }
+
       } catch (e) {
         setState(() {
           isLoading = false;

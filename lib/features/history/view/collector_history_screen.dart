@@ -1,11 +1,17 @@
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/features/history/widgets/history_card.dart';
+import 'package:fastrash/repository/data/response_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HistoryView extends StatelessWidget {
-  const HistoryView({Key? key}) : super(key: key);
+class CollectorHistoryScreen extends StatefulWidget {
+  const CollectorHistoryScreen({Key? key}) : super(key: key);
 
+  @override
+  State<CollectorHistoryScreen> createState() => _CollectorHistoryScreenState();
+}
+
+class _CollectorHistoryScreenState extends State<CollectorHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -35,7 +41,8 @@ class HistoryView extends StatelessWidget {
                       right: 3.w,
                     ),
                     tabs: [
-                      Container(
+                      ResponseData.profileResponseModel!.data!.user!.role.toString() == "user"
+                      ? Container() : Container(
                         alignment: Alignment.center,
                         child: Tab(
                           child: Padding(
