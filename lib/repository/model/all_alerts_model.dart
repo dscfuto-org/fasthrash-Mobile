@@ -32,7 +32,7 @@ class AllAlertsResponseModel {
   String? userId;
   String? description;
   String? status;
-  List<String>? images;
+  List<dynamic>? images;
   String? address;
   String? role;
   num? quantity;

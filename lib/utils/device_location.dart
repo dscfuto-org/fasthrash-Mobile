@@ -37,7 +37,6 @@ class DeviceLocation {
         lat = currentLocation.latitude!;
         lng = currentLocation.longitude!;
 
-        // print(currentLocation.latitude);
         // print(currentLocation.longitude);
 
         await LocationBackend().getCurrentLocationDetails(pos);

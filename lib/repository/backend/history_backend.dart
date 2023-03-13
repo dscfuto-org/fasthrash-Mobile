@@ -15,7 +15,7 @@ class HistoryBackend{
 
 
   Future<List<AllAlertsResponseModel>?> fetchAllAlerts() async {
-    final url = http + baseURL  + depositHistoryPath + ResponseData.profileResponseModel!.data!.user!.id.toString();
+    const url = http + baseURL  + allAlertPath;
 
     logger.i(url);
 
@@ -29,16 +29,18 @@ class HistoryBackend{
         },
       ).timeout(const Duration(seconds: 60));
       //
-      /// logger.v(httpConnectionApi.body);
+      logger.v(httpConnectionApi.body);
       // logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ///logger.wtf(resBody["data"]["alert"]);
 
-        ResponseData.depositHistoryModel = (resBody["data"]["alert"] as List)
-            .map((e) => DepositHistoryModel.fromJson(e)).toList();
+        ResponseData.allAlertsResponseModel = (resBody["data"]["alert"] as List)
+            .map((e) => AllAlertsResponseModel.fromJson(e)).toList();
 
+        /// todo: fetch only pending
+        logger.wtf(ResponseData.allAlertsResponseModel);
       }
     } on Exception catch (e) {
       logger.e(e);
@@ -82,7 +84,7 @@ class HistoryBackend{
   }
 
   Future<List<CollectionsHistoryModel>?> collectionHistory() async {
-    final url = http + baseURL  + depositHistoryPath + ResponseData.profileResponseModel!.data!.user!.id.toString();
+    final url = http + baseURL  + collectionHistoryPath + ResponseData.profileResponseModel!.data!.user!.id.toString();
 
     logger.i(url);
 
@@ -103,9 +105,10 @@ class HistoryBackend{
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ///logger.wtf(resBody["data"]["alert"]);
 
-        ResponseData.depositHistoryModel = (resBody["data"]["alert"] as List)
-            .map((e) => DepositHistoryModel.fromJson(e)).toList();
+        ResponseData.collectionsHistoryModel = (resBody["data"]["alert"] as List)
+            .map((e) => CollectionsHistoryModel.fromJson(e)).toList();
 
+        logger.wtf(ResponseData.collectionsHistoryModel);
       }
     } on Exception catch (e) {
       logger.e(e);

@@ -12,6 +12,7 @@ import 'package:fastrash/repository/model/failure_response_model.dart';
 import 'package:fastrash/repository/model/login_response_model.dart';
 import 'package:fastrash/repository/model/profile_response_model.dart';
 import 'package:fastrash/repository/model/registration_sucess_model.dart';
+import 'package:fastrash/repository/services/bloc.dart';
 import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/navigators.dart';
@@ -228,6 +229,8 @@ class AuthBackend {
       if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.profileResponseModel = ProfileResponseModel.fromJson(resBody);
+        await bloc.fetchHistory(context);
+        logger.w(ResponseData.profileResponseModel);
         /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
         navigateReplace(context, const Dashboard());
       }

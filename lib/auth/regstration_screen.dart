@@ -2,8 +2,10 @@ import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/constants/strings.dart';
 import 'package:fastrash/repository/backend/auth_backend.dart';
+import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/utils/custom_print.dart';
+import 'package:fastrash/utils/device_location.dart';
 import 'package:fastrash/utils/form_fields.dart';
 import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
@@ -35,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController passwordConfirmController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
+  TextEditingController locationController = TextEditingController(text: DummyData.address);
   TextEditingController phoneController = TextEditingController();
   TextEditingController roleController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -49,6 +51,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           value: "collector", child: Text("Collector")),
     ];
     return menuItems;
+  }
+
+  @override
+  void initState() {
+    DeviceLocation().getCurrentLocation();
+    super.initState();
   }
 
   void _toggle() {

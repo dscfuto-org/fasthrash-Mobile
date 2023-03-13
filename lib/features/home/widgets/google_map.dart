@@ -1,6 +1,11 @@
 import 'dart:async';
+import 'package:fastrash/repository/backend/alerts_backend.dart';
+import 'package:fastrash/repository/data/response_data.dart';
+import 'package:fastrash/utils/alerts.dart';
+import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -19,6 +24,64 @@ class UserLocationMapState extends State<UserLocationMap> {
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
+
+
+  late BitmapDescriptor myIcon;
+
+  List<Marker> _markers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    ResponseData.profileResponseModel!.data!.user!.role == "user" ? getCurrentLocation() :   _loadMarkers();
+
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(48.w, 20.h)), "assets/images/trash_icon.png").then((onValue) {
+      myIcon = onValue;
+    });
+  }
+
+
+  Future<void> _loadMarkers() async {
+    // // Load JSON object from file or API
+    // String jsonString = '[{"id":1,"latitude":40.712776,"longitude":-74.005974},{"id":2,"latitude":51.507351,"longitude":-0.127758}]';
+    // List<dynamic> data = json.decode(jsonString);
+
+    // Create a Marker object for each location
+    for (var item in ResponseData.allAlertsResponseModel) {
+      double lat = double.parse(item.location!.latitude.toString());
+      double lng =  double.parse(item.location!.longitude.toString());
+      LatLng latLng = LatLng(lat, lng);
+      Marker marker = Marker(
+        markerId: MarkerId(item.id.toString()),
+        position: latLng,
+        ///icon: myIcon,
+        ///infoWindow: InfoWindow(title: 'Marker ${item.id.toString()}'),
+        infoWindow: InfoWindow(title: '${item.quantity.toString()} kg waste at  ${item.address.toString()}', onTap: (){
+          showInfoAlert(
+            context,
+            " ",
+            isDismissible: true,
+            btnOneText: "Accept",
+            btnTwoText: "Back",
+            btnOnePressed: () async {
+             AlertsBackend().updateUTCAlert(context, alertId: item.id.toString(),
+                 status: "accepted", userId:  item.id.toString(), collectorId:
+                 ResponseData.profileResponseModel!.data!.user!.id.toString());
+            },
+            btnTwoPressed: () =>
+                navigateBack(context),
+            message:
+            " ${item.quantity.toString()} kg waste at ${item.address.toString()}",
+          );
+      }),
+      );
+      _markers.add(marker);
+    }
+
+    // Update state to trigger rebuild
+    setState(() {});
+  }
 
 
 
@@ -80,14 +143,6 @@ class UserLocationMapState extends State<UserLocationMap> {
 
 
   @override
-  void initState() {
-    super.initState();
-    getCurrentLocation();
-    // _connectivitySubscription =
-    //     _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-  }
-
-  @override
   dispose() {
     super.dispose();
     // ignore: null_argument_to_non_null_type
@@ -119,6 +174,7 @@ class UserLocationMapState extends State<UserLocationMap> {
         myLocationButtonEnabled: true,
         initialCameraPosition: _kGooglePlex,
         zoomGesturesEnabled: false,
+        markers: Set<Marker>.of(_markers),
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },

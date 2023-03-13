@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:fastrash/features/education/view/education.dart';
-import 'package:fastrash/features/history/view/user_history_screen.dart';
 import 'package:fastrash/features/history/view/collector_history_screen.dart';
+import 'package:fastrash/features/history/view/user_history_screen.dart';
 import 'package:fastrash/features/home/view/home.dart';
 import 'package:fastrash/features/profile/my_account_screen.dart';
 import 'package:fastrash/repository/data/response_data.dart';
+import 'package:fastrash/repository/services/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +18,21 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+  late Timer timer;
   @override
   void initState() {
+
+    makeRepeatedCalls();
     super.initState();
   }
+
+  makeRepeatedCalls(){
+    timer =Timer(const Duration(seconds: 10), () {
+      bloc.fetchHistory(context);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {

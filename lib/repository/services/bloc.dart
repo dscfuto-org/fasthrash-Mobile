@@ -45,7 +45,7 @@ class Bloc {
     _allAlertsSubject.close();
   }
 
-  BehaviorSubject<List<DepositHistoryModel>> get trxSubject => _depositSubject;
+  BehaviorSubject<List<DepositHistoryModel>> get depositSubject => _depositSubject;
   BehaviorSubject<List<CollectionsHistoryModel>> get collectorSubject => _collectorSubject;
   BehaviorSubject<List<AllAlertsResponseModel>> get allAlertsSubject => _allAlertsSubject;
 }

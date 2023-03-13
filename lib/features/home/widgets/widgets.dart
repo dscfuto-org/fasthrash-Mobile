@@ -9,6 +9,7 @@ import 'package:fastrash/utils/buttons.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/device_location.dart';
 import 'package:fastrash/utils/loaders.dart';
+import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -158,6 +159,7 @@ class _PickImageState extends State<PickImage> {
         textColor: Colors.white,
         onTap: () {
          if(image != null ){
+
            _submitRequest();
          } else {
            displayLongToastMessage("Please  Select Image");
@@ -191,9 +193,9 @@ class _PickImageState extends State<PickImage> {
         // await Alerts().createAlerts(context, alertsDto, image: );
 
         if(ResponseData.profileResponseModel!.data!.user!.role.toString() == "user"){
-         await Alerts().createUTCAlerts(context, alertsDto, image!);
+         await AlertsBackend().createUTCAlerts(context, alertsDto, image!);
         } else {
-          await Alerts().createCTOAlerts(context, alertsDto, image!);
+          await AlertsBackend().createCTOAlerts(context, alertsDto, image!);
         }
 
       } catch (e) {

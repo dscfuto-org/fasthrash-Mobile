@@ -13,10 +13,10 @@ class FailureResponseModel {
     message = json['message'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
-  num? status;
+  dynamic status;
   String? message;
   Data? data;
-FailureResponseModel copyWith({  num? status,
+FailureResponseModel copyWith({  dynamic status,
   String? message,
   Data? data,
 }) => FailureResponseModel(  status: status ?? this.status,

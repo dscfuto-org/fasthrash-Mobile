@@ -44,6 +44,13 @@
             </list>
           </value>
         </entry>
+        <entry key="basic_utils">
+          <value>
+            <list>
+              <option value="$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/basic_utils-5.5.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="boolean_selector">
           <value>
             <list>
@@ -683,6 +690,7 @@
       <root url="file://$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/args-2.4.0/lib" />
       <root url="file://$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/async-2.9.0/lib" />
       <root url="file://$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/badges-2.0.3/lib" />
+      <root url="file://$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/basic_utils-5.5.1/lib" />
       <root url="file://$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0/lib" />
       <root url="file://$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/characters-1.2.1/lib" />
       <root url="file://$USER_HOME$/flutterDev/.pub-cache/hosted/pub.dartlang.org/checked_yaml-2.0.2/lib" />

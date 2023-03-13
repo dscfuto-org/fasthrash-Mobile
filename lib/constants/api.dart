@@ -19,7 +19,6 @@ const String resetPasswordPath = "/api/auth/resetpassword/";
 const String createUTCAlertsPath ="/api/alerts/create";
 const String deleteUTCAlertsPath ="/api/alerts/delete/";
 const String updateUTCAlertsPath ="/api/alerts/update/";
-
 const String createCTOAlertsPath ="/api/org/alerts/create";
 const String updateCTOAlertsPath ="/api/org/alerts/update/";
 const String deleteCTOAlertsPath ="/api/org/alerts/delete/";
@@ -28,5 +27,5 @@ const String deleteCTOAlertsPath ="/api/org/alerts/delete/";
 /// History
 
 const String depositHistoryPath ="/api/alerts/user/";
-///const String collectorDepositHistoryPath ="/api/alerts/user/{userId}}";
-const String collectorCollectionsHistoryPath ="/api/org/alerts/create";
+const String collectionHistoryPath ="/api/alerts/collector/";
+const String allAlertPath ="/api/alerts/?role=user";

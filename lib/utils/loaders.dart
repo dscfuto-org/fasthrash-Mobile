@@ -20,7 +20,7 @@ const loaderOne =  Padding(
 );
 
 const loaderTwo = CircularProgressIndicator(
-  color: Colors.blue,
+  color: Colors.green,
   backgroundColor: Colors.red,
-  value: 30.0,
+  value: 25.0,
 );

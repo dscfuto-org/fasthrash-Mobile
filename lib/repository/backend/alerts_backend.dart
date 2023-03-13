@@ -13,7 +13,7 @@ import 'package:fastrash/utils/custom_print.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as client;
 
-class Alerts {
+class AlertsBackend {
   Future<void> createUTCAlerts(
     BuildContext context, AlertsDto alertsDto, File image,
   ) async {
@@ -88,6 +88,7 @@ class Alerts {
       Map<String, String> field = {
         "description": "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
         "status": alertsDto.status.toString(),
+        "userId": ResponseData.profileResponseModel!.data!.user!.id.toString(),
         "quantity": int.parse(alertsDto.quantity.toString()).toString(),
         "location.longitude": alertsDto.locationlongitude.toString(),
         "location.latitude": alertsDto.locationlatitude.toString(),
@@ -111,6 +112,7 @@ class Alerts {
       logger.wtf(responseD.statusCode);
       logger.wtf(responseD.body);
       if (responseD.statusCode == 201) {
+        bloc.fetchHistory(context);
         showSuccessAlert(context, "Success", message: "Alert Created Successfully", isDismissible: true);
       } else {
 
@@ -138,11 +140,11 @@ class Alerts {
         Uri.parse(url),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader: 'Bearer ${DummyData.accessToken}',
+          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
         },
-        body: json.encode({
-          "id":alertId.toString(),
-        }),
+        // body: json.encode({
+        //   "id":alertId.toString(),
+        // }),
       ).timeout(const Duration(seconds: 60));
 
       logger.v(httpConnectionApi.body);
@@ -177,11 +179,11 @@ class Alerts {
         Uri.parse(url),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader: 'Bearer ${DummyData.accessToken}',
+          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
         },
-        body: json.encode({
-          "id":alertId.toString(),
-        }),
+        // body: json.encode({
+        //   "_id": alertId.toString(),
+        // }),
       ).timeout(const Duration(seconds: 60));
 
       logger.v(httpConnectionApi.body);
@@ -217,7 +219,7 @@ class Alerts {
         Uri.parse(url),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader: 'Bearer ${DummyData.accessToken}',
+          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
         },
         body: json.encode({
           "userId":collectorId.toString(),
@@ -248,21 +250,32 @@ class Alerts {
   }
 
   Future<void> updateUTCAlert(BuildContext context, {required String alertId,
-    required String collectorId, required String status, }) async {
-    final url = http + baseURL +  updateCTOAlertsPath + alertId;
+    required String status,
+    required String collectorId,
+    required String userId,
+  }) async {
+    final url = http + baseURL +  updateUTCAlertsPath + alertId;
 
     logger.i(url);
+
+    print(json.encode({
+      "collectorId":collectorId.toString(),
+      "status":status.toString(),
+      "userId":userId.toString(),
+    }));
+
 
     try {
       final httpConnectionApi = await client.put(
         Uri.parse(url),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader: 'Bearer ${DummyData.accessToken}',
+          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
         },
         body: json.encode({
-          "userId":collectorId.toString(),
+          "collectorId":collectorId.toString(),
           "status":status.toString(),
+          "userId":userId.toString(),
         }),
       ).timeout(const Duration(seconds: 60));
 

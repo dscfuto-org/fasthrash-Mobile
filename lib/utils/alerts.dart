@@ -1,6 +1,7 @@
 
 import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
+import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -8,104 +9,131 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 
-// showInfoAlert(
-//     BuildContext context, String title, {
-//       required String message,
-//       required bool isDismissible,
-//       btnOnePressed, btnOneText,
-//       btnTwoText, btnTwoPressed,
-//     }) {
-//   final width = MediaQuery.of(context).size.width;
-//   final deviceH = MediaQuery.of(context).size.height;
-//   showDialog(
-//       barrierDismissible: true, context: context,
-//       builder: (ctx) {
-//         return Container(
-//           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.r)),
-//           child: AlertDialog(
-//             contentPadding: EdgeInsets.zero,
-//             shape:
-//             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-//             content: SizedBox(
-//               height: deviceH/3.5,
-//               width: width,
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   const Spacer(),
-//                   SizedBox(
-//                     height: deviceH/14,
-//                     child: Image.asset(dangerAlertIcon, alignment: Alignment.center),
-//                   ),
-//
-//                   // Text(title, textAlign: TextAlign.center, style: kTitleStyle,),
-//                   Container(
-//                     height:  deviceH/9,
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Center(
-//                       child: Text(
-//                         message,
-//                         textAlign: TextAlign.center,
-//                         style: TextStyle(
-//                           color: Colors.black,
-//                           fontSize: 14.sp,
-//                           fontFamily: 'Satoshi',
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                   Container(
-//                     height:  deviceH/11,
-//                     padding: const EdgeInsets.all(8.0),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.end,
-//                       children: [
-//                         InkWell(
-//                           onTap: btnTwoPressed,
-//                           child: Text(
-//                             btnTwoText.toString(),
-//                             style:  TextStyle(
-//                               color: Colors.black,
-//                               fontSize: 14.sp,
-//                               fontFamily: 'Satoshi',
-//                             ),
-//                           ),
-//                         ),
-//                         MaterialButton(
-//                           onPressed: () async {
-//                             btnOnePressed();
-//                           },
-//                           child: Container(
-//                             width: width / 4,
-//                             height: 50.w,
-//                             padding:  EdgeInsets.all(5.r),
-//                             // alignment: Alignment.centerRight,
-//                             decoration: BoxDecoration(
-//                                 borderRadius: BorderRadius.all(Radius.circular(15.r)),
-//                                 color: Colors.black),
-//                             child: Center(
-//                               child: Text(
-//                                 btnOneText.toString(),
-//                                 style:  TextStyle(
-//                                     fontSize: 14.sp,
-//                                     color: Colors.white,
-//                                     fontFamily: 'Satoshi',
-//                                     fontWeight: FontWeight.bold),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         );
-//       });
-//
-// }
+
+
+showInfoAlert(
+    BuildContext context, String title, {
+      required String message,
+      required bool isDismissible,
+      btnOnePressed, btnOneText,
+      btnTwoText, btnTwoPressed,
+    }) {
+  final width = MediaQuery.of(context).size.width;
+  final deviceH = MediaQuery.of(context).size.height;
+  bool isLoading = false;
+  showDialog(
+      barrierDismissible: true, context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (BuildContext context, setState) {
+            return Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.r)),
+              child: AlertDialog(
+                contentPadding: EdgeInsets.zero,
+                shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                content: SizedBox(
+                  height: deviceH/3.5,
+                  width: width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Spacer(),
+                      SizedBox(
+                          height: deviceH/14,
+                          child: Icon(Icons.info, color: Colors.red, size: 50.sp,)
+                      ),
+
+                      // Text(title, textAlign: TextAlign.center, style: kTitleStyle,),
+                      Container(
+                        height:  deviceH/9,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            message,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.sp,
+                              fontFamily: 'DMSans',
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height:  deviceH/11,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: btnTwoPressed,
+                              child: Text(
+                                btnTwoText.toString(),
+                                style:  TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontFamily: 'DMSans',
+                                ),
+                              ),
+                            ),
+                             isLoading ? loaderTwo : MaterialButton(
+                              onPressed: () async {
+
+                                setState(() {
+                                  isLoading = true;
+                                });
+
+                                try {
+                                  await btnOnePressed();
+                                  // navigateBack(context);
+
+                                } catch (e) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+
+                                  rethrow;
+                                }
+
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              },
+                              child: Container(
+                                width: width / 4,
+                                height: 50.w,
+                                padding:  EdgeInsets.all(5.r),
+                                // alignment: Alignment.centerRight,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                                  color: AppColors.green,),
+                                child: Center(
+                                  child: Text(
+                                    btnOneText.toString(),
+                                    style:  TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.white,
+                                        fontFamily: 'DMSans',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+
+      });
+
+}
 
 
 
@@ -143,7 +171,7 @@ Future<void> showSuccessAlert(BuildContext context, String title, {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Colors.black,
-                        fontFamily: 'Satoshi',
+                        fontFamily: 'DMSans',
                         fontSize: 14,
                         height: 1.5,
                         fontWeight: FontWeight.bold),
@@ -158,7 +186,7 @@ Future<void> showSuccessAlert(BuildContext context, String title, {
                       color: Colors.black,
                       fontSize: 14.sp,
                       height: 1.2,
-                      fontFamily: 'Satoshi',
+                      fontFamily: 'DMSans',
                     ),
                   ),
                   const SizedBox(
@@ -181,7 +209,7 @@ Future<void> showSuccessAlert(BuildContext context, String title, {
                           'Ok',
                           style: TextStyle(
                               fontSize: 14.sp,
-                              fontFamily: "Satoshi",
+                              fontFamily: "DMSans",
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -252,7 +280,7 @@ Future<void> showRegisterAlert(BuildContext context, String title, {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Colors.black,
-                        fontFamily: 'Satoshi',
+                        fontFamily: 'DMSans',
                         fontSize: 14,
                         height: 1.5,
                         fontWeight: FontWeight.bold),
@@ -267,7 +295,7 @@ Future<void> showRegisterAlert(BuildContext context, String title, {
                       color: Colors.black,
                       fontSize: 14.sp,
                       height: 1.2,
-                      fontFamily: 'Satoshi',
+                      fontFamily: 'DMSans',
                     ),
                   ),
                   const SizedBox(
@@ -290,7 +318,7 @@ Future<void> showRegisterAlert(BuildContext context, String title, {
                           'Proceed',
                           style: TextStyle(
                               fontSize: 14.sp,
-                              fontFamily: "Satoshi",
+                              fontFamily: "DMSans",
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -360,7 +388,7 @@ Future<void> showCreateAlert(BuildContext context, String title, {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Colors.black,
-                        fontFamily: 'Satoshi',
+                        fontFamily: 'DMSans',
                         fontSize: 14,
                         height: 1.5,
                         fontWeight: FontWeight.bold),
@@ -375,7 +403,7 @@ Future<void> showCreateAlert(BuildContext context, String title, {
                       color: Colors.black,
                       fontSize: 14.sp,
                       height: 1.2,
-                      fontFamily: 'Satoshi',
+                      fontFamily: 'DMSans',
                     ),
                   ),
                   const SizedBox(
@@ -398,7 +426,7 @@ Future<void> showCreateAlert(BuildContext context, String title, {
                           'Proceed',
                           style: TextStyle(
                               fontSize: 14.sp,
-                              fontFamily: "Satoshi",
+                              fontFamily: "DMSans",
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -468,7 +496,7 @@ Future<void> showFailureAlert(BuildContext context, String title, {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         color: Colors.black,
-                        fontFamily: 'Satoshi',
+                        fontFamily: 'DMSans',
                         fontSize: 14,
                         height: 1.5,
                         fontWeight: FontWeight.bold),
@@ -485,7 +513,7 @@ Future<void> showFailureAlert(BuildContext context, String title, {
                         color: Colors.black,
                         fontSize: 14.sp,
                         height: 1.2,
-                        fontFamily: 'Satoshi',
+                        fontFamily: 'DMSans',
                       ),
                     ),
                   ),
@@ -509,7 +537,7 @@ Future<void> showFailureAlert(BuildContext context, String title, {
                           'Ok',
                           style: TextStyle(
                               fontSize: 14.sp,
-                              fontFamily: "Satoshi",
+                              fontFamily: "DMSans",
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
