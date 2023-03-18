@@ -10,8 +10,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class HistoryCard extends StatelessWidget {
 
   final depositHistoryModel;
+  final String collectorType;
 
-  const HistoryCard({super.key, required this.depositHistoryModel});
+  const HistoryCard({super.key, required this.depositHistoryModel, required this.collectorType});
+
+
 
 
   @override
@@ -21,7 +24,8 @@ class HistoryCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => navigatePush(context, HistoryDetailsScreen(depositHistoryModel: depositHistoryModel,)),
+        onTap: () => navigatePush(context, HistoryDetailsScreen(
+          depositHistoryModel: depositHistoryModel, collectorType: collectorType,)),
         child: Container(
             decoration: BoxDecoration(
                 color: AppColors.grey.withOpacity(0.2),
@@ -159,9 +163,9 @@ class HistoryCard extends StatelessWidget {
 
   getColour() {
     if(depositHistoryModel.status == "pending"){
+      return AppColors.red;
+    }  else if (depositHistoryModel.status == "accepted"){
       return AppColors.yellow;
-    }  else if (depositHistoryModel.status == "pending"){
-      return Colors.lightGreenAccent;
     } else {
       return AppColors.green;
     }

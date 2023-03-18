@@ -35,7 +35,7 @@ class Bloc {
   }
   allAlerts(context) async {
     List<AllAlertsResponseModel>? allAlertsResponseModel =
-    await _historyRepository.getAllAlerts();
+    await _historyRepository.getAllAlerts(context);
     _allAlertsSubject.sink.add(allAlertsResponseModel!);
   }
 
@@ -61,8 +61,8 @@ class HistoryRepository {
     return HistoryBackend().collectionHistory();
   }
 
-  Future<List<AllAlertsResponseModel>?> getAllAlerts() {
-    return HistoryBackend().fetchAllAlerts();
+  Future<List<AllAlertsResponseModel>?> getAllAlerts(context) {
+    return HistoryBackend().fetchAllAlerts(context);
   }
 }
 

@@ -144,7 +144,7 @@ showInfoAlert(
 
 Future<void> showSuccessAlert(BuildContext context, String title, {
   required String message, required bool isDismissible,
-  btnOnePressed, btnOneText,
+  required btnOnePressed, btnOneText,
 }) async {
   final width = MediaQuery.of(context).size.width;
   final deviceH = MediaQuery.of(context).size.height;

@@ -88,7 +88,7 @@ class _CollectorHistoryScreenState extends State<CollectorHistoryScreen> {
             child: StreamBuilder<List<CollectionsHistoryModel>>(
               stream: bloc.collectorSubject.stream,
               builder: (context, AsyncSnapshot<List<CollectionsHistoryModel>> snapshot) {
-                logger.w(snapshot.data);
+                ///logger.w(snapshot.data);
                 if (snapshot.hasData) {
                   return CollectionsHistoryListView(depositHistoryModel: snapshot.data);
                 } else if (snapshot.hasError) {
@@ -158,7 +158,8 @@ class CollectionsHistoryListViewState extends State<CollectionsHistoryListView> 
           scrollDirection: Axis.vertical,
           itemBuilder: (BuildContext context, int index) {
             return HistoryCard(
-              depositHistoryModel: widget.depositHistoryModel![index] as CollectionsHistoryModel,
+              collectorType: "Collections",
+              depositHistoryModel: widget.depositHistoryModel![index],
             );
           },
           itemCount: widget.depositHistoryModel!.length,

@@ -181,6 +181,7 @@ class DepositHistoryListViewState extends State<DepositHistoryListView> {
           scrollDirection: Axis.vertical,
           itemBuilder: (BuildContext context, int index) {
             return HistoryCard(
+              collectorType: "Deposit",
               depositHistoryModel: widget.depositHistoryModel![index],
             );
           },

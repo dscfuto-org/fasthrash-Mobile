@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:fastrash/repository/backend/alerts_backend.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/utils/alerts.dart';
+import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,7 @@ class UserLocationMapState extends State<UserLocationMap> {
             btnTwoText: "Back",
             btnOnePressed: () async {
              AlertsBackend().updateUTCAlert(context, alertId: item.id.toString(),
-                 status: "accepted", userId:  item.id.toString(), collectorId:
+                 status: "accepted", userId:  item.userId.toString(), collectorId:
                  ResponseData.profileResponseModel!.data!.user!.id.toString());
             },
             btnTwoPressed: () =>
@@ -81,6 +82,8 @@ class UserLocationMapState extends State<UserLocationMap> {
 
     // Update state to trigger rebuild
     setState(() {});
+
+
   }
 
 
@@ -146,7 +149,7 @@ class UserLocationMapState extends State<UserLocationMap> {
   dispose() {
     super.dispose();
     // ignore: null_argument_to_non_null_type
-    _controller.complete();
+    ///_controller.complete();
    /// _connectivitySubscription.cancel();
   }
   //
@@ -163,6 +166,7 @@ class UserLocationMapState extends State<UserLocationMap> {
 
   @override
   Widget build(BuildContext context) {
+    logger.v(ResponseData.allAlertsResponseModel);
     return  Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),),
@@ -177,6 +181,9 @@ class UserLocationMapState extends State<UserLocationMap> {
         markers: Set<Marker>.of(_markers),
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
+          setState(() {
+            _loadMarkers();
+          });
         },
       ),
     );

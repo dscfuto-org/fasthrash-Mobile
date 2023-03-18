@@ -2,7 +2,6 @@ import 'package:basic_utils/basic_utils.dart';
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/repository/backend/alerts_backend.dart';
 import 'package:fastrash/repository/data/response_data.dart';
-import 'package:fastrash/repository/model/deposit_history_model.dart';
 import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/buttons.dart';
 import 'package:fastrash/utils/loaders.dart';
@@ -15,8 +14,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HistoryDetailsScreen extends StatefulWidget {
   final depositHistoryModel;
+  final String collectorType;
 
-  const HistoryDetailsScreen({super.key, required this.depositHistoryModel});
+  const HistoryDetailsScreen({super.key, required this.depositHistoryModel, required this.collectorType});
+
 
   @override
   State<HistoryDetailsScreen> createState() => _HistoryDetailsScreenState();
@@ -67,12 +68,10 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
     try {
       displayLongToastMessage("Please wait...");
       if(ResponseData.profileResponseModel!.data!.user!.role.toString() == "user"){
-        await AlertsBackend()
-            .deleteUTCAlert(context, widget.depositHistoryModel.id.toString());
+        await AlertsBackend().deleteUTCAlert(context, widget.depositHistoryModel.id.toString());
       } else {
         displayLongToastMessage("Please wait...");
-        await AlertsBackend()
-            .deleteCTOAlert(context, widget.depositHistoryModel.id.toString());
+        await AlertsBackend().deleteCTOAlert(context, widget.depositHistoryModel.id.toString());
       }
 
     } catch (e) {
@@ -161,15 +160,13 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                           child: Row(
                             mainAxisAlignment:
                             MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Icon(CupertinoIcons.trash, color: Colors.red,),
+                            children: const [
+                              Icon(CupertinoIcons.trash, color: Colors.red,),
                               Text(
                                 "Delete",
                                 style: TextStyle(
-                                  color: Colors.red
-                                      .withOpacity(0.7),
-                                  fontFamily:
-                                  'DMSans',
+                                  color: Colors.red,
+                                  fontFamily: 'DMSans',
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -436,13 +433,13 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                   child: Chip(
                     backgroundColor:
                     widget.depositHistoryModel.status == "pending"
-                        ? AppColors.yellow
+                        ? AppColors.red
                         : Colors.grey,
 
                     padding: const EdgeInsets.all(0.0),
                     // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
                     label: Text(
-                      "Posted",
+                      "Pending",
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -458,8 +455,8 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                   padding: const EdgeInsets.only(right: 4),
                   child: Chip(
                     backgroundColor:
-                    widget.depositHistoryModel.status == "Accepted"
-                        ? Colors.lightGreenAccent
+                    widget.depositHistoryModel.status == "accepted"
+                        ? AppColors.yellow
                         : Colors.grey,
                     padding: const EdgeInsets.all(0.0),
                     // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
@@ -480,8 +477,7 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                 Chip(
                   backgroundColor:
                   widget.depositHistoryModel.status == "collected"
-                      ? Colors.green
-                      : Colors.grey,
+                      ? AppColors.green : Colors.grey,
                   padding: const EdgeInsets.all(0.0),
                   // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
                   label: Text(
@@ -740,6 +736,9 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
     });
     try {
       ///await AlertsBackend().updateUTCAlert(context, status: status, alertId: widget.depositHistoryModel.id.toString());
+      ///
+      await AlertsBackend().updateUTCAlertToCollected(context, alertId: widget.depositHistoryModel.id.toString(),
+          status: status, userId:  widget.depositHistoryModel.userId!.toString());
     } catch (e) {
       setState(() {
         isLoading = false;
@@ -759,6 +758,9 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
 
     try {
      /// await AlertsBackend().updateUTCAlert(context, status: status, alertId:  widget.depositHistoryModel.id.toString());
+      ///
+      await AlertsBackend().updateCTOAlertToCollected(context, alertId: widget.depositHistoryModel.id.toString(),
+          status: status, collectorId:  widget.depositHistoryModel.userId!.toString());
     } catch (e) {
       setState(() {
         isLoading = false;
@@ -773,48 +775,45 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
 
   _submitButton() {
     if (ResponseData.profileResponseModel!.data!.user!.role == "collector") {
-      if (StringUtils.equalsIgnoreCase(
-          'pending', widget.depositHistoryModel.status.toString())) {
-        return AppLargeButton(
-          text: "Accept Job",
-          onTap: () => providerSubmitRequest("accepted"),
-        );
-      } else if (StringUtils.equalsIgnoreCase(
-          'Accepted', widget.depositHistoryModel.status.toString())) {
-        return Container();
-      } else if (StringUtils.equalsIgnoreCase(
-          'paid', widget.depositHistoryModel.status.toString())) {
-        return AppLargeButton(
-          text: "Start Job",
-          onTap: () => providerSubmitRequest("in_progress"),
-        );
-      } else if (StringUtils.equalsIgnoreCase(
-          'In Progress', widget.depositHistoryModel.status.toString())) {
-        return Container();
+     /// return Container();
+
+      if(widget.collectorType == "Deposit"){
+        if (StringUtils.equalsIgnoreCase(
+            'pending', widget.depositHistoryModel.status.toString())) {
+          return Container();
+        } else if (StringUtils.equalsIgnoreCase(
+            'Accepted', widget.depositHistoryModel.status.toString())) {
+          return AppLargeButton(
+            text: "Mark as Collected",
+            onTap: ()=> providerSubmitRequest("collected"),
+          );
+        } else if ( StringUtils.equalsIgnoreCase(
+            'collected', widget.depositHistoryModel.status.toString())) {
+          return Container();
+        } else {
+          return Container();
+        }
       } else {
         return Container();
       }
-    } else {
+
+
+    }
+    /// ########
+
+    else {
       if (StringUtils.equalsIgnoreCase(
           'pending', widget.depositHistoryModel.status.toString())) {
         return Container();
       } else if (StringUtils.equalsIgnoreCase(
           'Accepted', widget.depositHistoryModel.status.toString())) {
         return AppLargeButton(
-          text: "Make Payment",
-          onTap: (){},
-          ///onTap: () => chargeCard(),
-          ///  userSubmitRequest("paid");
+          text: "Mark as Collected",
+          onTap: ()=> userSubmitRequest("collected"),
         );
-      } else if (StringUtils.equalsIgnoreCase(
-          'paid', widget.depositHistoryModel.status.toString())) {
+      } else if ( StringUtils.equalsIgnoreCase(
+          'collected', widget.depositHistoryModel.status.toString())) {
         return Container();
-      } else if (StringUtils.equalsIgnoreCase(
-          'In Progress', widget.depositHistoryModel.status.toString())) {
-        return AppLargeButton(
-          text: "Confirm Job Completed",
-          onTap: () => userSubmitRequest("done"),
-        );
       } else {
         return Container();
       }

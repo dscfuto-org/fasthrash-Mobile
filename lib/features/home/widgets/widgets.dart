@@ -9,7 +9,6 @@ import 'package:fastrash/utils/buttons.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/device_location.dart';
 import 'package:fastrash/utils/loaders.dart';
-import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

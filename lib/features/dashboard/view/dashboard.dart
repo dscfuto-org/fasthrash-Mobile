@@ -23,13 +23,13 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
 
-    makeRepeatedCalls();
+    ///makeRepeatedCalls();
     super.initState();
   }
 
   makeRepeatedCalls(){
-    timer =Timer(const Duration(seconds: 10), () {
-      bloc.fetchHistory(context);
+    timer =Timer(const Duration(seconds: 10), () async {
+      await bloc.fetchHistory(context);
     });
   }
 

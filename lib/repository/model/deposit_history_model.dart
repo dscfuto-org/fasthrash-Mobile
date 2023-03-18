@@ -13,18 +13,19 @@
 
 class DepositHistoryModel {
   DepositHistoryModel({
-      this.location, 
-      this.id, 
-      this.userId, 
-      this.description, 
-      this.status, 
-      this.images, 
-      this.address, 
-      this.role, 
-      this.quantity, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.v,});
+    this.location,
+    this.id,
+    this.userId,
+    this.description,
+    this.status,
+    this.images,
+    this.address,
+    this.role,
+    this.quantity,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+    this.collectorId,});
 
   DepositHistoryModel.fromJson(dynamic json) {
     location = json['location'] != null ? Location.fromJson(json['location']) : null;
@@ -39,6 +40,7 @@ class DepositHistoryModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     v = json['__v'];
+    collectorId = json['collectorId'];
   }
   Location? location;
   String? id;
@@ -52,31 +54,34 @@ class DepositHistoryModel {
   String? createdAt;
   String? updatedAt;
   num? v;
-DepositHistoryModel copyWith({  Location? location,
-  String? id,
-  String? userId,
-  String? description,
-  String? status,
-  List<String>? images,
-  String? address,
-  String? role,
-  num? quantity,
-  String? createdAt,
-  String? updatedAt,
-  num? v,
-}) => DepositHistoryModel(  location: location ?? this.location,
-  id: id ?? this.id,
-  userId: userId ?? this.userId,
-  description: description ?? this.description,
-  status: status ?? this.status,
-  images: images ?? this.images,
-  address: address ?? this.address,
-  role: role ?? this.role,
-  quantity: quantity ?? this.quantity,
-  createdAt: createdAt ?? this.createdAt,
-  updatedAt: updatedAt ?? this.updatedAt,
-  v: v ?? this.v,
-);
+  String? collectorId;
+  DepositHistoryModel copyWith({  Location? location,
+    String? id,
+    String? userId,
+    String? description,
+    String? status,
+    List<String>? images,
+    String? address,
+    String? role,
+    num? quantity,
+    String? createdAt,
+    String? updatedAt,
+    num? v,
+    String? collectorId,
+  }) => DepositHistoryModel(  location: location ?? this.location,
+    id: id ?? this.id,
+    userId: userId ?? this.userId,
+    description: description ?? this.description,
+    status: status ?? this.status,
+    images: images ?? this.images,
+    address: address ?? this.address,
+    role: role ?? this.role,
+    quantity: quantity ?? this.quantity,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    v: v ?? this.v,
+    collectorId: collectorId ?? this.collectorId,
+  );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (location != null) {
@@ -93,18 +98,19 @@ DepositHistoryModel copyWith({  Location? location,
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
+    map['collectorId'] = collectorId;
     return map;
   }
 
 }
 
-/// longitude : -122.084
-/// latitude : 37.4219983
+/// longitude : -122.0849872
+/// latitude : 37.4226711
 
 class Location {
   Location({
-      this.longitude, 
-      this.latitude,});
+    this.longitude,
+    this.latitude,});
 
   Location.fromJson(dynamic json) {
     longitude = json['longitude'];
@@ -112,11 +118,11 @@ class Location {
   }
   num? longitude;
   num? latitude;
-Location copyWith({  num? longitude,
-  num? latitude,
-}) => Location(  longitude: longitude ?? this.longitude,
-  latitude: latitude ?? this.latitude,
-);
+  Location copyWith({  num? longitude,
+    num? latitude,
+  }) => Location(  longitude: longitude ?? this.longitude,
+    latitude: latitude ?? this.latitude,
+  );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['longitude'] = longitude;

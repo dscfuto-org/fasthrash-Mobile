@@ -28,4 +28,4 @@ const String deleteCTOAlertsPath ="/api/org/alerts/delete/";
 
 const String depositHistoryPath ="/api/alerts/user/";
 const String collectionHistoryPath ="/api/alerts/collector/";
-const String allAlertPath ="/api/alerts/?role=user";
+const String allPendingAlertPath ="/api/alerts/?role=user&status=pending";

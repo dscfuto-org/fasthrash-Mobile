@@ -14,8 +14,9 @@ import 'package:http/http.dart' as client;
 class HistoryBackend{
 
 
-  Future<List<AllAlertsResponseModel>?> fetchAllAlerts() async {
-    const url = http + baseURL  + allAlertPath;
+
+  Future<List<AllAlertsResponseModel>?> fetchAllAlerts(context) async {
+    const url = http + baseURL  + allPendingAlertPath;
 
     logger.i(url);
 
@@ -29,7 +30,7 @@ class HistoryBackend{
         },
       ).timeout(const Duration(seconds: 60));
       //
-      logger.v(httpConnectionApi.body);
+     /// logger.v(httpConnectionApi.body);
       // logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 200) {
@@ -39,7 +40,6 @@ class HistoryBackend{
         ResponseData.allAlertsResponseModel = (resBody["data"]["alert"] as List)
             .map((e) => AllAlertsResponseModel.fromJson(e)).toList();
 
-        /// todo: fetch only pending
         logger.wtf(ResponseData.allAlertsResponseModel);
       }
     } on Exception catch (e) {
@@ -108,7 +108,7 @@ class HistoryBackend{
         ResponseData.collectionsHistoryModel = (resBody["data"]["alert"] as List)
             .map((e) => CollectionsHistoryModel.fromJson(e)).toList();
 
-        logger.wtf(ResponseData.collectionsHistoryModel);
+      ///  logger.wtf(ResponseData.collectionsHistoryModel);
       }
     } on Exception catch (e) {
       logger.e(e);
@@ -116,6 +116,5 @@ class HistoryBackend{
     }
    return ResponseData.collectionsHistoryModel;
   }
-
 
 }

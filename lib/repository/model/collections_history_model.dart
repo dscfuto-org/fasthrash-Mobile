@@ -11,7 +11,8 @@ class CollectionsHistoryModel {
     this.quantity,
     this.createdAt,
     this.updatedAt,
-    this.v,});
+    this.v,
+    this.collectorId,});
 
   CollectionsHistoryModel.fromJson(dynamic json) {
     location = json['location'] != null ? Location.fromJson(json['location']) : null;
@@ -26,6 +27,7 @@ class CollectionsHistoryModel {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     v = json['__v'];
+    collectorId = json['collectorId'];
   }
   Location? location;
   String? id;
@@ -39,6 +41,7 @@ class CollectionsHistoryModel {
   String? createdAt;
   String? updatedAt;
   num? v;
+  String? collectorId;
   CollectionsHistoryModel copyWith({  Location? location,
     String? id,
     String? userId,
@@ -51,6 +54,7 @@ class CollectionsHistoryModel {
     String? createdAt,
     String? updatedAt,
     num? v,
+    String? collectorId,
   }) => CollectionsHistoryModel(  location: location ?? this.location,
     id: id ?? this.id,
     userId: userId ?? this.userId,
@@ -63,6 +67,7 @@ class CollectionsHistoryModel {
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
     v: v ?? this.v,
+    collectorId: collectorId ?? this.collectorId,
   );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -80,13 +85,14 @@ class CollectionsHistoryModel {
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
+    map['collectorId'] = collectorId;
     return map;
   }
 
 }
 
-/// longitude : -122.084
-/// latitude : 37.4219983
+/// longitude : -122.0849872
+/// latitude : 37.4226711
 
 class Location {
   Location({

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fastrash/constants/api.dart';
 import 'package:fastrash/constants/strings.dart';
+import 'package:fastrash/features/dashboard/view/dashboard.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/alerts_dto.dart';
@@ -10,6 +11,7 @@ import 'package:fastrash/repository/model/failure_response_model.dart';
 import 'package:fastrash/repository/services/bloc.dart';
 import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
+import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as client;
 
@@ -54,8 +56,9 @@ class AlertsBackend {
       logger.wtf(responseD.statusCode);
       logger.wtf(responseD.body);
       if (responseD.statusCode == 201) {
-        bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Alert Created Successfully", isDismissible: true);
+        await bloc.fetchHistory(context);
+        showSuccessAlert(context, "Success", message: "Alert Created Successfully",
+            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
       } else {
 
         var resBody = jsonDecode(responseD.body.toString());
@@ -112,8 +115,10 @@ class AlertsBackend {
       logger.wtf(responseD.statusCode);
       logger.wtf(responseD.body);
       if (responseD.statusCode == 201) {
-        bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Alert Created Successfully", isDismissible: true);
+        await bloc.fetchHistory(context);
+        showSuccessAlert(context, "Success", message: "Alert Created Successfully",
+            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+       ///
       } else {
 
         var resBody = jsonDecode(responseD.body.toString());
@@ -150,10 +155,10 @@ class AlertsBackend {
       logger.v(httpConnectionApi.body);
       logger.v(httpConnectionApi.statusCode);
 
-      if (httpConnectionApi.statusCode == 200) {
-       bloc.fetchHistory(context);
-
-        displayLongToastMessage("Alert is deleted successfully");
+      if (httpConnectionApi.statusCode == 201) {
+       await bloc.fetchHistory(context);
+       showSuccessAlert(context, "Success", message: "Alert Deleted Successfully",
+           isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
 
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
@@ -164,7 +169,7 @@ class AlertsBackend {
     } on Exception catch (e) {
       displayShortToastMessage( somethingWentWrongText, context );
 
-      logger.e(e);
+      print(e);
       rethrow;
     }
   }
@@ -189,9 +194,10 @@ class AlertsBackend {
       logger.v(httpConnectionApi.body);
       logger.v(httpConnectionApi.statusCode);
 
-      if (httpConnectionApi.statusCode == 200) {
-        bloc.fetchHistory(context);
-        displayLongToastMessage("Alert is deleted successfully");
+      if (httpConnectionApi.statusCode == 201) {
+        await bloc.fetchHistory(context);
+        showSuccessAlert(context, "Success", message: "Alert Deleted Successfully",
+            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
 
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
@@ -201,53 +207,52 @@ class AlertsBackend {
       }
     } on Exception catch (e) {
       displayShortToastMessage( somethingWentWrongText, context );
-
-      logger.e(e);
+      print(e);
       rethrow;
     }
   }
 
 
-  Future<void> updateCTOAlert(BuildContext context, {required String alertId, 
-    required String collectorId, required String status, }) async {
-    final url = http + baseURL +  updateCTOAlertsPath + alertId;
-
-    logger.i(url);
-
-    try {
-      final httpConnectionApi = await client.put(
-        Uri.parse(url),
-        headers: {
-          HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
-        },
-        body: json.encode({
-          "userId":collectorId.toString(),
-          "status":status.toString(),
-        }),
-      ).timeout(const Duration(seconds: 60));
-
-      logger.v(httpConnectionApi.body);
-      logger.v(httpConnectionApi.statusCode);
-
-      if (httpConnectionApi.statusCode == 200) {
-        bloc.fetchHistory(context);
-
-        displayLongToastMessage("Alert is updated to ${status.toUpperCase()} successfully");
-
-      } else {
-        var resBody = jsonDecode(httpConnectionApi.body.toString());
-        ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-        showFailureAlert(context,"Error Deleting Alert" ,
-            message:  ResponseData.failureResponse!.message.toString(), isDismissible: true);
-      }
-    } on Exception catch (e) {
-      displayShortToastMessage( somethingWentWrongText, context );
-
-      logger.e(e);
-      rethrow;
-    }
-  }
+  // Future<void> updateCTOAlert(BuildContext context, {required String alertId,
+  //   required String collectorId, required String status, }) async {
+  //   final url = http + baseURL +  updateCTOAlertsPath + alertId;
+  //
+  //   logger.i(url);
+  //
+  //   try {
+  //     final httpConnectionApi = await client.put(
+  //       Uri.parse(url),
+  //       headers: {
+  //         HttpHeaders.contentTypeHeader: 'application/json',
+  //         HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
+  //       },
+  //       body: json.encode({
+  //         "userId":collectorId.toString(),
+  //         "status":status.toString(),
+  //       }),
+  //     ).timeout(const Duration(seconds: 60));
+  //
+  //     logger.v(httpConnectionApi.body);
+  //     logger.v(httpConnectionApi.statusCode);
+  //
+  //     if (httpConnectionApi.statusCode == 200) {
+  //       await bloc.fetchHistory(context);
+  //
+  //       displayLongToastMessage("Alert is updated to ${status.toUpperCase()} successfully");
+  //
+  //     } else {
+  //       var resBody = jsonDecode(httpConnectionApi.body.toString());
+  //       ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+  //       showFailureAlert(context,"Error Updating Alert" ,
+  //           message:  ResponseData.failureResponse!.message.toString(), isDismissible: true);
+  //     }
+  //   } on Exception catch (e) {
+  //     displayShortToastMessage( somethingWentWrongText, context );
+  //
+  //     logger.e(e);
+  //     rethrow;
+  //   }
+  // }
 
   Future<void> updateUTCAlert(BuildContext context, {required String alertId,
     required String status,
@@ -283,14 +288,15 @@ class AlertsBackend {
       logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 200) {
-        bloc.fetchHistory(context);
+        await bloc.fetchHistory(context);
 
-        displayLongToastMessage("Alert is updated to ${status.toUpperCase()} successfully");
+        showSuccessAlert(context, "Success", message: "Alert ${status.toUpperCase()} Successfully",
+            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
 
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
-        showFailureAlert(context,"Error Deleting Alert" ,
+        showFailureAlert(context,"Error Updating Alert" ,
             message:  ResponseData.failureResponse!.message.toString(), isDismissible: true);
       }
     } on Exception catch (e) {
@@ -300,6 +306,106 @@ class AlertsBackend {
       rethrow;
     }
   }
+
+
+  Future<void> updateUTCAlertToCollected(BuildContext context, {required String alertId,
+    required String status,
+    required String userId,
+  }) async {
+    final url =  http + baseURL +  "/api/alerts/user/update/"  + alertId ;
+
+    logger.i(url);
+
+    print(json.encode({
+      "status":status.toString(),
+      "userId":userId.toString(),
+    }));
+
+
+    try {
+      final httpConnectionApi = await client.put(
+        Uri.parse(url),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
+        },
+        body: json.encode({
+          "status":status.toString(),
+          "userId":userId.toString(),
+        }),
+      ).timeout(const Duration(seconds: 60));
+
+      logger.v(httpConnectionApi.body);
+      logger.v(httpConnectionApi.statusCode);
+
+      if (httpConnectionApi.statusCode == 200) {
+        await bloc.fetchHistory(context);
+        showSuccessAlert(context, "Success", message: "Alert ${status.toUpperCase()} Successfully",
+            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+      } else {
+        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+        showFailureAlert(context,"Error Updating Alert" ,
+            message:  ResponseData.failureResponse!.message.toString(), isDismissible: true);
+      }
+    } on Exception catch (e) {
+      displayShortToastMessage( somethingWentWrongText, context );
+
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+
+  Future<void> updateCTOAlertToCollected(BuildContext context, {required String alertId,
+    required String status,
+    required String collectorId,
+  }) async {
+    final url =  http + baseURL +  "/api/org/alerts/collector/update/"  + alertId ;
+
+    logger.i(url);
+
+    print(json.encode({
+      "status":status.toString(),
+      "userId":collectorId.toString(),
+    }));
+
+
+    try {
+      final httpConnectionApi = await client.put(
+        Uri.parse(url),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
+        },
+        body: json.encode({
+          "status":status.toString(),
+          "userId":collectorId.toString(),
+        }),
+      ).timeout(const Duration(seconds: 60));
+
+      logger.v(httpConnectionApi.body);
+      logger.v(httpConnectionApi.statusCode);
+
+      if (httpConnectionApi.statusCode == 200) {
+        await bloc.fetchHistory(context);
+        showSuccessAlert(context, "Success", message: "Alert ${status.toUpperCase()} Successfully",
+            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+      } else {
+        var resBody = jsonDecode(httpConnectionApi.body.toString());
+        ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
+        showFailureAlert(context,"Error Updating Alert" ,
+            message:  ResponseData.failureResponse!.message.toString(), isDismissible: true);
+      }
+    } on Exception catch (e) {
+      displayShortToastMessage( somethingWentWrongText, context );
+
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+
 
 
 

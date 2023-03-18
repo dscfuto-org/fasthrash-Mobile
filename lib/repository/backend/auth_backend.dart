@@ -17,11 +17,18 @@ import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as client;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBackend {
   late SharedPreferences sharedPreferences;
+
+
+  List<Marker> markers = [];
+
+  late BitmapDescriptor myIcon;
+
 
 //Single User SignUp
   Future<void> signUpUser(
@@ -229,7 +236,7 @@ class AuthBackend {
       if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.profileResponseModel = ProfileResponseModel.fromJson(resBody);
-        await bloc.fetchHistory(context);
+        await await bloc.fetchHistory(context);
         logger.w(ResponseData.profileResponseModel);
         /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
         navigateReplace(context, const Dashboard());
@@ -272,7 +279,7 @@ class AuthBackend {
         showSuccessAlert(context, 'Email Sent Successfully',
             message:
                 'Reset Link has be sent to $email, kindly check your mail to continue',
-            isDismissible: true);
+            isDismissible: true, btnOnePressed: null);
 
         // await navigatePush(context, LoginScreen());
 
@@ -318,37 +325,37 @@ class AuthBackend {
   getUserPassword() async {
     sharedPreferences = await SharedPreferences.getInstance();
     DummyData.password = sharedPreferences.getString("Password");
-    logger.i("get Password");
-    logger.i(DummyData.password);
+    //logger.i("get Password");
+    //logger.i(DummyData.password);
   }
 
   saveAppTme() async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setBool("firstTimeOnApp", false);
-    logger.i("saved firstTimeOnApp");
+    //logger.i("saved firstTimeOnApp");
   }
 
   getUserPhoneNo() async {
     sharedPreferences = await SharedPreferences.getInstance();
     DummyData.phone = sharedPreferences.getString("Phone");
-    logger.i("get Phone: ${DummyData.phone}");
+    //logger.i("get Phone: ${DummyData.phone}");
   }
 
   saveUserPhoneNo(phone) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("Phone", phone);
-    logger.i("saved Phone");
+    //logger.i("saved Phone");
   }
 
   saveAccessToken(accessToken) async {
     sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("accessToken", accessToken);
-    logger.i("saved accessToken");
+    //logger.i("saved accessToken");
   }
 
   getAccessToken() async {
     sharedPreferences = await SharedPreferences.getInstance();
     DummyData.accessToken = sharedPreferences.getString("accessToken");
-    logger.i("get accessToken : ${DummyData.accessToken}");
+    //logger.i("get accessToken : ${DummyData.accessToken}");
   }
 }
