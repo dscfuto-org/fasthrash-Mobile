@@ -9,44 +9,50 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 
-
-
 showInfoAlert(
-    BuildContext context, String title, {
-      required String message,
-      required bool isDismissible,
-      btnOnePressed, btnOneText,
-      btnTwoText, btnTwoPressed,
-    }) {
+  BuildContext context,
+  String title, {
+  required String message,
+  required bool isDismissible,
+  btnOnePressed,
+  btnOneText,
+  btnTwoText,
+  btnTwoPressed,
+}) {
   final width = MediaQuery.of(context).size.width;
   final deviceH = MediaQuery.of(context).size.height;
   bool isLoading = false;
   showDialog(
-      barrierDismissible: true, context: context,
+      barrierDismissible: true,
+      context: context,
       builder: (ctx) {
         return StatefulBuilder(
           builder: (BuildContext context, setState) {
             return Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(30.r)),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(30.r)),
               child: AlertDialog(
                 contentPadding: EdgeInsets.zero,
-                shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.r)),
                 content: SizedBox(
-                  height: deviceH/3.5,
+                  height: deviceH / 3.5,
                   width: width,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Spacer(),
                       SizedBox(
-                          height: deviceH/14,
-                          child: Icon(Icons.info, color: Colors.red, size: 50.sp,)
-                      ),
+                          height: deviceH / 14,
+                          child: Icon(
+                            Icons.info,
+                            color: Colors.red,
+                            size: 50.sp,
+                          )),
 
                       // Text(title, textAlign: TextAlign.center, style: kTitleStyle,),
                       Container(
-                        height:  deviceH/9,
+                        height: deviceH / 9,
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: Text(
@@ -61,7 +67,7 @@ showInfoAlert(
                         ),
                       ),
                       Container(
-                        height:  deviceH/11,
+                        height: deviceH / 11,
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -70,56 +76,60 @@ showInfoAlert(
                               onTap: btnTwoPressed,
                               child: Text(
                                 btnTwoText.toString(),
-                                style:  TextStyle(
+                                style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14.sp,
                                   fontFamily: 'DMSans',
                                 ),
                               ),
                             ),
-                             isLoading ? loaderTwo : MaterialButton(
-                              onPressed: () async {
+                            isLoading
+                                ? loaderTwo
+                                : MaterialButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
 
-                                setState(() {
-                                  isLoading = true;
-                                });
+                                      try {
+                                        await btnOnePressed();
+                                        // navigateBack(context);
 
-                                try {
-                                  await btnOnePressed();
-                                  // navigateBack(context);
+                                      } catch (e) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
 
-                                } catch (e) {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
+                                        rethrow;
+                                      }
 
-                                  rethrow;
-                                }
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    },
+                                    child: Container(
+                                      width: width / 4,
+                                      height: 50.w,
+                                      padding: EdgeInsets.all(5.r),
+                                      // alignment: Alignment.centerRight,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.r)),
+                                        color: AppColors.green,
+                                      ),
+                                      child: Center(
+                                        child: Text(
 
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              },
-                              child: Container(
-                                width: width / 4,
-                                height: 50.w,
-                                padding:  EdgeInsets.all(5.r),
-                                // alignment: Alignment.centerRight,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(15.r)),
-                                  color: AppColors.green,),
-                                child: Center(
-                                  child: Text(
-                                    btnOneText.toString(),
-                                    style:  TextStyle(
-                                        fontSize: 14.sp,
-                                        color: Colors.white,
-                                        fontFamily: 'DMSans',
-                                        fontWeight: FontWeight.bold),
+                                          btnOneText.toString(),
+                                          style: TextStyle(
+                                              fontSize: 14.sp,
+                                              color: Colors.white,
+                                              fontFamily: 'DMSans',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -130,17 +140,134 @@ showInfoAlert(
             );
           },
         );
-
       });
-
 }
 
+// class ShowInfoAlertFix extends StatefulWidget {
+//
+//   const ShowInfoAlertFix({Key? key}) : super(key: key);
+//
+//   @override
+//   State<ShowInfoAlertFix> createState() => _ShowInfoAlertFixState();
+// }
+//
+// class _ShowInfoAlertFixState extends State<ShowInfoAlertFix> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return AlertDialog(
+//       contentPadding: EdgeInsets.zero,
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+//       content: SizedBox(
+//         height: deviceH / 3.5,
+//         width: width,
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             const Spacer(),
+//             SizedBox(
+//                 height: deviceH / 14,
+//                 child: Icon(
+//                   Icons.info,
+//                   color: Colors.red,
+//                   size: 50.sp,
+//                 )),
+//
+//             // Text(title, textAlign: TextAlign.center, style: kTitleStyle,),
+//             Container(
+//               height: deviceH / 9,
+//               padding: const EdgeInsets.all(8.0),
+//               child: Center(
+//                 child: Text(
+//                   message,
+//                   textAlign: TextAlign.center,
+//                   style: TextStyle(
+//                     color: Colors.black,
+//                     fontSize: 14.sp,
+//                     fontFamily: 'DMSans',
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               height: deviceH / 11,
+//               padding: const EdgeInsets.all(8.0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   InkWell(
+//                     onTap: btnTwoPressed,
+//                     child: Text(
+//                       btnTwoText.toString(),
+//                       style: TextStyle(
+//                         color: Colors.black,
+//                         fontSize: 14.sp,
+//                         fontFamily: 'DMSans',
+//                       ),
+//                     ),
+//                   ),
+//                   isLoading
+//                       ? loaderTwo
+//                       : MaterialButton(
+//                           onPressed: () async {
+//                             setState(() {
+//                               isLoading = true;
+//                             });
+//
+//                             try {
+//                               await btnOnePressed();
+//                               // navigateBack(context);
+//
+//                             } catch (e) {
+//                               setState(() {
+//                                 isLoading = false;
+//                               });
+//
+//                               rethrow;
+//                             }
+//
+//                             setState(() {
+//                               isLoading = false;
+//                             });
+//                           },
+//                           child: Container(
+//                             width: width / 4,
+//                             height: 50.w,
+//                             padding: EdgeInsets.all(5.r),
+//                             // alignment: Alignment.centerRight,
+//                             decoration: BoxDecoration(
+//                               borderRadius:
+//                                   BorderRadius.all(Radius.circular(15.r)),
+//                               color: AppColors.green,
+//                             ),
+//                             child: Center(
+//                               child: Text(
+//                                 btnOneText.toString(),
+//                                 style: TextStyle(
+//                                     fontSize: 14.sp,
+//                                     color: Colors.white,
+//                                     fontFamily: 'DMSans',
+//                                     fontWeight: FontWeight.bold),
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-
-
-
-
-
+Future<void> showSuccessAlert(
+  BuildContext context,
+  String title, {
+  required String message,
+  required bool isDismissible,
+  btnOnePressed,
+  btnOneText,
 
 Future<void> showSuccessAlert(BuildContext context, String title, {
   required String message, required bool isDismissible,
@@ -155,16 +282,18 @@ Future<void> showSuccessAlert(BuildContext context, String title, {
         return Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
           child: AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
-              height: deviceH/3.0,
+              height: deviceH / 3.0,
               width: width,
               child: Column(
                 children: [
                   SizedBox(
-                    height: deviceH/8,
-                    child: Lottie.asset("assets/animations/success_lottie.json"),
+                    height: deviceH / 8,
+                    child:
+                        Lottie.asset("assets/animations/success_lottie.json"),
                   ),
                   Text(
                     title,
@@ -250,10 +379,13 @@ Future<void> showSuccessAlert(BuildContext context, String title, {
       });
 }
 
-
-Future<void> showRegisterAlert(BuildContext context, String title, {
-  required String message, required bool isDismissible,
-  btnOnePressed, btnOneText,
+Future<void> showRegisterAlert(
+  BuildContext context,
+  String title, {
+  required String message,
+  required bool isDismissible,
+  btnOnePressed,
+  btnOneText,
 }) async {
   final width = MediaQuery.of(context).size.width;
   final deviceH = MediaQuery.of(context).size.height;
@@ -264,16 +396,18 @@ Future<void> showRegisterAlert(BuildContext context, String title, {
         return Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
           child: AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
-              height: deviceH/3.0,
+              height: deviceH / 3.0,
               width: width,
               child: Column(
                 children: [
                   SizedBox(
-                    height: deviceH/8,
-                    child: Lottie.asset("assets/animations/success_lottie.json"),
+                    height: deviceH / 8,
+                    child:
+                        Lottie.asset("assets/animations/success_lottie.json"),
                   ),
                   Text(
                     title,
@@ -359,9 +493,13 @@ Future<void> showRegisterAlert(BuildContext context, String title, {
       });
 }
 
-Future<void> showCreateAlert(BuildContext context, String title, {
-  required String message, required bool isDismissible,
-  btnOnePressed, btnOneText,
+Future<void> showCreateAlert(
+  BuildContext context,
+  String title, {
+  required String message,
+  required bool isDismissible,
+  btnOnePressed,
+  btnOneText,
 }) async {
   final width = MediaQuery.of(context).size.width;
   final deviceH = MediaQuery.of(context).size.height;
@@ -372,16 +510,18 @@ Future<void> showCreateAlert(BuildContext context, String title, {
         return Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
           child: AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
-              height: deviceH/3.0,
+              height: deviceH / 3.0,
               width: width,
               child: Column(
                 children: [
                   SizedBox(
-                    height: deviceH/8,
-                    child: Lottie.asset("assets/animations/success_lottie.json"),
+                    height: deviceH / 8,
+                    child:
+                        Lottie.asset("assets/animations/success_lottie.json"),
                   ),
                   Text(
                     title,
@@ -467,9 +607,13 @@ Future<void> showCreateAlert(BuildContext context, String title, {
       });
 }
 
-Future<void> showFailureAlert(BuildContext context, String title, {
-  required String message, required bool isDismissible,
-  btnOnePressed, btnOneText,
+Future<void> showFailureAlert(
+  BuildContext context,
+  String title, {
+  required String message,
+  required bool isDismissible,
+  btnOnePressed,
+  btnOneText,
 }) async {
   final width = MediaQuery.of(context).size.width;
   final deviceH = MediaQuery.of(context).size.height;
@@ -480,15 +624,16 @@ Future<void> showFailureAlert(BuildContext context, String title, {
         return Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
           child: AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
-              height: deviceH/3,
+              height: deviceH / 3,
               width: width,
               child: Column(
                 children: [
                   SizedBox(
-                    height: deviceH/8,
+                    height: deviceH / 8,
                     child: Lottie.asset("assets/animations/error.json"),
                   ),
                   Text(
@@ -588,7 +733,7 @@ Future<void> showAlertDialogThenNavigateReplace(BuildContext context,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
           child: AlertDialog(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: const Text('Notification'),
             content: Text(message),
             actions: <Widget>[
@@ -604,13 +749,13 @@ Future<void> showAlertDialogThenNavigateReplace(BuildContext context,
       });
 }
 
-displayShortToastMessage(String message, BuildContext context)
-{Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);}
+displayShortToastMessage(String message, BuildContext context) {
+  Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);
+}
 
-
-displayLongToastMessage(String message)
-{Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_LONG);}
-
+displayLongToastMessage(String message) {
+  Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_LONG);
+}
 
 // Future<YYDialog> yYAlertDialogWithGravity( context,
 //     {width, gravity, doubleButtonGravity, child}) async {
@@ -654,11 +799,11 @@ displayLongToastMessage(String message)
 // }
 onSubmitButton(
     {required Color buttonColor,
-      required Color textColor,
-      required String text,
-      required IconData icon,
-      required Color iconColor,
-      required VoidCallback onTap}) {
+    required Color textColor,
+    required String text,
+    required IconData icon,
+    required Color iconColor,
+    required VoidCallback onTap}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
@@ -694,9 +839,3 @@ onSubmitButton(
     ),
   );
 }
-
-
-
-
-
-
