@@ -47,6 +47,7 @@ dependencies:
   flutter_launcher_icons: any
   geocoder_buddy: ^1.0.1
   rxdart: ^0.27.3
+  loader_overlay: ^2.1.0
   #simple_gradient_text: ^1.2.4
   intl: ^0.17.0
   basic_utils: ^5.5.1
