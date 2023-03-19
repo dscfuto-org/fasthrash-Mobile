@@ -3,7 +3,6 @@ import 'package:fastrash/repository/backend/alerts_backend.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
-import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +27,7 @@ class UserLocationMapState extends State<UserLocationMap> {
 
 
   late BitmapDescriptor myIcon;
-  bool isLoading =false;
+  bool isLoading =true;
   final List<Marker> _markers = [];
 
   @override
@@ -77,6 +76,7 @@ class UserLocationMapState extends State<UserLocationMap> {
               });
 
               try {
+                await navigateBack(context);
                 displayLongToastMessage("Please wait...");
                 AlertsBackend().updateUTCAlert(context, alertId: item.id.toString(),
                     status: "accepted", userId:  item.userId.toString(), collectorId:
@@ -194,33 +194,18 @@ class UserLocationMapState extends State<UserLocationMap> {
   @override
   Widget build(BuildContext context) {
     logger.v(ResponseData.allAlertsResponseModel);
-    return  Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),),
-      child: Stack(
-        children: [
-          GoogleMap(
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            compassEnabled: false,
-            zoomControlsEnabled: true,
-            myLocationButtonEnabled: true,
-            initialCameraPosition: _kGooglePlex,
-            zoomGesturesEnabled: false,
-            markers: ResponseData.profileResponseModel!.data!.user!.role == "collector" ? Set<Marker>.of(_markers) : const <Marker>{},
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-
-            },
-          ),
-          isLoading ?  Container(
-            color: Colors.white.withOpacity(0.7),
-            child: const Center(
-                child: loaderOne
-            ),
-          ) : Container()
-        ],
-      ),
+    return  GoogleMap(
+      mapType: MapType.normal,
+      myLocationEnabled: true,
+      compassEnabled: false,
+      zoomControlsEnabled: true,
+      myLocationButtonEnabled: true,
+      initialCameraPosition: _kGooglePlex,
+      zoomGesturesEnabled: false,
+      markers: ResponseData.profileResponseModel!.data!.user!.role == "collector" ? Set<Marker>.of(_markers) : const <Marker>{},
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller);
+      },
     );
   }
 

@@ -23,7 +23,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
 
-    ///makeRepeatedCalls();
+    makeRepeatedCalls();
     super.initState();
   }
 

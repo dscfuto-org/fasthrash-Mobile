@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/constants/api.dart';
-import 'package:fastrash/features/dashboard/view/dashboard.dart';
+import 'package:fastrash/repository/backend/history_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/login_dto.dart';
@@ -12,7 +12,6 @@ import 'package:fastrash/repository/model/failure_response_model.dart';
 import 'package:fastrash/repository/model/login_response_model.dart';
 import 'package:fastrash/repository/model/profile_response_model.dart';
 import 'package:fastrash/repository/model/registration_sucess_model.dart';
-import 'package:fastrash/repository/services/bloc.dart';
 import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/navigators.dart';
@@ -236,10 +235,8 @@ class AuthBackend {
       if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.profileResponseModel = ProfileResponseModel.fromJson(resBody);
-        await await bloc.fetchHistory(context);
         logger.w(ResponseData.profileResponseModel);
-        /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
-        navigateReplace(context, const Dashboard());
+        await HistoryBackend().fetchAllAlertsOnLogin(context);
       }
     } on Exception catch (e) {
       // displayLongToastMessage(somethingWentWrongText,  );

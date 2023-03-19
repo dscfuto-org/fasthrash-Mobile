@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:fastrash/constants/api.dart';
 import 'package:fastrash/constants/strings.dart';
 import 'package:fastrash/features/dashboard/view/dashboard.dart';
+import 'package:fastrash/repository/backend/history_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/dto/alerts_dto.dart';
@@ -297,7 +298,7 @@ class AlertsBackend {
         await bloc.fetchHistory(context);
 
         showSuccessAlert(context, "Success", message: "Trash $status successfully",
-            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
+            isDismissible: true, btnOnePressed: () async => await HistoryBackend().fetchAllAlertsOnLogin(context));
 
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
