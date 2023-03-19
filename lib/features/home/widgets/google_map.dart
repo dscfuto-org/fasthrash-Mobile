@@ -3,8 +3,8 @@ import 'package:fastrash/repository/backend/alerts_backend.dart';
 import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/utils/alerts.dart';
 import 'package:fastrash/utils/custom_print.dart';
+import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -28,12 +28,18 @@ class UserLocationMapState extends State<UserLocationMap> {
 
 
   late BitmapDescriptor myIcon;
-
-  List<Marker> _markers = [];
+  bool isLoading =false;
+  final List<Marker> _markers = [];
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadMarkers().then((value) => setState(() {
+        isLoading = false;
+      }));
+    });
+
     ResponseData.profileResponseModel!.data!.user!.role == "user" ? getCurrentLocation() :   _loadMarkers();
 
     BitmapDescriptor.fromAssetImage(
@@ -66,9 +72,30 @@ class UserLocationMapState extends State<UserLocationMap> {
             btnOneText: "Accept",
             btnTwoText: "Back",
             btnOnePressed: () async {
-             AlertsBackend().updateUTCAlert(context, alertId: item.id.toString(),
-                 status: "accepted", userId:  item.userId.toString(), collectorId:
-                 ResponseData.profileResponseModel!.data!.user!.id.toString());
+              setState(() {
+                isLoading = true;
+              });
+
+              try {
+                displayLongToastMessage("Please wait...");
+                AlertsBackend().updateUTCAlert(context, alertId: item.id.toString(),
+                    status: "accepted", userId:  item.userId.toString(), collectorId:
+                    ResponseData.profileResponseModel!.data!.user!.id.toString());
+                await _loadMarkers();
+
+              } catch (e) {
+                setState(() {
+                  isLoading = false;
+                });
+
+                rethrow;
+              }
+
+              setState(() {
+                isLoading = false;
+              });
+
+
             },
             btnTwoPressed: () =>
                 navigateBack(context),
@@ -170,21 +197,29 @@ class UserLocationMapState extends State<UserLocationMap> {
     return  Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),),
-      child: GoogleMap(
-        mapType: MapType.normal,
-        myLocationEnabled: true,
-        compassEnabled: false,
-        zoomControlsEnabled: true,
-        myLocationButtonEnabled: true,
-        initialCameraPosition: _kGooglePlex,
-        zoomGesturesEnabled: false,
-        markers: Set<Marker>.of(_markers),
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-          setState(() {
-            _loadMarkers();
-          });
-        },
+      child: Stack(
+        children: [
+          GoogleMap(
+            mapType: MapType.normal,
+            myLocationEnabled: true,
+            compassEnabled: false,
+            zoomControlsEnabled: true,
+            myLocationButtonEnabled: true,
+            initialCameraPosition: _kGooglePlex,
+            zoomGesturesEnabled: false,
+            markers: ResponseData.profileResponseModel!.data!.user!.role == "collector" ? Set<Marker>.of(_markers) : const <Marker>{},
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+
+            },
+          ),
+          isLoading ?  Container(
+            color: Colors.white.withOpacity(0.7),
+            child: const Center(
+                child: loaderOne
+            ),
+          ) : Container()
+        ],
       ),
     );
   }

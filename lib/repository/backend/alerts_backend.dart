@@ -17,7 +17,7 @@ import 'package:http/http.dart' as client;
 
 class AlertsBackend {
   Future<void> createUTCAlerts(
-    BuildContext context, AlertsDto alertsDto, File image,
+    BuildContext context, AlertsDto alertsDto, {required File imageOne, required File imageTwo}
   ) async {
     const url = http + baseURL + createUTCAlertsPath;
     logger.i(url);
@@ -30,7 +30,7 @@ class AlertsBackend {
         HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
       };
       Map<String, String> field = {
-          "description": "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
+          "description": alertsDto.description.toString(),
           "status": alertsDto.status.toString(),
           "userId": ResponseData.profileResponseModel!.data!.user!.id.toString(),
           "quantity": int.parse(alertsDto.quantity.toString()).toString(),
@@ -41,13 +41,16 @@ class AlertsBackend {
       };
 
       request.headers.addAll(headers);
-      var imageMultipartFile = await client.MultipartFile.fromPath(
-          'images', image.path,
-          filename: image.path.split("/").last);
+      var imageMultipartFileOne = await client.MultipartFile.fromPath(
+          'images', imageOne.path,
+          filename: imageOne.path.split("/").last);
+      var imageMultipartFileTwo = await client.MultipartFile.fromPath(
+          'images', imageOne.path,
+          filename: imageOne.path.split("/").last);
 
-      request.files.add(imageMultipartFile);
+      request.files.add(imageMultipartFileOne);
+      request.files.add(imageMultipartFileTwo);
       request.fields.addAll(field);
-      logger.wtf(imageMultipartFile);
       var response =await request.send();
 
       //for getting and decoding the response into json format
@@ -57,8 +60,8 @@ class AlertsBackend {
       logger.wtf(responseD.body);
       if (responseD.statusCode == 201) {
         await bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Alert Created Successfully",
-            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+        showSuccessAlert(context, "Success", message: "Trash alert Created Successfully",
+            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
       } else {
 
         var resBody = jsonDecode(responseD.body.toString());
@@ -76,7 +79,7 @@ class AlertsBackend {
   }
 
   Future<void> createCTOAlerts(
-      BuildContext context, AlertsDto alertsDto, File image,
+      BuildContext context, AlertsDto alertsDto, {required File imageOne, required File imageTwo}
       ) async {
     const url = http + baseURL + createCTOAlertsPath;
     logger.i(url);
@@ -89,7 +92,7 @@ class AlertsBackend {
         HttpHeaders.authorizationHeader: '${DummyData.accessToken}',
       };
       Map<String, String> field = {
-        "description": "I have some waste at ${alertsDto.address} that needs to be collected, it weighs about ${alertsDto.quantity} kg...",
+        "description": alertsDto.description.toString(),
         "status": alertsDto.status.toString(),
         "userId": ResponseData.profileResponseModel!.data!.user!.id.toString(),
         "quantity": int.parse(alertsDto.quantity.toString()).toString(),
@@ -100,13 +103,16 @@ class AlertsBackend {
       };
 
       request.headers.addAll(headers);
-      var imageMultipartFile = await client.MultipartFile.fromPath(
-          'images', image.path,
-          filename: image.path.split("/").last);
+      var imageMultipartFileOne = await client.MultipartFile.fromPath(
+          'images', imageOne.path,
+          filename: imageOne.path.split("/").last);
+      var imageMultipartFileTwo = await client.MultipartFile.fromPath(
+          'images', imageOne.path,
+          filename: imageOne.path.split("/").last);
 
-      request.files.add(imageMultipartFile);
+      request.files.add(imageMultipartFileOne);
+      request.files.add(imageMultipartFileTwo);
       request.fields.addAll(field);
-      logger.wtf(imageMultipartFile);
       var response =await request.send();
 
       //for getting and decoding the response into json format
@@ -116,8 +122,8 @@ class AlertsBackend {
       logger.wtf(responseD.body);
       if (responseD.statusCode == 201) {
         await bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Alert Created Successfully",
-            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+        showSuccessAlert(context, "Success", message: "Trash alert Created Successfully",
+            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
        ///
       } else {
 
@@ -155,10 +161,10 @@ class AlertsBackend {
       logger.v(httpConnectionApi.body);
       logger.v(httpConnectionApi.statusCode);
 
-      if (httpConnectionApi.statusCode == 201) {
+      if (httpConnectionApi.statusCode == 204) {
        await bloc.fetchHistory(context);
        showSuccessAlert(context, "Success", message: "Alert Deleted Successfully",
-           isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+           isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
 
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
@@ -194,10 +200,10 @@ class AlertsBackend {
       logger.v(httpConnectionApi.body);
       logger.v(httpConnectionApi.statusCode);
 
-      if (httpConnectionApi.statusCode == 201) {
+      if (httpConnectionApi.statusCode == 204) {
         await bloc.fetchHistory(context);
         showSuccessAlert(context, "Success", message: "Alert Deleted Successfully",
-            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
 
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
@@ -290,8 +296,8 @@ class AlertsBackend {
       if (httpConnectionApi.statusCode == 200) {
         await bloc.fetchHistory(context);
 
-        showSuccessAlert(context, "Success", message: "Alert ${status.toUpperCase()} Successfully",
-            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+        showSuccessAlert(context, "Success", message: "Trash $status successfully",
+            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
 
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
@@ -340,8 +346,8 @@ class AlertsBackend {
 
       if (httpConnectionApi.statusCode == 200) {
         await bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Alert ${status.toUpperCase()} Successfully",
-            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+        showSuccessAlert(context, "Success", message: "Trash $status successfully",
+            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);
@@ -389,8 +395,8 @@ class AlertsBackend {
 
       if (httpConnectionApi.statusCode == 200) {
         await bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Alert ${status.toUpperCase()} Successfully",
-            isDismissible: true, btnOnePressed: navigateReplace(context, const Dashboard()));
+        showSuccessAlert(context, "Success", message: "Trash $status successfully",
+            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
       } else {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
         ResponseData.failureResponse = FailureResponseModel.fromJson(resBody);

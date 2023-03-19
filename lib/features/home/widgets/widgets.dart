@@ -24,7 +24,8 @@ class PickImage extends StatefulWidget {
 }
 
 class _PickImageState extends State<PickImage> {
-  File? image;
+  File? imageOne;
+  File? imageTwo;
   final picker = ImagePicker();
   final GlobalKey<FormState> _formKey = GlobalKey();
   // TextEditingController quantityController = TextEditingController();
@@ -52,21 +53,46 @@ class _PickImageState extends State<PickImage> {
     //   });
     // }
 
-    initiateCapture() async {
+    initiateCaptureOne() async {
       final pickedFile =
           await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
       setState(() {
         if (pickedFile != null) {
-          image = File(pickedFile.path);
+          imageOne = File(pickedFile.path);
 
           ///_imageName = File(pickedFile.name);
           // personalProfileDto.image = base64Encode(
           //   _image!.readAsBytesSync(),
           // );
 
-          logger.wtf('Image Path $image');
-          final bytes = image!.readAsBytesSync().lengthInBytes;
+          logger.wtf('Image Path $imageOne');
+          final bytes = imageOne!.readAsBytesSync().lengthInBytes;
+          final kb = bytes / 1024;
+          logger.v(kb.toString() + "KB");
+          logger.i(kb.toString() + "KB");
+
+          ///logger.v(personalProfileDto.image.runtimeType);
+          ///updateImageReq();
+        } else {}
+      });
+    }
+
+    initiateCaptureTwo() async {
+      final pickedFile =
+      await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+
+      setState(() {
+        if (pickedFile != null) {
+          imageTwo = File(pickedFile.path);
+
+          ///_imageName = File(pickedFile.name);
+          // personalProfileDto.image = base64Encode(
+          //   _image!.readAsBytesSync(),
+          // );
+
+          logger.wtf('Image Path $imageTwo');
+          final bytes = imageTwo!.readAsBytesSync().lengthInBytes;
           final kb = bytes / 1024;
           logger.v(kb.toString() + "KB");
           logger.i(kb.toString() + "KB");
@@ -80,24 +106,74 @@ class _PickImageState extends State<PickImage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        InkWell(
-          onTap: () => initiateCapture(),
-          child: CircleAvatar(
-            radius: 70.r,
-            backgroundColor: AppColors.green,
-            child: SizedBox(
-                height: 160.h,
-                width: 160.w,
-                child: ClipOval(
-                  child: (image != null)
-                      ? Image.file(
-                          image!,
-                          fit: BoxFit.cover,
-                        )
-                      : const Icon(Icons.add_a_photo),
-                )),
-          ),
-        ),
+        // InkWell(
+        //   onTap: () => initiateCapture(),
+        //   child: CircleAvatar(
+        //     radius: 70.r,
+        //     backgroundColor: AppColors.green,
+        //     child: SizedBox(
+        //         height: 160.h,
+        //         width: 160.w,
+        //         child: ClipOval(
+        //           child: (image != null)
+        //               ? Image.file(
+        //                   image!,
+        //                   fit: BoxFit.cover,
+        //                 )
+        //               : const Icon(Icons.add_a_photo),
+        //         )),
+        //   ),
+        // ),
+
+      InkWell(
+
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InkWell(
+              onTap: () => initiateCaptureOne(),
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.green,
+                  ),
+
+                  height: 160.h,
+                  width: MediaQuery.of(context).size.width/2.5,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child:  (imageOne != null)
+                        ? Image.file(
+                      imageOne!,
+                      fit: BoxFit.cover,
+                    )
+                        : const Icon(Icons.add_a_photo, color: Colors.white,),
+                  )),
+            ),
+
+            InkWell(
+              onTap: () => initiateCaptureTwo(),
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.green,
+                  ),
+                  height: 160.h,
+                  width:  MediaQuery.of(context).size.width/2.5,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: (imageTwo != null)
+                          ? Image.file(
+                        imageTwo!,
+                        fit: BoxFit.cover,
+                      )
+                          : const Icon(Icons.add_a_photo, color: Colors.white,)
+                  )
+                  ),
+            ),
+          ],
+        )
+      ),
         const SizedBox(
           height: 10,
         ),
@@ -134,7 +210,7 @@ class _PickImageState extends State<PickImage> {
         const SizedBox(
           height: 3,
         ),
-        isLoading ? loaderOne : submitButton()
+        isLoading ? loaderOne : Padding(padding: EdgeInsets.symmetric(horizontal: 10), child: submitButton(),)
       ],
     );
   }
@@ -148,6 +224,9 @@ class _PickImageState extends State<PickImage> {
               textEditingController: quantityTextController, isDigits: true),
         customButton("Enter Location Address",
                   textEditingController: locationAddressController),
+
+          customButton("More Descriptions",
+                  textEditingController: descriptionController),
         ],
       ),
     );
@@ -157,7 +236,7 @@ class _PickImageState extends State<PickImage> {
     return AppLargeButton(
         textColor: Colors.white,
         onTap: () {
-         if(image != null ){
+         if(imageOne != null && imageTwo != null ){
 
            _submitRequest();
          } else {
@@ -175,26 +254,27 @@ class _PickImageState extends State<PickImage> {
     } else {
       alertsDto.quantity = int.parse(quantityTextController.text);
       alertsDto.address = locationAddressController.text;
+      alertsDto.description = descriptionController.text;
       alertsDto.locationlatitude = DeviceLocation.lat;
       alertsDto.locationlongitude = DeviceLocation.lng;
       alertsDto.role = 'user';
       alertsDto.status = 'pending';
-      image = image;
+      ///image = image;
       // alertsDto.image = _image as String?;
 
       setState(() {
         isLoading = true;
       });
       logger.wtf('Alerts');
-      logger.wtf("Image::::::: $image");
+      // logger.wtf("Image::::::: $image");
       // logger.wtf( alertsDto.location);
       try {
         // await Alerts().createAlerts(context, alertsDto, image: );
 
         if(ResponseData.profileResponseModel!.data!.user!.role.toString() == "user"){
-         await AlertsBackend().createUTCAlerts(context, alertsDto, image!);
+         await AlertsBackend().createUTCAlerts(context, alertsDto, imageOne: imageOne!, imageTwo: imageTwo! );
         } else {
-          await AlertsBackend().createCTOAlerts(context, alertsDto, image!);
+          await AlertsBackend().createCTOAlerts(context, alertsDto, imageOne: imageOne!, imageTwo: imageTwo! );
         }
 
       } catch (e) {

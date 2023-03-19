@@ -196,13 +196,34 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container( color: Colors.grey,
-                    width: deviceW,
-                    height: deviceH/4,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width:   widget.depositHistoryModel.images!.length ==2  ? deviceW/2.25 : deviceW/1.1,
+                        height: deviceH/4,
+                        decoration: BoxDecoration( borderRadius: BorderRadius.circular(10),  color: Colors.grey,),
 
-                    child: FittedBox(
-                      fit: BoxFit.fill,
-                        child: Image.network(widget.depositHistoryModel.images![0].toString(),)),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Image.network(widget.depositHistoryModel.images![0].toString(),)),
+                        ),
+                      ),
+                      widget.depositHistoryModel.images!.length ==2 ? Container(
+                        decoration: BoxDecoration( borderRadius: BorderRadius.circular(10),  color: Colors.grey,),
+                        width: deviceW/2.25,
+                        height: deviceH/4,
+
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Image.network(widget.depositHistoryModel.images?[1])),
+                        ),
+                      ) : Container()
+                    ],
                   ),
                   // InkWell(
                   //   onTap: () => navigatePush(
@@ -283,178 +304,15 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                 ],
               ),
             ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // ResponseData.profileResponseModel!.data!.user!.role != "user"
-              //     ? Container()
-              //     :
-              widget.depositHistoryModel.status != "pending"
-                  ? Container()
-                  : Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  isLoadingDelete
-                      ? loaderTwo
-                      : InkWell(
-                    onTap: () => showInfoAlert(
-                      context,
-                      " ",
-                      isDismissible: true,
-                      btnOneText: "Continue",
-                      btnTwoText: "No, back",
-                      btnOnePressed: () async {
-                        navigateBack(context);
-                        _submitDeleteRequest();
-                      },
-                      btnTwoPressed: () =>
-                          navigateBack(context),
-                      message:
-                      "Are you sure you want to delete this alert?",
-                    ),
-                    child: Container(
-                        height: 30.h,
-                        decoration: BoxDecoration(
-                            color: Colors.red.withOpacity(0.1),
-                            border: Border.all(
-                                color: Colors.grey
-                                    .withOpacity(0.2),
-                                width: 1),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            )),
-                        width: deviceW / 4,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              Icon(CupertinoIcons.trash, color: Colors.red,),
-                              Text(
-                                "Delete",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontFamily: 'DMSans',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          // child: ListTile(
-                          //   leading:Image(image: AssetImage(trash), height: 20,),
-                          //   title: Text("Delete", style: TextStyle(
-                          //     color: Colors.red.withOpacity(0.7),
-                          //     fontFamily: 'DMSans',
-                          //     fontWeight: FontWeight.bold,
-                          //
-                          //   ),),
-                          //   // subtitle:Text("See room details",style: TextStyle(
-                          //   //   fontFamily: 'DMSans',
-                          //   // ),),
-                          //
-                          // ),
-                        )),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container( color: Colors.grey,
-                width: deviceW,
-                height: deviceH/4,
-
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                    child: Image.network(widget.depositHistoryModel.images![0].toString(),)),
-              ),
-              // InkWell(
-              //   onTap: () => navigatePush(
-              //       context,
-              //       RoomDetailsScreen(
-              //         bookingHistoryModel: widget.bookingHistoryModel,
-              //       )),
-              //   child: Container(
-              //       decoration: BoxDecoration(
-              //           color: AppColors.color1.withOpacity(0.1),
-              //           border: Border.all(
-              //               color: Colors.grey.withOpacity(0.2), width: 1),
-              //           borderRadius: const BorderRadius.all(
-              //             Radius.circular(10),
-              //           )),
-              //       width: deviceW,
-              //       child: Center(
-              //         child: ListTile(
-              //           leading: Image(
-              //             image: AssetImage(homeIcon),
-              //             height: 30,
-              //           ),
-              //           title: const Text(
-              //             "Rooms",
-              //             style: TextStyle(
-              //               color: Colors.black,
-              //               fontFamily: 'DMSans',
-              //               fontWeight: FontWeight.bold,
-              //             ),
-              //           ),
-              //           subtitle: const Text(
-              //             "See room details",
-              //             style: TextStyle(
-              //               fontFamily: 'DMSans',
-              //             ),
-              //           ),
-              //           trailing: const Icon(
-              //             CupertinoIcons.right_chevron,
-              //             color: Colors.black,
-              //             size: 20,
-              //           ),
-              //         ),
-              //       )),
-              // ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    "Alert ID: ",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15.0,
-                      height: 1.2,
-                      fontFamily: 'DMSans',
-                    ),
-                  ),
-                  Text(
-                    "#${widget.depositHistoryModel.id!.toUpperCase()}3",
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'DMSans',
-                        fontSize: 20.0,
-                        height: 1.5,
-                        fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              mainDetails(),
-              const SizedBox(
-                height: 15,
-              ),
-              isLoading ? loaderOne : _submitButton(),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
           ),
-          if (isLoadingDelete)
-            Container(
+          Padding(padding:  const EdgeInsets.all(20.0),
+            child: isLoadingDelete ?  Container(
               color: Colors.white.withOpacity(0.7),
               child: const Center(
-                child: loaderOne
+                  child: loaderOne
               ),
-            ),
+            ) : Container(),
+            )
         ],
       ),
     );
@@ -996,6 +854,6 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
       }
     }
   }
-  
-  
+
+
 }

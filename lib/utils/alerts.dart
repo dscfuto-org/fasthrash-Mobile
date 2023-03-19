@@ -143,123 +143,6 @@ showInfoAlert(
       });
 }
 
-// class ShowInfoAlertFix extends StatefulWidget {
-//
-//   const ShowInfoAlertFix({Key? key}) : super(key: key);
-//
-//   @override
-//   State<ShowInfoAlertFix> createState() => _ShowInfoAlertFixState();
-// }
-//
-// class _ShowInfoAlertFixState extends State<ShowInfoAlertFix> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//       contentPadding: EdgeInsets.zero,
-//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-//       content: SizedBox(
-//         height: deviceH / 3.5,
-//         width: width,
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             const Spacer(),
-//             SizedBox(
-//                 height: deviceH / 14,
-//                 child: Icon(
-//                   Icons.info,
-//                   color: Colors.red,
-//                   size: 50.sp,
-//                 )),
-//
-//             // Text(title, textAlign: TextAlign.center, style: kTitleStyle,),
-//             Container(
-//               height: deviceH / 9,
-//               padding: const EdgeInsets.all(8.0),
-//               child: Center(
-//                 child: Text(
-//                   message,
-//                   textAlign: TextAlign.center,
-//                   style: TextStyle(
-//                     color: Colors.black,
-//                     fontSize: 14.sp,
-//                     fontFamily: 'DMSans',
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             Container(
-//               height: deviceH / 11,
-//               padding: const EdgeInsets.all(8.0),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.end,
-//                 children: [
-//                   InkWell(
-//                     onTap: btnTwoPressed,
-//                     child: Text(
-//                       btnTwoText.toString(),
-//                       style: TextStyle(
-//                         color: Colors.black,
-//                         fontSize: 14.sp,
-//                         fontFamily: 'DMSans',
-//                       ),
-//                     ),
-//                   ),
-//                   isLoading
-//                       ? loaderTwo
-//                       : MaterialButton(
-//                           onPressed: () async {
-//                             setState(() {
-//                               isLoading = true;
-//                             });
-//
-//                             try {
-//                               await btnOnePressed();
-//                               // navigateBack(context);
-//
-//                             } catch (e) {
-//                               setState(() {
-//                                 isLoading = false;
-//                               });
-//
-//                               rethrow;
-//                             }
-//
-//                             setState(() {
-//                               isLoading = false;
-//                             });
-//                           },
-//                           child: Container(
-//                             width: width / 4,
-//                             height: 50.w,
-//                             padding: EdgeInsets.all(5.r),
-//                             // alignment: Alignment.centerRight,
-//                             decoration: BoxDecoration(
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(15.r)),
-//                               color: AppColors.green,
-//                             ),
-//                             child: Center(
-//                               child: Text(
-//                                 btnOneText.toString(),
-//                                 style: TextStyle(
-//                                     fontSize: 14.sp,
-//                                     color: Colors.white,
-//                                     fontFamily: 'DMSans',
-//                                     fontWeight: FontWeight.bold),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 Future<void> showSuccessAlert(
   BuildContext context,
@@ -268,10 +151,6 @@ Future<void> showSuccessAlert(
   required bool isDismissible,
   btnOnePressed,
   btnOneText,
-
-Future<void> showSuccessAlert(BuildContext context, String title, {
-  required String message, required bool isDismissible,
-  required btnOnePressed, btnOneText,
 }) async {
   final width = MediaQuery.of(context).size.width;
   final deviceH = MediaQuery.of(context).size.height;
@@ -757,46 +636,7 @@ displayLongToastMessage(String message) {
   Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_LONG);
 }
 
-// Future<YYDialog> yYAlertDialogWithGravity( context,
-//     {width, gravity, doubleButtonGravity, child}) async {
-//   return YYDialog().build()
-//     ..width = width
-//     ..context = context
-//     ..gravity = gravity
-//     ..gravityAnimationEnable = true
-//     ..borderRadius = 4.0
-//     ..widget(child)
-//     ..decoration = const BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.only(
-//             topRight: Radius.circular(25), topLeft: Radius.circular(25)))
-//
-//     // ..text(
-//     //   padding: EdgeInsets.all(18.0),
-//     //   text: "Use location service?",
-//     //   color: Colors.black,
-//     //   fontSize: 18.0,
-//     //   fontWeight: FontWeight.w500,
-//     // )
-//     // ..text(
-//     //   padding: EdgeInsets.only(left: 18.0, right: 18.0),
-//     //   text:
-//     //       "Let us help apps determine location. This means sending anonymous location data to us, even when no apps are running.",
-//     //   color: Colors.grey[500],
-//     //   fontSize: 15.0,
-//     // )
-//     // ..doubleButton(
-//     //   padding: EdgeInsets.only(top: 20.0),
-//     //   gravity: doubleButtonGravity ?? Gravity.right,
-//     //   text1: "DISAGREE",
-//     //   color1: Colors.deepPurpleAccent,
-//     //   fontSize1: 14.0,
-//     //   text2: "AGREE",
-//     //   color2: Colors.deepPurpleAccent,
-//     //   fontSize2: 14.0,
-//     // )
-//     ..show();
-// }
+
 onSubmitButton(
     {required Color buttonColor,
     required Color textColor,

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 actionsModalBottomSheet(
   BuildContext context,
 ) {
-  double sheetHeight = 500.h;
+  double sheetHeight = 600.h;
   showModalBottomSheet(
       context: context,
       isDismissible: true,
