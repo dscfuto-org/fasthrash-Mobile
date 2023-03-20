@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:basic_utils/basic_utils.dart';
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/repository/backend/alerts_backend.dart';
@@ -9,7 +11,8 @@ import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-//import 'package:intl/intl.dart' as intl;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart' as intl;
 
 
 class HistoryDetailsScreen extends StatefulWidget {
@@ -28,7 +31,7 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
   bool isLoading = false;
   bool isLoadingDelete = false;
   bool isGeneratingCode = false;
-
+ 
   @override
   void initState() {
     super.initState();
@@ -91,6 +94,8 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
   Widget build(BuildContext context) {
     final deviceW = MediaQuery.of(context).size.width;
     final deviceH = MediaQuery.of(context).size.height;
+   /// String phoneNo =  
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -101,17 +106,16 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
         actions: const [
           // IconButton(icon: Icons.moreVert, onPressed: null)
         ],
-        centerTitle: false,
-        title: const Center(
-            child: Text(
-              "Alert Details",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'DMSans',
-                  fontSize: 20.0,
-                  height: 1.5,
-                  fontWeight: FontWeight.bold),
-            )),
+        centerTitle: true,
+        title: const Text(
+          "Alert Details",
+          style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'DMSans',
+              fontSize: 20.0,
+              height: 1.5,
+              fontWeight: FontWeight.bold),
+        ),
       ),
       body:  Stack(
         children: [
@@ -196,34 +200,17 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width:   widget.depositHistoryModel.images!.length ==2  ? deviceW/2.25 : deviceW/1.1,
-                        height: deviceH/4,
-                        decoration: BoxDecoration( borderRadius: BorderRadius.circular(10),  color: Colors.grey,),
+                  Container(
+                    width: deviceW/1.1,
+                    height: deviceH/4,
+                    decoration: BoxDecoration( borderRadius: BorderRadius.circular(10),  color: Colors.grey,),
 
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: Image.network(widget.depositHistoryModel.images![0].toString(),)),
-                        ),
-                      ),
-                      widget.depositHistoryModel.images!.length ==2 ? Container(
-                        decoration: BoxDecoration( borderRadius: BorderRadius.circular(10),  color: Colors.grey,),
-                        width: deviceW/2.25,
-                        height: deviceH/4,
-
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: Image.network(widget.depositHistoryModel.images?[1])),
-                        ),
-                      ) : Container()
-                    ],
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Image.network(widget.depositHistoryModel.images![0].toString(),)),
+                    ),
                   ),
                   // InkWell(
                   //   onTap: () => navigatePush(
@@ -429,7 +416,7 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
     final deviceH = MediaQuery.of(context).size.height;
     final deviceW = MediaQuery.of(context).size.width;
     return Container(
-      height: deviceH / 2.5,
+      height: deviceH / 2.2,
       decoration: BoxDecoration(
           color: AppColors.grey.withOpacity(0.1),
           border: Border.all(color: Colors.grey.withOpacity(0.2), width: 2),
@@ -460,21 +447,76 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
             //     Text("Provider requests your Confirmation"),
             //   ],
             // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //
+            //     Padding(
+            //       padding: const EdgeInsets.only(right: 4),
+            //       child: Chip(
+            //         backgroundColor:
+            //         widget.depositHistoryModel.status == "accepted"
+            //             ? AppColors.yellow
+            //             : Colors.grey,
+            //         padding: const EdgeInsets.all(0.0),
+            //         // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
+            //         label: Text(
+            //           "Accepted",
+            //           textAlign: TextAlign.center,
+            //           maxLines: 1,
+            //           overflow: TextOverflow.ellipsis,
+            //           style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: deviceW / 30,
+            //               fontFamily: 'DMSans',
+            //               fontWeight: FontWeight.bold),
+            //         ),
+            //       ),
+            //     ),
+            //
+            //     Chip(
+            //       backgroundColor:
+            //       widget.depositHistoryModel.status == "collected"
+            //           ? AppColors.green : Colors.grey,
+            //       padding: const EdgeInsets.all(0.0),
+            //       // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
+            //       label: Text(
+            //         "Collected",
+            //         textAlign: TextAlign.center,
+            //         maxLines: 1,
+            //         overflow: TextOverflow.ellipsis,
+            //         style: TextStyle(
+            //             color: Colors.white,
+            //             fontSize: deviceW / 30,
+            //             fontFamily: 'DMSans',
+            //             fontWeight: FontWeight.bold),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text(
+                  "",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: deviceW / 35,
+                    fontFamily: 'DMSans',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(right: 4),
                   child: Chip(
-                    backgroundColor:
-                    widget.depositHistoryModel.status == "pending"
-                        ? AppColors.red
-                        : Colors.grey,
-
+                    backgroundColor: getColour(),
                     padding: const EdgeInsets.all(0.0),
                     // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
                     label: Text(
-                      "Pending",
+                      /// toBeginningOfSentenceCase(widget.depositHistoryModel.status.toString()),
+                      StringUtils.capitalize(widget.depositHistoryModel.status.toString()),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -486,190 +528,104 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: Chip(
-                    backgroundColor:
-                    widget.depositHistoryModel.status == "accepted"
-                        ? AppColors.yellow
-                        : Colors.grey,
-                    padding: const EdgeInsets.all(0.0),
-                    // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
-                    label: Text(
-                      "Accepted",
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: deviceW / 30,
-                          fontFamily: 'DMSans',
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-
-                Chip(
-                  backgroundColor:
-                  widget.depositHistoryModel.status == "collected"
-                      ? AppColors.green : Colors.grey,
-                  padding: const EdgeInsets.all(0.0),
-                  // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
-                  label: Text(
-                    "Collected",
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: deviceW / 30,
-                        fontFamily: 'DMSans',
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
               ],
             ),
-            // widget.depositHistoryModel.status != "pending"
-            //     ? Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Text(
-            //       " ${ResponseData.loginResponse.serviceProvider == true ? "Customer" : "Provider"} Details",
-            //       style: TextStyle(
-            //         color: Colors.black,
-            //         fontSize: deviceW / 35,
-            //         fontFamily: 'DMSans',
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //     Container(
-            //         decoration: BoxDecoration(
-            //             color: Colors.grey.withOpacity(0.1),
-            //             border: Border.all(
-            //                 color: Colors.grey.withOpacity(0.1),
-            //                 width: 1),
-            //             borderRadius: const BorderRadius.all(
-            //               Radius.circular(15),
-            //             )),
-            //         height: 60, // Image radius
-            //         width: deviceW,
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             // Image(image: AssetImage(userIcon),height: 40, ),
-            //             // SizedBox(width: deviceW,
-            //             //   child: Text("See more room  details", maxLines: 2, textDirection: TextDirection.ltr,)
-            //             //   ,)
-            //
-            //             Padding(
-            //               padding: const EdgeInsets.only(left: 10.0),
-            //               child: Image.asset(
-            //                 userIcon,
-            //                 height: 25,
-            //               ),
-            //             ),
-            //
-            //             // SizedBox(width: deviceW/30,),
-            //             // Container(
-            //             //   width: deviceW * 3.2 / 6.5,
-            //             //   child: Column(
-            //             //     crossAxisAlignment: CrossAxisAlignment.start,
-            //             //     mainAxisAlignment: MainAxisAlignment.center,
-            //             //     children: [
-            //             //       Text(
-            //             //         "Name",
-            //             //         maxLines: 2,
-            //             //         textDirection: TextDirection.ltr,
-            //             //         style: const TextStyle(
-            //             //             color: Colors.black,
-            //             //             fontFamily: 'DMSans',
-            //             //             fontSize: 20.0,
-            //             //             height: 1.5,
-            //             //             fontWeight: FontWeight.bold)
-            //             //             .copyWith(fontSize: 17),
-            //             //       ),
-            //             //       Text(
-            //             //         ResponseData.loginResponse
-            //             //             .serviceProvider ==
-            //             //             true
-            //             //             ? widget.bookingHistoryModel.user
-            //             //             .firstName +
-            //             //             " " +
-            //             //             widget.bookingHistoryModel.user
-            //             //                 .lastName
-            //             //             : widget.bookingHistoryModel.provider
-            //             //             .firstName +
-            //             //             " " +
-            //             //             widget.bookingHistoryModel
-            //             //                 .provider.lastName,
-            //             //         maxLines: 2,
-            //             //         textDirection: TextDirection.ltr,
-            //             //         overflow: TextOverflow.ellipsis,
-            //             //         style: const TextStyle(
-            //             //           color: Colors.black,
-            //             //           fontSize: 15.0,
-            //             //           height: 1.2,
-            //             //           fontFamily: 'DMSans',
-            //             //         ),
-            //             //       ),
-            //             //     ],
-            //             //   ),
-            //             // ),
-            //             // InkWell(
-            //             //   onTap: () => navigatePush(
-            //             //       context,
-            //             //       ProviderOnBookingDetails(
-            //             //           ResponseData.loginResponse.serviceProvider ==
-            //             //               true
-            //             //               ? widget.bookingHistoryModel.user
-            //             //               : widget.bookingHistoryModel.provider)),
-            //             //   child: Container(
-            //             //     width: deviceW * 1.3 / 6.5,
-            //             //     height: 60,
-            //             //     decoration: const BoxDecoration(
-            //             //         color: Colors.black12,
-            //             //         borderRadius: BorderRadius.all(
-            //             //             Radius.circular(15))),
-            //             //     child: SizedBox(
-            //             //         child: Padding(
-            //             //             padding: const EdgeInsets.all(10.0),
-            //             //             child: Row(
-            //             //               mainAxisAlignment:
-            //             //               MainAxisAlignment.center,
-            //             //               crossAxisAlignment:
-            //             //               CrossAxisAlignment.center,
-            //             //               children: [
-            //             //                 Text(
-            //             //                   "View",
-            //             //                   style: TextStyle(
-            //             //                     color: Colors.black54,
-            //             //                     fontSize: deviceW / 30,
-            //             //                     fontFamily:
-            //             //                     'DMSans',
-            //             //                     fontWeight: FontWeight.bold,
-            //             //                   ),
-            //             //                 ),
-            //             //                 const SizedBox(
-            //             //                   width: 5,
-            //             //                 ),
-            //             //                 const Icon(
-            //             //                   CupertinoIcons.right_chevron,
-            //             //                   color: Colors.black,
-            //             //                   size: 20,
-            //             //                 ),
-            //             //               ],
-            //             //             ))),
-            //             //   ),
-            //             // ),
-            //           ],
-            //         )
-            //
-            //       //
-            //       // fit: BoxFit.cover, height: 100,),
-            //     ),
-            //   ],
-            // )
-            //     : Container(),
+
+            widget.depositHistoryModel.status != "pending"
+                ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  " ${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? "User" : "Collector"} Details",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: deviceW / 35,
+                    fontFamily: 'DMSans',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.1),
+                        border: Border.all(
+                            color: Colors.grey.withOpacity(0.1),
+                            width: 1),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        )),
+                    height: 60, // Image radius
+                    width: deviceW,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Image(image: AssetImage(userIcon),height: 40, ),
+                        // SizedBox(width: deviceW,
+                        //   child: Text("See more room  details", maxLines: 2, textDirection: TextDirection.ltr,)
+                        //   ,)
+
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Icon(Icons.account_circle)
+                        ),
+
+                        SizedBox(width: deviceW/30,),
+                        SizedBox(
+                          width: deviceW *4.7/10,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Name",
+                                maxLines: 2,
+                                textDirection: TextDirection.ltr,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'DMSans',
+                                    fontSize: 20.0,
+                                    height: 1.5,
+                                    fontWeight: FontWeight.bold)
+                                    .copyWith(fontSize: 17),
+                              ),
+                              Text(
+                                ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userName.toString() : widget.depositHistoryModel.collectorName.toString(),
+                                maxLines: 2,
+                                textDirection: TextDirection.ltr,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15.0,
+                                  height: 1.2,
+                                  fontFamily: 'DMSans',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                       SizedBox(
+                         width: deviceW *2.5 /10,
+                         child:  Row(
+                           children: [
+                             buildItemUrl(  FontAwesomeIcons.whatsapp, onTap:()=> launchInURL(Uri.parse(whatsappUrl()))),
+                             buildItemUrl( CupertinoIcons.phone,onTap:()=> launchInURL(
+                                 Uri.parse("tel:${ResponseData.profileResponseModel!.data!.user!.role == "collector" ?
+                                 widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.collectorPhone()}"))),
+                             buildItemUrl( CupertinoIcons.mail,onTap:()=> launchInURL
+                               (Uri.parse('sms:${ResponseData.profileResponseModel!.data!.user!.role == "collector" ?
+                             widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}'))),
+                           ],
+                         ),
+                       )
+                      ],
+                    )
+
+                  //
+                  // fit: BoxFit.cover, height: 100,),
+                ),
+              ],
+            )
+                : Container(),
+
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -728,7 +684,9 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.depositHistoryModel.createdAt!.split("T")[0].toString(),
+                    intl.DateFormat("E, d MMM yyyy HH:mm a").format(
+                      DateTime.parse(widget.depositHistoryModel.createdAt.toString()),
+                    ).toString(),
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: deviceW / 35,
@@ -854,6 +812,45 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
       }
     }
   }
+
+
+  getColour() {
+    if(widget.depositHistoryModel.status == "pending"){
+      return AppColors.red;
+    }  else if (widget.depositHistoryModel.status == "accepted"){
+      return AppColors.yellow;
+    } else {
+      return AppColors.green;
+    }
+  }
+
+  Widget buildItemUrl( IconData icon, {required Function onTap}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: InkWell(
+        onTap: () {
+          onTap();
+        },
+        child: Icon(
+          icon,
+          ///color: AppColors.dark,
+        ),
+      ),
+    );
+  }
+
+
+  String whatsappUrl() {
+    if (Platform.isAndroid) {
+      return "https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from FixBot App")}";
+      // return "https://wa.me/phone:+234${widget.bookingHistoryModel.phoneNumber.toString()}:/?text=${Uri.parse("")}";
+    } else {
+      print("https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from FixBot App")}");
+      return "https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from FixBot App")}";
+    }
+  }
+
+
 
 
 }

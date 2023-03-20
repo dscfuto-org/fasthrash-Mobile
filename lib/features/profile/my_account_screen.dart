@@ -1,7 +1,7 @@
 import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/constants/app_colors.dart';
-import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
+import 'package:fastrash/utils/device_location.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,18 +43,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 20,
                   ),
 
-                  Container(
-                    height: 90,
-                    alignment: Alignment.center,
-                    child: CircleAvatar(
-                      radius: deviceH / 15,
-                      child: Icon(
-                        Icons.person,
-                        size: 50.r,
+                  InkWell(
+                    onTap: ()=> DeviceLocation().getCurrentLocation(),
+                    child: Container(
+                      height: 90,
+                      alignment: Alignment.center,
+                      child: CircleAvatar(
+                        radius: deviceH / 15,
+                        child: Icon(
+                          Icons.person,
+                          size: 50.r,
+                        ),
+                        // backgroundImage: AssetImage(
+                        //   assetUserIcon,
+                        // ),
                       ),
-                      // backgroundImage: AssetImage(
-                      //   assetUserIcon,
-                      // ),
                     ),
                   ),
                   const SizedBox(
@@ -119,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         buildTile(
                             Icons.email,
                             "Location",
-                            DummyData.address.toString(),
+                            ResponseData.profileResponseModel!.data!.user!.location.toString(),
                             context),
                         buildLogOutTile(Icons.logout, 'Log Out', context)
                       ],

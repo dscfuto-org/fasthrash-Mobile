@@ -8,7 +8,6 @@ import 'package:fastrash/repository/data/response_data.dart';
 import 'package:fastrash/repository/model/all_alerts_model.dart';
 import 'package:fastrash/repository/model/collections_history_model.dart';
 import 'package:fastrash/repository/model/deposit_history_model.dart';
-import 'package:fastrash/repository/services/bloc.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:http/http.dart' as client;
@@ -73,10 +72,12 @@ class HistoryBackend{
 
       if (httpConnectionApi.statusCode == 200) {
         var resBody = jsonDecode(httpConnectionApi.body.toString());
-        ///logger.wtf(resBody["data"]["alert"]);
+        logger.wtf(resBody["data"]["alert"]);
 
         ResponseData.depositHistoryModel = (resBody["data"]["alert"] as List)
             .map((e) => DepositHistoryModel.fromJson(e)).toList();
+
+        logger.v(ResponseData.depositHistoryModel.toList());
 
       }
     } on Exception catch (e) {
@@ -146,14 +147,14 @@ class HistoryBackend{
         ResponseData.allAlertsResponseModel = (resBody["data"]["alert"] as List)
             .map((e) => AllAlertsResponseModel.fromJson(e)).toList();
 
-        logger.wtf(ResponseData.allAlertsResponseModel);
 
-        if(ResponseData.allAlertsResponseModel != []){
-          await bloc.fetchHistory(context);
 
-          /// DummyData.emailAddress = ResponseData.loginResponseModel!.email.toString();
-          navigateReplace(context, const Dashboard());
-        } else {fetchAllAlertsOnLogin(context);}
+        navigateReplace(context, const Dashboard());
+
+        // if(ResponseData.allAlertsResponseModel != []){
+        //   await bloc.fetchHistory(context);
+        // } else {fetchAllAlertsOnLogin(context);}
+        //
       }
     } on Exception catch (e) {
       logger.e(e);

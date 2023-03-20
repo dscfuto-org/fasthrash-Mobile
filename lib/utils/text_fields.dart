@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 
 Widget customButton (labelText, {
-required TextEditingController textEditingController, bool isDigits = false
+required TextEditingController textEditingController, bool isDigits = false, bool decimal = false
 }){
   return Container(
     padding: const EdgeInsets.all(10),
     child: TextFormField(
       controller: textEditingController,
-     keyboardType:  isDigits?const TextInputType.numberWithOptions(decimal: false):TextInputType.text,
+     keyboardType:  isDigits? TextInputType.numberWithOptions(decimal: decimal,):TextInputType.text,
       validator: (value) {
         if (value!.isEmpty) {
           return fieldRequired;

@@ -1,15 +1,3 @@
-/// location : {"longitude":-122.084,"latitude":37.4219983}
-/// _id : "6413f6907b4814c1ee2be62a"
-/// userId : "63f85e50705601e9e6e003d9"
-/// description : "I have some waste at Google Building 40, Amphitheatre Parkway, Mountain View, Santa Clara County, California, 94043, United States that needs to be collected, it weighs about 10 kg..."
-/// status : "pending"
-/// images : ["https://storage.googleapis.com/fastrash-image-upload/images-38489c84-854c-4887-8ce7-fd79ad53ce43-scaled_1000000020.jpg"]
-/// address : "Google Building 40, Amphitheatre Parkway, Mountain View, Santa Clara County, California, 94043, United States"
-/// role : "user"
-/// quantity : 10
-/// createdAt : "2023-03-17T05:11:44.856Z"
-/// updatedAt : "2023-03-17T05:11:44.856Z"
-/// __v : 0
 
 class DepositHistoryModel {
   DepositHistoryModel({
@@ -22,10 +10,16 @@ class DepositHistoryModel {
     this.address,
     this.role,
     this.quantity,
+    this.userName,
+    this.userEmail,
+    this.userPhone,
     this.createdAt,
     this.updatedAt,
     this.v,
-    this.collectorId,});
+    this.collectorEmail,
+    this.collectorId,
+    this.collectorName,
+    this.collectorPhone,});
 
   DepositHistoryModel.fromJson(dynamic json) {
     location = json['location'] != null ? Location.fromJson(json['location']) : null;
@@ -37,10 +31,16 @@ class DepositHistoryModel {
     address = json['address'];
     role = json['role'];
     quantity = json['quantity'];
+    userName = json['userName'];
+    userEmail = json['userEmail'];
+    userPhone = json['userPhone'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     v = json['__v'];
+    collectorEmail = json['collectorEmail'];
     collectorId = json['collectorId'];
+    collectorName = json['collectorName'];
+    collectorPhone = json['collectorPhone'];
   }
   Location? location;
   String? id;
@@ -51,10 +51,16 @@ class DepositHistoryModel {
   String? address;
   String? role;
   num? quantity;
+  String? userName;
+  String? userEmail;
+  String? userPhone;
   String? createdAt;
   String? updatedAt;
   num? v;
+  String? collectorEmail;
   String? collectorId;
+  String? collectorName;
+  String? collectorPhone;
   DepositHistoryModel copyWith({  Location? location,
     String? id,
     String? userId,
@@ -64,10 +70,16 @@ class DepositHistoryModel {
     String? address,
     String? role,
     num? quantity,
+    String? userName,
+    String? userEmail,
+    String? userPhone,
     String? createdAt,
     String? updatedAt,
     num? v,
+    String? collectorEmail,
     String? collectorId,
+    String? collectorName,
+    String? collectorPhone,
   }) => DepositHistoryModel(  location: location ?? this.location,
     id: id ?? this.id,
     userId: userId ?? this.userId,
@@ -77,10 +89,16 @@ class DepositHistoryModel {
     address: address ?? this.address,
     role: role ?? this.role,
     quantity: quantity ?? this.quantity,
+    userName: userName ?? this.userName,
+    userEmail: userEmail ?? this.userEmail,
+    userPhone: userPhone ?? this.userPhone,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
     v: v ?? this.v,
+    collectorEmail: collectorEmail ?? this.collectorEmail,
     collectorId: collectorId ?? this.collectorId,
+    collectorName: collectorName ?? this.collectorName,
+    collectorPhone: collectorPhone ?? this.collectorPhone,
   );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -95,17 +113,23 @@ class DepositHistoryModel {
     map['address'] = address;
     map['role'] = role;
     map['quantity'] = quantity;
+    map['userName'] = userName;
+    map['userEmail'] = userEmail;
+    map['userPhone'] = userPhone;
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
+    map['collectorEmail'] = collectorEmail;
     map['collectorId'] = collectorId;
+    map['collectorName'] = collectorName;
+    map['collectorPhone'] = collectorPhone;
     return map;
   }
 
 }
 
-/// longitude : -122.0849872
-/// latitude : 37.4226711
+/// longitude : -122.084
+/// latitude : 37.4219983
 
 class Location {
   Location({

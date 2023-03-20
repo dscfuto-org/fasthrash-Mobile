@@ -7,6 +7,7 @@ import 'package:fastrash/utils/navigators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 
 
@@ -64,12 +65,18 @@ class UserLocationMapState extends State<UserLocationMap> {
         ///icon: myIcon,
         ///infoWindow: InfoWindow(title: 'Marker ${item.id.toString()}'),
         infoWindow: InfoWindow(title: '${item.quantity.toString()} kg waste at  ${item.address.toString()}', onTap: (){
-          showInfoAlert(
+          showTrashInfoAlert(
             context,
-            " ",
+            " ${item.quantity.toString()} kg waste at ${item.address.toString()} ",
             isDismissible: true,
+            image: item.images![0].toString(),
             btnOneText: "Accept",
             btnTwoText: "Back",
+            date: DateFormat("E, d MMM yyyy HH:mm a").format(
+              DateTime.parse(item.createdAt.toString()),
+            ).toString(),
+            //date: ,
+            name: item.userName.toString(),
             btnOnePressed: () async {
               setState(() {
                 isLoading = true;
@@ -99,8 +106,7 @@ class UserLocationMapState extends State<UserLocationMap> {
             },
             btnTwoPressed: () =>
                 navigateBack(context),
-            message:
-            " ${item.quantity.toString()} kg waste at ${item.address.toString()}",
+            message: "${item.description}",
           );
       }),
       );
@@ -202,7 +208,8 @@ class UserLocationMapState extends State<UserLocationMap> {
       myLocationButtonEnabled: true,
       initialCameraPosition: _kGooglePlex,
       zoomGesturesEnabled: false,
-      markers: ResponseData.profileResponseModel!.data!.user!.role == "collector" ? Set<Marker>.of(_markers) : const <Marker>{},
+      markers: ResponseData.profileResponseModel!.data!.user!.role ==
+          "collector" ? Set<Marker>.of(_markers) : const <Marker>{},
       onMapCreated: (GoogleMapController controller) {
         _controller.complete(controller);
       },

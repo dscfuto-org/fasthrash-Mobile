@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 actionsModalBottomSheet(
   BuildContext context,
 ) {
-  double sheetHeight = 600.h;
+  double sheetHeight = MediaQuery.of(context).size.height/1.05;
   showModalBottomSheet(
       context: context,
       isDismissible: true,

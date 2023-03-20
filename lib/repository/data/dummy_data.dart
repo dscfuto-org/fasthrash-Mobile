@@ -7,7 +7,7 @@ class DummyData {
   static String?phone;
   static String? accessToken;
 
-  static dynamic address;
+  static String address = "";
   static String?dongleAddress;
   // static double?latitude;
   // static double?longitude;

@@ -6,8 +6,11 @@ import 'package:fastrash/repository/model/collections_history_model.dart';
 import 'package:fastrash/repository/model/deposit_history_model.dart';
 import 'package:fastrash/repository/services/bloc.dart';
 import 'package:fastrash/utils/custom_print.dart';
+// ignore: unnecessary_import
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+///import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CollectorHistoryScreen extends StatefulWidget {
   const CollectorHistoryScreen({Key? key}) : super(key: key);
@@ -17,6 +20,30 @@ class CollectorHistoryScreen extends StatefulWidget {
 }
 
 class _CollectorHistoryScreenState extends State<CollectorHistoryScreen> {
+
+  // final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  //
+  // void _onRefresh() async{
+  //   bloc.collections(context);
+  //   bloc.deposit(context);
+  //   await Future.delayed(const Duration(milliseconds: 1000));
+  //
+  //   _refreshController.refreshCompleted();
+  // }
+  //
+  //
+  // void _onLoading() async{
+  //   bloc.collections(context);
+  //   bloc.deposit(context);
+  //   _refreshController.loadComplete();
+  // }
+  @override
+  void initState() {
+    bloc.collections(context);
+    bloc.deposit(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -88,7 +115,7 @@ class _CollectorHistoryScreenState extends State<CollectorHistoryScreen> {
             child: StreamBuilder<List<CollectionsHistoryModel>>(
               stream: bloc.collectorSubject.stream,
               builder: (context, AsyncSnapshot<List<CollectionsHistoryModel>> snapshot) {
-                ///logger.w(snapshot.data);
+                logger.w(snapshot.data);
                 if (snapshot.hasData) {
                   return CollectionsHistoryListView(depositHistoryModel: snapshot.data);
                 } else if (snapshot.hasError) {
@@ -145,14 +172,7 @@ class CollectionsHistoryListViewState extends State<CollectionsHistoryListView> 
         child: widget.depositHistoryModel!.isEmpty
             ? SizedBox(
           height: 600.h,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("No  History", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp),),
-              // SizedBox(height: 200.h,
-              //     child: Image.asset(invoiceIcon))
-            ],
-          ),
+          child: Center(child: Text("No  History", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp),)),
         )
             : ListView.builder(
           scrollDirection: Axis.vertical,

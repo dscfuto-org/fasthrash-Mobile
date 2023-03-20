@@ -16,11 +16,11 @@ class Bloc {
   final BehaviorSubject<List<AllAlertsResponseModel>> _allAlertsSubject = BehaviorSubject<List<AllAlertsResponseModel>>();
 
 
-  fetchHistory(context){
-    deposit(context);
-    collections(context);
-    allAlerts(context);
-  }
+  // fetchHistory(context){
+  //   deposit(context);
+  //   collections(context);
+  //   allAlerts(context);
+  // }
 
   deposit(context) async {
     List<DepositHistoryModel>? depositHistoryModel =

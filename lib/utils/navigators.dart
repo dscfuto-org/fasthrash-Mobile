@@ -1,6 +1,7 @@
 //This manages our routing
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 ///This method ensures navigation and kills the previous activity
 //  navigateReplace(BuildContext context, Widget widget) {
@@ -44,4 +45,17 @@ class FadeRoute<T> extends PageRouteBuilder<T> {
       );
     },
   );
+}
+
+
+
+launchInURL(Uri testUrl) async {
+  if (await canLaunchUrl(testUrl)) {
+    await launchUrl(
+        testUrl,
+        mode: LaunchMode.externalApplication
+    );
+  } else {
+    throw 'Could not launch $testUrl';
+  }
 }

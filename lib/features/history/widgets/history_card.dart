@@ -2,10 +2,9 @@ import 'package:badges/badges.dart' as badge;
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/features/history/view/history_details_screen.dart';
 import 'package:fastrash/utils/navigators.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-///import 'package:intl/intl.dart' as intl;
+import 'package:intl/intl.dart' as intl;
 
 class HistoryCard extends StatelessWidget {
 
@@ -41,7 +40,7 @@ class HistoryCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     width: width/6.5,
@@ -53,17 +52,21 @@ class HistoryCard extends StatelessWidget {
                           bottomRight: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
                         )),
-                    child: const SizedBox(
-                        height: 10,
-                        width: 10,
-                        child: Icon(CupertinoIcons.trash, color: AppColors.green,),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Image.network(depositHistoryModel.images![0].toString(),)),
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: width * 0.15 / 6.5,
                   ),
                   SizedBox(
-                    width: width/2,
+                    width: width/2.1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,14 +74,14 @@ class HistoryCard extends StatelessWidget {
                         Text(
                           // StringUtils.capitalize(
                           //     "${widget.jobsHistory.jobTitle} "),
-                              depositHistoryModel.address.toString(),
+                              depositHistoryModel.description.toString(),
                           maxLines: 2, overflow: TextOverflow.ellipsis,
 
                           /// textDirection: TextDirection.ltr,
                           style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'DMSans',
-                              fontSize: 15.sp,
+                              fontSize: 14.sp,
                               height: 1.5,
                               fontWeight: FontWeight.bold),
                         ),
@@ -108,9 +111,9 @@ class HistoryCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 2.0),
                             child: Text(
                                depositHistoryModel.status.toString(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 13,
+                                  fontSize: 13.sp,
                                   fontFamily: 'DMSans',
                                   fontWeight: FontWeight.bold),
                             ),
@@ -120,12 +123,14 @@ class HistoryCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: width/5,
+                    width: width/4,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          depositHistoryModel.createdAt!.split("T")[0].toString(),
+                        intl.DateFormat("E, d MMM yyyy ").format(
+                      DateTime.parse( depositHistoryModel.createdAt!.split("T")[0].toString(),),).toString(),
+
                           textDirection: TextDirection.ltr,
 
                           // DateFormat.yMMMMEEEEd().format().toString(),

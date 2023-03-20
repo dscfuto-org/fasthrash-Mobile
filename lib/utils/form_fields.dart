@@ -1,8 +1,10 @@
 import 'package:fastrash/constants/app_colors.dart';
 import 'package:fastrash/constants/strings.dart';
+import 'package:fastrash/utils/custom_print.dart';
 import 'package:fastrash/utils/password_strength/procedure.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class EmailFormField extends StatefulWidget {
@@ -158,102 +160,87 @@ class _PhoneFormFieldState extends State<PhoneFormField> {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(primaryColor: AppColors.dark),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: TextFormField(
-                enabled: true,
-                keyboardType: TextInputType.phone,
-                // inputFormatters: <TextInputFormatter>[
-                //   FilteringTextInputFormatter.allow(phoneNumber)
-                // ], // Only numbers can be entered
-                onChanged: (val) {
-                  setState(() {
-                    isValidState = regPhoneValue(val);
-                  });
-                },
-                validator: (value) {
-                  if (
-                      //value!.isEmpty
-                      !isValidState) {
-                    return 'Invalid Phone Number format';
-                  } else if (value!.isEmpty) {
-                    return fieldRequired;
-                  } else {
-                    return null;
-                  }
-                },
-                // onChanged: (val) {
-                //   setState(() {
-                //     isValidState = regPhoneValue(val);
-                //   });
-                // },
-                // // validator: (value) {
-                // //   if (value!.isEmpty) {
-                // //     return fieldRequired;
-                // //   }
-                // //   return null;
-                // // },
-                // validator: (value) {
-                //   setState(() {
-                //     onError = false;
-                //   });
-                //   if (
-                //       //!regExp.hasMatch(value!)
-                //       !isValidState) {
-                //     setState(() {
-                //       onError = true;
-                //     });
-
-                //     return 'Invalid Phone Format';
-                //   }
-                //   return fieldRequired;
-                // },
-                style: kSubtitleStyle.copyWith(
-                    fontWeight: FontWeight.w400, fontSize: 14),
-                controller: widget.textEditingController,
-                cursorColor: AppColors.dark,
-                decoration: InputDecoration(
-                    enabled: true,
-                    // contentPadding:
-                    //     EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                    focusedBorder: OutlineInputBorder(
-                        //borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                            color: isValidState == false
-                                ? AppColors.red
-                                : AppColors.green)),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: isValidState == false
-                              ? AppColors.red
-                              : AppColors.green,
-                          width: 0.3),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 7.0,
-                          color: isValidState == false
-                              ? AppColors.red
-                              : AppColors.green),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: isValidState == false
-                                ? AppColors.red
-                                : AppColors.green)),
-                    hintText: widget.title,
-                    hintStyle: kSubtitleStyle.copyWith(
-                        color: AppColors.dark,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14),
-                    errorStyle: kTitleStyle.copyWith(
-                        fontSize: 12.0, color: AppColors.red),
-                    filled: false)),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: InternationalPhoneNumberInput(
+          inputDecoration: InputDecoration(
+              enabled: true,
+              // contentPadding:
+              //     EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              focusedBorder: OutlineInputBorder(
+                //borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                      color: isValidState == false
+                          ? AppColors.red
+                          : AppColors.green)),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: isValidState == false
+                        ? AppColors.red
+                        : AppColors.green,
+                    width: 0.3),
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                    width: 7.0,
+                    color: isValidState == false
+                        ? AppColors.red
+                        : AppColors.green),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: isValidState == false
+                          ? AppColors.red
+                          : AppColors.green)),
+              hintText: widget.title,
+              hintStyle: kSubtitleStyle.copyWith(
+                  color: AppColors.dark,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14),
+              errorStyle: kTitleStyle.copyWith(
+                  fontSize: 12.0, color: AppColors.red),
+              filled: false,
+              fillColor: const Color(0xfff3f3f4),
+          ),
+          onInputChanged: (PhoneNumber number) {
+            setState(() {
+              isValidState = regPhoneValue(number.phoneNumber.toString());
+              logger.i(number.phoneNumber);
+            });
+          },
+          validator: (value) {
+            if (
+            //value!.isEmpty
+            !isValidState) {
+              return 'Invalid Phone Number format';
+            } else if (value!.isEmpty) {
+              return fieldRequired;
+            } else {
+              return null;
+            }
+          },
+          onInputValidated: (bool value) {
+            logger.i(value);
+          },
+          selectorConfig: const SelectorConfig(
+            selectorType: PhoneInputSelectorType.DROPDOWN,
+          ),
+          ignoreBlank: false,
+          autoValidateMode: AutovalidateMode.disabled,
+          selectorTextStyle:  kSubtitleStyle.copyWith(
+              fontWeight: FontWeight.w400, fontSize: 14),
+          textStyle: kSubtitleStyle.copyWith(
+              fontWeight: FontWeight.w400, fontSize: 14),
+          textFieldController: widget.textEditingController,
+          cursorColor: AppColors.dark,
+          formatInput: false,
+          keyboardType: const TextInputType.numberWithOptions(
+              signed: true, decimal: true),
+          inputBorder: const OutlineInputBorder(),
+          onSaved: (PhoneNumber number) {
+            logger.i('On Saved: $number');
+          },
+        ),
       ),
     );
   }

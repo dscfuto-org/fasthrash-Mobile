@@ -144,6 +144,217 @@ showInfoAlert(
 }
 
 
+showTrashInfoAlert(
+    BuildContext context,
+    String title, {
+      required String message,
+      required String date,
+      required String name,
+      required String image,
+      required bool isDismissible,
+      btnOnePressed,
+      btnOneText,
+      btnTwoText,
+      btnTwoPressed,
+    }) {
+  final width = MediaQuery.of(context).size.width;
+  final deviceH = MediaQuery.of(context).size.height;
+  bool isLoading = false;
+  showDialog(
+      barrierDismissible: true,
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (BuildContext context, setState) {
+            return Container(
+              decoration:
+              BoxDecoration(borderRadius: BorderRadius.circular(30.r)),
+              child: AlertDialog(
+                contentPadding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.r)),
+                content: SizedBox(
+                  height: deviceH / 3.5,
+                  width: width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                          SizedBox(
+                              height: deviceH / 14,
+                              width: width *1.5 /10,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: Image.network(image.toString(),)),
+                              ),),
+
+                          SizedBox(
+                              width: width *6/10,
+                              child: Text(title, textAlign: TextAlign.left, style: kTitleStyle.copyWith(fontSize: 13.sp),)),
+
+                        ],),
+                      ),
+                     Container(
+                        height: deviceH / 11,
+                        //color: Colors.red,
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Name",
+                                  /// textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.sp,fontWeight: FontWeight.bold,
+                                    fontFamily: 'DMSans',
+                                  ),
+                                ),
+                                Text(
+                                  name,
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.sp,
+                                    fontFamily: 'DMSans',
+                                  ),
+                                ),
+                            ],),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Date",
+                                  /// textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.sp,fontWeight: FontWeight.bold,
+                                    fontFamily: 'DMSans',
+                                  ),
+                                ),
+                                Text(
+                                  date,
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.sp,
+                                    fontFamily: 'DMSans',
+                                  ),
+                                ),
+                              ],),
+
+                            Text(
+                              "Description",
+                              /// textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,fontWeight: FontWeight.bold,
+                                fontFamily: 'DMSans',
+                              ),
+                            ),
+                            Text(
+                              message,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontFamily: 'DMSans',
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: deviceH / 11,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: btnTwoPressed,
+                              child: Text(
+                                btnTwoText.toString(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontFamily: 'DMSans',
+                                ),
+                              ),
+                            ),
+                            isLoading
+                                ? loaderTwo
+                                : MaterialButton(
+                              onPressed: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+
+                                try {
+                                  await btnOnePressed();
+                                  // navigateBack(context);
+
+                                } catch (e) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+
+                                  rethrow;
+                                }
+
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              },
+                              child: Container(
+                                width: width / 4,
+                                height: 50.w,
+                                padding: EdgeInsets.all(5.r),
+                                // alignment: Alignment.centerRight,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15.r)),
+                                  color: AppColors.green,
+                                ),
+                                child: Center(
+                                  child: Text(
+
+                                    btnOneText.toString(),
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.white,
+                                        fontFamily: 'DMSans',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      });
+}
+
+
+
 Future<void> showSuccessAlert(
   BuildContext context,
   String title, {

@@ -4,6 +4,7 @@ import 'package:fastrash/repository/services/bloc.dart';
 import 'package:fastrash/utils/custom_print.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+///import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class UserHistoryScreen extends StatefulWidget {
   const UserHistoryScreen({Key? key}) : super(key: key);
@@ -13,6 +14,26 @@ class UserHistoryScreen extends StatefulWidget {
 }
 
 class _UserHistoryScreenState extends State<UserHistoryScreen> {
+
+  // final RefreshController _refreshController = RefreshController(initialRefresh: false);
+  //
+  // void _onRefresh() async{
+  //   bloc.deposit(context);
+  //   await Future.delayed(const Duration(milliseconds: 1000));
+  //
+  //   _refreshController.refreshCompleted();
+  // }
+  //
+  //
+  // void _onLoading() async{
+  //   bloc.deposit(context);
+  //   _refreshController.loadComplete();
+  // }
+  @override
+  void initState() {
+    bloc.deposit(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,17 +189,11 @@ class DepositHistoryListViewState extends State<DepositHistoryListView> {
         child: widget.depositHistoryModel!.isEmpty
             ? SizedBox(
           height: 600.h,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("No  History", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp),),
-              // SizedBox(height: 200.h,
-              //     child: Image.asset(invoiceIcon))
-            ],
-          ),
+          child: Center(child: Text("No  History", style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp),)),
         )
             : ListView.builder(
           scrollDirection: Axis.vertical,
+          reverse: true,
           itemBuilder: (BuildContext context, int index) {
             return HistoryCard(
               collectorType: "Deposit",

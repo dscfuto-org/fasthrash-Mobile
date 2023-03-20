@@ -14,6 +14,14 @@
   	<string>Upload image from camera for screen background</string>
   	<key>NSMicrophoneUsageDescription</key>
   	<string>Post videos to profile</string>
+  	<key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>https</string>
+            <string>http</string>
+            <string>tel</string>
+            <string>sms</string>
+            <string>mailto</string>
+        </array>
 	<key>CFBundleDisplayName</key>
 	<string>Fastrash</string>
 	<key>CFBundleExecutable</key>

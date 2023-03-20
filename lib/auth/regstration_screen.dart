@@ -5,13 +5,13 @@ import 'package:fastrash/repository/backend/auth_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/dto/regisration_dto.dart';
 import 'package:fastrash/utils/custom_print.dart';
-import 'package:fastrash/utils/device_location.dart';
 import 'package:fastrash/utils/form_fields.dart';
 import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:fastrash/utils/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController passwordConfirmController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController locationController = TextEditingController(text: DummyData.address);
+ /// TextEditingController locationController = TextEditingController(text: DummyData.address);
   TextEditingController phoneController = TextEditingController();
   TextEditingController roleController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -55,7 +55,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   void initState() {
-    DeviceLocation().getCurrentLocation();
+
     super.initState();
   }
 
@@ -64,7 +64,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _obscureText = !_obscureText;
     });
   }
-  static String _chosenValue = 'Sign Up as';
+  // static const String _chosenValue = 'Sign Up as';
   // DashBoardDropDownFormField roleSelect = createDropDownList(role, 'Role', [
   //   ''
   // ]);
@@ -86,8 +86,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: 10.h,
             ),
             Container(
                 alignment: Alignment.center,
@@ -96,10 +96,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   'Sign Up',
                   style: TextStyle(fontSize: 30),
                 )),
-            const SizedBox(height: 20),
+            SizedBox(height: 10.h),
             forms(),
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: 10.h,
             ),
             isLoading
                 ? const Center(child: loaderOne)
@@ -112,8 +112,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     submitRequest();
                   },
                 )),
-            const SizedBox(
-              height: 80,
+            SizedBox(
+              height: 20.h,
             ),
             Row(
               children: <Widget>[
@@ -140,7 +140,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     } else {
       registrationDto.firstName = firstNameController.text;
       registrationDto.lastName = lastNameController.text;
-      registrationDto.location = locationController.text;
+      registrationDto.location = DummyData.address;
       registrationDto.email = emailController.text;
       registrationDto.phoneNumber = phoneController.text;
       registrationDto.password = passwordController.text;
@@ -320,7 +320,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 title: 'Email', textEditingController: emailController),
             PhoneFormField(
                 title: 'Phone Number', textEditingController: phoneController),
-            _entryField('Location', locationController),
+            // _entryField('Location', locationController),
             // _entryField('role', roleController),
             roleDropDown(),
             PasswordFormField(
@@ -335,57 +335,107 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ));
   }
 
-  dropDwon() {
-    return Container(
-      padding: const EdgeInsets.all(0.0),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: _chosenValue, //elevation: 5,
-          icon: Image.asset(
-            'assets/images/9. Plastic waste in developing countries and the global waste trade.jpeg',
-            height: 20,
-            width: 20,
-          ),
-          style: const TextStyle(
-            color: Colors.red,
-            fontSize: 16,
-            fontFamily: "Poppins",
-          ),
-          items: <String>[
-            'Approved',
-            'Pending',
-            'Failed',
-            'All',
-          ].map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: "Poppins",
-                ),
-              ),
-            );
-          }).toList(),
-          hint: const Text(
-            "Sort by",
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w600),
-          ),
-          onChanged: (String? value) {
-            setState(() {
-              _chosenValue = value.toString();
-            });
-          },
-        ),
-      ),
-    );
-  }
+  // dropDown() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(0.0),
+  //     child: DropdownButtonHideUnderline(
+  //       child: DropdownButton<String>(
+  //         value: _chosenValue, //elevation: 5,
+  //         icon: Image.asset(
+  //           'assets/images/9. Plastic waste in developing countries and the global waste trade.jpeg',
+  //           height: 20,
+  //           width: 20,
+  //         ),
+  //         style: const TextStyle(
+  //           color: Colors.red,
+  //           fontSize: 16,
+  //           fontFamily: "Poppins",
+  //         ),
+  //         items: <String>[
+  //           'Approved',
+  //           'Pending',
+  //           'Failed',
+  //           'All',
+  //         ].map<DropdownMenuItem<String>>((String value) {
+  //           return DropdownMenuItem<String>(
+  //             value: value,
+  //             child: Text(
+  //               value,
+  //               style: const TextStyle(
+  //                 color: Colors.black,
+  //                 fontSize: 16,
+  //                 fontFamily: "Poppins",
+  //               ),
+  //             ),
+  //           );
+  //         }).toList(),
+  //         hint: const Text(
+  //           "Sort by",
+  //           style: TextStyle(
+  //               color: Colors.black,
+  //               fontSize: 16,
+  //               fontFamily: "Poppins",
+  //               fontWeight: FontWeight.w600),
+  //         ),
+  //         onChanged: (String? value) {
+  //           setState(() {
+  //             _chosenValue = value.toString();
+  //           });
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }  // dropDown() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(0.0),
+  //     child: DropdownButtonHideUnderline(
+  //       child: DropdownButton<String>(
+  //         value: _chosenValue, //elevation: 5,
+  //         icon: Image.asset(
+  //           'assets/images/9. Plastic waste in developing countries and the global waste trade.jpeg',
+  //           height: 20,
+  //           width: 20,
+  //         ),
+  //         style: const TextStyle(
+  //           color: Colors.red,
+  //           fontSize: 16,
+  //           fontFamily: "Poppins",
+  //         ),
+  //         items: <String>[
+  //           'Approved',
+  //           'Pending',
+  //           'Failed',
+  //           'All',
+  //         ].map<DropdownMenuItem<String>>((String value) {
+  //           return DropdownMenuItem<String>(
+  //             value: value,
+  //             child: Text(
+  //               value,
+  //               style: const TextStyle(
+  //                 color: Colors.black,
+  //                 fontSize: 16,
+  //                 fontFamily: "Poppins",
+  //               ),
+  //             ),
+  //           );
+  //         }).toList(),
+  //         hint: const Text(
+  //           "Sort by",
+  //           style: TextStyle(
+  //               color: Colors.black,
+  //               fontSize: 16,
+  //               fontFamily: "Poppins",
+  //               fontWeight: FontWeight.w600),
+  //         ),
+  //         onChanged: (String? value) {
+  //           setState(() {
+  //             _chosenValue = value.toString();
+  //           });
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 
   roleDropDown() {
     return Padding(

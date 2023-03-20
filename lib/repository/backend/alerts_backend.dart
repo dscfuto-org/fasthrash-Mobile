@@ -18,7 +18,7 @@ import 'package:http/http.dart' as client;
 
 class AlertsBackend {
   Future<void> createUTCAlerts(
-    BuildContext context, AlertsDto alertsDto, {required File imageOne, required File imageTwo}
+    BuildContext context, AlertsDto alertsDto, {required File image, }
   ) async {
     const url = http + baseURL + createUTCAlertsPath;
     logger.i(url);
@@ -34,7 +34,7 @@ class AlertsBackend {
           "description": alertsDto.description.toString(),
           "status": alertsDto.status.toString(),
           "userId": ResponseData.profileResponseModel!.data!.user!.id.toString(),
-          "quantity": int.parse(alertsDto.quantity.toString()).toString(),
+          "quantity":  alertsDto.quantity.toString(),
           "location.longitude": alertsDto.locationlongitude.toString(),
           "location.latitude": alertsDto.locationlatitude.toString(),
           "address": alertsDto.address.toString(),
@@ -42,15 +42,10 @@ class AlertsBackend {
       };
 
       request.headers.addAll(headers);
-      var imageMultipartFileOne = await client.MultipartFile.fromPath(
-          'images', imageOne.path,
-          filename: imageOne.path.split("/").last);
-      var imageMultipartFileTwo = await client.MultipartFile.fromPath(
-          'images', imageOne.path,
-          filename: imageOne.path.split("/").last);
-
-      request.files.add(imageMultipartFileOne);
-      request.files.add(imageMultipartFileTwo);
+      var imageMultipartFile = await client.MultipartFile.fromPath(
+          'images', image.path,
+          filename: image.path.split("/").last);
+      request.files.add(imageMultipartFile);
       request.fields.addAll(field);
       var response =await request.send();
 
@@ -60,8 +55,11 @@ class AlertsBackend {
       logger.wtf(responseD.statusCode);
       logger.wtf(responseD.body);
       if (responseD.statusCode == 201) {
-        await bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Trash alert Created Successfully",
+        await bloc.deposit(context);
+        await bloc.collections(context);
+        await bloc.allAlerts(context);
+          (context);
+        showSuccessAlert(context, "Success", message: "Trash alert created Successfully",
             isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
       } else {
 
@@ -72,16 +70,16 @@ class AlertsBackend {
             message: ResponseData.failureResponse!.message.toString(), isDismissible: true);
       }
     } on Exception catch (e) {
-      // showErrorAlert(context, message: somethingWentWrongText);
-      logger.wtf('Error');
+      displayShortToastMessage( somethingWentWrongText, context );
       logger.e(e);
       rethrow;
     }
   }
 
   Future<void> createCTOAlerts(
-      BuildContext context, AlertsDto alertsDto, {required File imageOne, required File imageTwo}
-      ) async {
+      BuildContext context, AlertsDto alertsDto, {required File image, required deliveryTime,
+      required costPerKg}
+      ) async  {
     const url = http + baseURL + createCTOAlertsPath;
     logger.i(url);
 
@@ -96,34 +94,36 @@ class AlertsBackend {
         "description": alertsDto.description.toString(),
         "status": alertsDto.status.toString(),
         "userId": ResponseData.profileResponseModel!.data!.user!.id.toString(),
-        "quantity": int.parse(alertsDto.quantity.toString()).toString(),
+        "quantity": double.parse(alertsDto.quantity.toString()).toString(),
         "location.longitude": alertsDto.locationlongitude.toString(),
         "location.latitude": alertsDto.locationlatitude.toString(),
         "address": alertsDto.address.toString(),
+        "deliveryTime": deliveryTime.toString(),
+        "costPerKg": costPerKg.toString(),
         "role": ResponseData.profileResponseModel!.data!.user!.role.toString(),
       };
 
       request.headers.addAll(headers);
-      var imageMultipartFileOne = await client.MultipartFile.fromPath(
-          'images', imageOne.path,
-          filename: imageOne.path.split("/").last);
-      var imageMultipartFileTwo = await client.MultipartFile.fromPath(
-          'images', imageOne.path,
-          filename: imageOne.path.split("/").last);
+      var imageMultipartFile = await client.MultipartFile.fromPath(
+          'images', image.path,
+          filename: image.path.split("/").last);
 
-      request.files.add(imageMultipartFileOne);
-      request.files.add(imageMultipartFileTwo);
+      request.files.add(imageMultipartFile);
       request.fields.addAll(field);
       var response =await request.send();
 
       //for getting and decoding the response into json format
       var responseD = await client.Response.fromStream(response);
       // final responseData = json.decode(responseD.body);
+
+      logger.w(field);
       logger.wtf(responseD.statusCode);
       logger.wtf(responseD.body);
       if (responseD.statusCode == 201) {
-        await bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Trash alert Created Successfully",
+        await bloc.deposit(context);
+        await bloc.collections(context);
+        await bloc.allAlerts(context);
+        showSuccessAlert(context, "Success", message: "Trash alert created Successfully",
             isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
        ///
       } else {
@@ -136,7 +136,6 @@ class AlertsBackend {
       }
     } on Exception catch (e) {
       displayShortToastMessage(somethingWentWrongText, context);
-      logger.wtf('Error');
       logger.e(e);
       rethrow;
     }
@@ -163,8 +162,10 @@ class AlertsBackend {
       logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 204) {
-       await bloc.fetchHistory(context);
-       showSuccessAlert(context, "Success", message: "Alert Deleted Successfully",
+        await bloc.deposit(context);
+        await bloc.collections(context);
+        await bloc.allAlerts(context);
+       showSuccessAlert(context, "Success", message: "Alert deleted Successfully",
            isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
 
       } else {
@@ -176,7 +177,7 @@ class AlertsBackend {
     } on Exception catch (e) {
       displayShortToastMessage( somethingWentWrongText, context );
 
-      print(e);
+      logger.d(e);
       rethrow;
     }
   }
@@ -202,8 +203,10 @@ class AlertsBackend {
       logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 204) {
-        await bloc.fetchHistory(context);
-        showSuccessAlert(context, "Success", message: "Alert Deleted Successfully",
+        await bloc.deposit(context);
+        await bloc.collections(context);
+        await bloc.allAlerts(context);
+        showSuccessAlert(context, "Success", message: "Alert deleted Successfully",
             isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
 
       } else {
@@ -214,7 +217,7 @@ class AlertsBackend {
       }
     } on Exception catch (e) {
       displayShortToastMessage( somethingWentWrongText, context );
-      print(e);
+      logger.d(e);
       rethrow;
     }
   }
@@ -270,7 +273,7 @@ class AlertsBackend {
 
     logger.i(url);
 
-    print(json.encode({
+    logger.i(json.encode({
       "collectorId":collectorId.toString(),
       "status":status.toString(),
       "userId":userId.toString(),
@@ -295,7 +298,9 @@ class AlertsBackend {
       logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 200) {
-        await bloc.fetchHistory(context);
+        await bloc.deposit(context);
+        await bloc.collections(context);
+        await bloc.allAlerts(context);
 
         showSuccessAlert(context, "Success", message: "Trash $status successfully",
             isDismissible: true, btnOnePressed: () async => await HistoryBackend().fetchAllAlertsOnLogin(context));
@@ -323,7 +328,7 @@ class AlertsBackend {
 
     logger.i(url);
 
-    print(json.encode({
+    logger.i(json.encode({
       "status":status.toString(),
       "userId":userId.toString(),
     }));
@@ -346,7 +351,9 @@ class AlertsBackend {
       logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 200) {
-        await bloc.fetchHistory(context);
+        await bloc.deposit(context);
+        await bloc.collections(context);
+        await bloc.allAlerts(context);
         showSuccessAlert(context, "Success", message: "Trash $status successfully",
             isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
       } else {
@@ -372,7 +379,7 @@ class AlertsBackend {
 
     logger.i(url);
 
-    print(json.encode({
+    logger.i(json.encode({
       "status":status.toString(),
       "userId":collectorId.toString(),
     }));
@@ -395,7 +402,9 @@ class AlertsBackend {
       logger.v(httpConnectionApi.statusCode);
 
       if (httpConnectionApi.statusCode == 200) {
-        await bloc.fetchHistory(context);
+        await bloc.deposit(context);
+        await bloc.collections(context);
+        await bloc.allAlerts(context);
         showSuccessAlert(context, "Success", message: "Trash $status successfully",
             isDismissible: true, btnOnePressed: ()=> navigateReplace(context, const Dashboard()));
       } else {
@@ -411,10 +420,4 @@ class AlertsBackend {
       rethrow;
     }
   }
-
-
-
-
-
-
 }

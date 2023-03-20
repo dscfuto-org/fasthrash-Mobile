@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fastrash/auth/login_screen.dart';
 import 'package:fastrash/constants/api.dart';
+import 'package:fastrash/constants/strings.dart';
 import 'package:fastrash/repository/backend/history_backend.dart';
 import 'package:fastrash/repository/data/dummy_data.dart';
 import 'package:fastrash/repository/data/response_data.dart';
@@ -37,7 +38,7 @@ class AuthBackend {
     logger.i(json.encode({
       "firstName": registrationDto.firstName.toString().trim(),
       "lastName": registrationDto.lastName.toString().trim(),
-      "location": registrationDto.location.toString().trim(),
+      "location": DummyData.address.toString(),
       "email": registrationDto.email.toString().trim(),
       "phoneNumber": registrationDto.phoneNumber.toString().trim(),
       "password": registrationDto.password.toString().trim(),
@@ -53,12 +54,11 @@ class AuthBackend {
             body: json.encode({
               "firstName": registrationDto.firstName.toString().trim(),
               "lastName": registrationDto.lastName.toString().trim(),
-              "location": registrationDto.location.toString().trim(),
+              "location": DummyData.address.toString(),
               "email": registrationDto.email.toString().trim(),
               "phoneNumber": registrationDto.phoneNumber.toString().trim(),
               "password": registrationDto.password.toString().trim(),
-              "passwordConfirm":
-                  registrationDto.passwordConfirm.toString().trim(),
+              "passwordConfirm": registrationDto.passwordConfirm.toString().trim(),
               "role": registrationDto.role.toString().trim()
             }),
           )
@@ -79,7 +79,7 @@ class AuthBackend {
         getUserEmail();
         getUserPassword();
         getUserPhoneNo();
-        showRegisterAlert(context, 'Registration Successfully',
+        showRegisterAlert(context, 'Registration Successful',
             message: 'Proceed to Login', isDismissible: true);
         //navigatePush(context, const LoginScreen());
       } else if (httpConnectionApi.statusCode == 201) {
@@ -91,8 +91,7 @@ class AuthBackend {
             message: ResponseData.failureResponse!.message.toString(), isDismissible: true);
       }
     } on Exception catch (e) {
-      // showErrorAlert(context, message: somethingWentWrongText);
-      logger.wtf('Error');
+      displayLongToastMessage(somethingWentWrongText,  );
       logger.e(e);
       rethrow;
     }
@@ -153,8 +152,8 @@ class AuthBackend {
             message: 'Email or Password is incorrect', isDismissible: true);
       }
     } on Exception catch (e) {
+      displayLongToastMessage(somethingWentWrongText,  );
       logger.wtf('login Not Working');
-
       logger.e(e);
       rethrow;
     }
@@ -206,7 +205,7 @@ class AuthBackend {
         navigateReplace(context, const LoginScreen());
       }
     } on Exception catch (e) {
-      // displayLongToastMessage(somethingWentWrongText,  );
+      displayLongToastMessage(somethingWentWrongText,  );
 
       logger.e(e);
       rethrow;
@@ -293,7 +292,7 @@ class AuthBackend {
             isDismissible: true);
       }
     } on Exception catch (e) {
-      // displayLongToastMessage(somethingWentWrongText,  );
+      displayLongToastMessage(somethingWentWrongText,  );
 
       logger.e(e);
       rethrow;

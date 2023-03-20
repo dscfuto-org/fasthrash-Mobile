@@ -1,3 +1,5 @@
+
+
 class CollectionsHistoryModel {
   CollectionsHistoryModel({
     this.location,
@@ -9,10 +11,16 @@ class CollectionsHistoryModel {
     this.address,
     this.role,
     this.quantity,
+    this.userName,
+    this.userEmail,
+    this.userPhone,
     this.createdAt,
     this.updatedAt,
     this.v,
-    this.collectorId,});
+    this.collectorEmail,
+    this.collectorId,
+    this.collectorName,
+    this.collectorPhone,});
 
   CollectionsHistoryModel.fromJson(dynamic json) {
     location = json['location'] != null ? Location.fromJson(json['location']) : null;
@@ -24,10 +32,16 @@ class CollectionsHistoryModel {
     address = json['address'];
     role = json['role'];
     quantity = json['quantity'];
+    userName = json['userName'];
+    userEmail = json['userEmail'];
+    userPhone = json['userPhone'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     v = json['__v'];
+    collectorEmail = json['collectorEmail'];
     collectorId = json['collectorId'];
+    collectorName = json['collectorName'];
+    collectorPhone = json['collectorPhone'];
   }
   Location? location;
   String? id;
@@ -38,10 +52,16 @@ class CollectionsHistoryModel {
   String? address;
   String? role;
   num? quantity;
+  String? userName;
+  String? userEmail;
+  String? userPhone;
   String? createdAt;
   String? updatedAt;
   num? v;
+  String? collectorEmail;
   String? collectorId;
+  String? collectorName;
+  String? collectorPhone;
   CollectionsHistoryModel copyWith({  Location? location,
     String? id,
     String? userId,
@@ -51,10 +71,16 @@ class CollectionsHistoryModel {
     String? address,
     String? role,
     num? quantity,
+    String? userName,
+    String? userEmail,
+    String? userPhone,
     String? createdAt,
     String? updatedAt,
     num? v,
+    String? collectorEmail,
     String? collectorId,
+    String? collectorName,
+    String? collectorPhone,
   }) => CollectionsHistoryModel(  location: location ?? this.location,
     id: id ?? this.id,
     userId: userId ?? this.userId,
@@ -64,10 +90,16 @@ class CollectionsHistoryModel {
     address: address ?? this.address,
     role: role ?? this.role,
     quantity: quantity ?? this.quantity,
+    userName: userName ?? this.userName,
+    userEmail: userEmail ?? this.userEmail,
+    userPhone: userPhone ?? this.userPhone,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
     v: v ?? this.v,
+    collectorEmail: collectorEmail ?? this.collectorEmail,
     collectorId: collectorId ?? this.collectorId,
+    collectorName: collectorName ?? this.collectorName,
+    collectorPhone: collectorPhone ?? this.collectorPhone,
   );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -82,17 +114,23 @@ class CollectionsHistoryModel {
     map['address'] = address;
     map['role'] = role;
     map['quantity'] = quantity;
+    map['userName'] = userName;
+    map['userEmail'] = userEmail;
+    map['userPhone'] = userPhone;
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
+    map['collectorEmail'] = collectorEmail;
     map['collectorId'] = collectorId;
+    map['collectorName'] = collectorName;
+    map['collectorPhone'] = collectorPhone;
     return map;
   }
 
 }
 
-/// longitude : -122.0849872
-/// latitude : 37.4226711
+/// longitude : -122.084
+/// latitude : 37.4219983
 
 class Location {
   Location({
