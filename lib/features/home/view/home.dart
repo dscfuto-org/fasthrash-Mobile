@@ -15,6 +15,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: const UserLocationMap(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => actionsModalBottomSheet(context),

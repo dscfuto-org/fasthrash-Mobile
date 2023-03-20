@@ -609,10 +609,10 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
                              buildItemUrl(  FontAwesomeIcons.whatsapp, onTap:()=> launchInURL(Uri.parse(whatsappUrl()))),
                              buildItemUrl( CupertinoIcons.phone,onTap:()=> launchInURL(
                                  Uri.parse("tel:${ResponseData.profileResponseModel!.data!.user!.role == "collector" ?
-                                 widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.collectorPhone()}"))),
+                                 widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}"))),
                              buildItemUrl( CupertinoIcons.mail,onTap:()=> launchInURL
                                (Uri.parse('sms:${ResponseData.profileResponseModel!.data!.user!.role == "collector" ?
-                             widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}'))),
+                             widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}?body=Hello, I am contacting you from Fastrash App'))),
                            ],
                          ),
                        )
@@ -778,7 +778,21 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
             'Accepted', widget.depositHistoryModel.status.toString())) {
           return AppLargeButton(
             text: "Mark as Collected",
-            onTap: ()=> providerSubmitRequest("collected"),
+            onTap:  ()=> showInfoAlert(
+              context,
+              " ",
+              isDismissible: true,
+              btnOneText: "Continue",
+              btnTwoText: "No, back",
+              btnOnePressed: () async {
+                navigateBack(context);
+                providerSubmitRequest("collected");
+              },
+              btnTwoPressed: () =>
+                  navigateBack(context),
+              message:
+              "Marking ths alert as completed means it as been collected",
+            ),
           );
         } else if ( StringUtils.equalsIgnoreCase(
             'collected', widget.depositHistoryModel.status.toString())) {
@@ -802,7 +816,20 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
           'Accepted', widget.depositHistoryModel.status.toString())) {
         return AppLargeButton(
           text: "Mark as Collected",
-          onTap: ()=> userSubmitRequest("collected"),
+          onTap: ()=> showInfoAlert(
+            context,
+            " ",
+            isDismissible: true,
+            btnOneText: "Continue",
+            btnTwoText: "No, back",
+            btnOnePressed: () async {
+              navigateBack(context);
+              userSubmitRequest("collected");
+            },
+            btnTwoPressed: () => navigateBack(context),
+            message:
+            "Marking ths alert as completed means it as been collected",
+          ),
         );
       } else if ( StringUtils.equalsIgnoreCase(
           'collected', widget.depositHistoryModel.status.toString())) {
@@ -842,11 +869,11 @@ class _HistoryDetailsScreenState extends State<HistoryDetailsScreen> {
 
   String whatsappUrl() {
     if (Platform.isAndroid) {
-      return "https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from FixBot App")}";
+      return "https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from Fastrash App")}";
       // return "https://wa.me/phone:+234${widget.bookingHistoryModel.phoneNumber.toString()}:/?text=${Uri.parse("")}";
     } else {
-      print("https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from FixBot App")}");
-      return "https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from FixBot App")}";
+      print("https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from Fastrash App")}");
+      return "https://wa.me/${ResponseData.profileResponseModel!.data!.user!.role == "collector" ? widget.depositHistoryModel.userPhone.toString() : widget.depositHistoryModel.collectorPhone.toString()}/?text=${Uri.encodeFull("Hello, I am contacting you from Fastrash App")}";
     }
   }
 

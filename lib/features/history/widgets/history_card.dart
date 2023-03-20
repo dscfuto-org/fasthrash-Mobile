@@ -62,9 +62,9 @@ class HistoryCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: width * 0.15 / 6.5,
-                  ),
+                  // SizedBox(
+                  //   width: width * 0.15 / 6.5,
+                  // ),
                   SizedBox(
                     width: width/2.1,
                     child: Column(
@@ -128,7 +128,7 @@ class HistoryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                        intl.DateFormat("E, d MMM yyyy ").format(
+                        intl.DateFormat(" d MMM yyyy ").format(
                       DateTime.parse( depositHistoryModel.createdAt!.split("T")[0].toString(),),).toString(),
 
                           textDirection: TextDirection.ltr,

@@ -33,7 +33,7 @@ class _PickImageState extends State<PickImage> {
   TextEditingController quantityTextController = TextEditingController();
   TextEditingController locationAddressController = TextEditingController(text:  DummyData.address.toString());
   TextEditingController titleController = TextEditingController();
-  TextEditingController esDevTimeController = TextEditingController(text: "5");
+  TextEditingController esDevTimeController = TextEditingController();
   TextEditingController cKPController = TextEditingController();
   AlertsDto alertsDto = AlertsDto();
   var isLoading = false;

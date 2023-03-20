@@ -177,9 +177,10 @@ class CollectionsHistoryListViewState extends State<CollectionsHistoryListView> 
             : ListView.builder(
           scrollDirection: Axis.vertical,
           itemBuilder: (BuildContext context, int index) {
+            final reversedIndex =  widget.depositHistoryModel!.length - 1 - index;
             return HistoryCard(
               collectorType: "Collections",
-              depositHistoryModel: widget.depositHistoryModel![index],
+              depositHistoryModel: widget.depositHistoryModel![reversedIndex],
             );
           },
           itemCount: widget.depositHistoryModel!.length,

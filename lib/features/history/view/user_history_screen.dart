@@ -46,100 +46,6 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: [
-            //       Padding(
-            //         padding: const EdgeInsets.only(right: 4),
-            //         child: Chip(
-            //           backgroundColor:
-            //           // widget.bookingHistoryModel.jobStatus == "Paid"
-            //           //     ? Colors.green :
-            //           Colors.grey,
-            //           padding: const EdgeInsets.all(5.0),
-            //           // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
-            //           label: Text(
-            //             "All History",
-            //             textAlign: TextAlign.center,
-            //             maxLines: 1,
-            //             overflow: TextOverflow.ellipsis,
-            //             style: TextStyle(
-            //                 color: Colors.white,
-            //                 fontSize: 10.sp,
-            //                 fontFamily: 'DMSans',
-            //                 fontWeight: FontWeight.bold),
-            //           ),
-            //         ),
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.only(right: 4),
-            //         child: Chip(
-            //           backgroundColor:
-            //           // widget.bookingHistoryModel.jobStatus == "Paid"
-            //           //     ? Colors.green :
-            //           AppColors.grey,
-            //           padding: const EdgeInsets.all(5.0),
-            //           // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
-            //           label: Text(
-            //             "Pending",
-            //             textAlign: TextAlign.center,
-            //             maxLines: 1,
-            //             overflow: TextOverflow.ellipsis,
-            //             style: TextStyle(
-            //                 color: Colors.white,
-            //                 fontSize: 10.sp,
-            //                 fontFamily: 'DMSans',
-            //                 fontWeight: FontWeight.bold),
-            //           ),
-            //         ),
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.only(right: 4),
-            //         child: Chip(
-            //           backgroundColor:
-            //           // widget.bookingHistoryModel.jobStatus == "Paid"
-            //           //     ? Colors.green :
-            //           AppColors.grey,
-            //           padding: const EdgeInsets.all(5.0),
-            //           // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
-            //           label: Text(
-            //             "Accepted",
-            //             textAlign: TextAlign.center,
-            //             maxLines: 1,
-            //             overflow: TextOverflow.ellipsis,
-            //             style: TextStyle(
-            //                 color: Colors.white,
-            //                 fontSize: 10.sp,
-            //                 fontFamily: 'DMSans',
-            //                 fontWeight: FontWeight.bold),
-            //           ),
-            //         ),
-            //       ),
-            //       Padding(padding: const EdgeInsets.only(right: 4),
-            //         child: Chip(
-            //           backgroundColor:
-            //           // widget.bookingHistoryModel.jobStatus == "Paid"
-            //           //     ? Colors.green :
-            //           Colors.green,
-            //           padding: const EdgeInsets.all(5.0),
-            //           // backgroundColor: AppColors.mainColor2.withOpacity(0.5),
-            //           label: Text(
-            //             "Collected",
-            //             textAlign: TextAlign.center,
-            //             maxLines: 1,
-            //             overflow: TextOverflow.ellipsis,
-            //             style: TextStyle(
-            //                 color: Colors.white,
-            //                 fontSize: 10.sp,
-            //                 fontFamily: 'DMSans',
-            //                 fontWeight: FontWeight.bold),
-            //           ),
-            //         ),
-            //       ),
-            //     ],),
-            // ),
             Container(
               color: Colors.white,
               child: StreamBuilder<List<DepositHistoryModel>>(
@@ -155,7 +61,7 @@ class _UserHistoryScreenState extends State<UserHistoryScreen> {
                   }
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -193,11 +99,11 @@ class DepositHistoryListViewState extends State<DepositHistoryListView> {
         )
             : ListView.builder(
           scrollDirection: Axis.vertical,
-          reverse: true,
           itemBuilder: (BuildContext context, int index) {
+            final reversedIndex =  widget.depositHistoryModel!.length - 1 - index;
             return HistoryCard(
               collectorType: "Deposit",
-              depositHistoryModel: widget.depositHistoryModel![index],
+              depositHistoryModel: widget.depositHistoryModel![reversedIndex],
             );
           },
           itemCount: widget.depositHistoryModel!.length,

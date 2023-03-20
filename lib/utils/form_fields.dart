@@ -60,7 +60,7 @@ class _EmailFormFieldState extends State<EmailFormField> {
                       !isEmailCorrect) {
                     return 'Invalid Email format';
                   } else if (value!.isEmpty) {
-                    return "fieldRequired";
+                    return "Field Required";
                   } else {
                     return null;
                   }
@@ -156,6 +156,8 @@ class _PhoneFormFieldState extends State<PhoneFormField> {
     }
   }
 
+  final PhoneNumber _phoneNumber = PhoneNumber(isoCode: 'NG');
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -163,6 +165,7 @@ class _PhoneFormFieldState extends State<PhoneFormField> {
       child: Padding(
         padding: const EdgeInsets.only(right: 8.0),
         child: InternationalPhoneNumberInput(
+          initialValue: _phoneNumber,
           inputDecoration: InputDecoration(
               enabled: true,
               // contentPadding:
@@ -420,26 +423,29 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
             /// height: widget.spacebetween,
             height: 10,
           ),
-          SizedBox(
-            width: deviceW,
-            child: Visibility(
-              visible:
-                  widget.textEditingController.text.isNotEmpty ? true : false,
-              child: StepProgressIndicator(
-                totalSteps: 9,
-                currentStep: check == "weak"
-                    ? 3
-                    : check == "fair"
-                        ? 6
-                        : 9,
-                // size: widget.spacebetween,
-                size: 10,
-                selectedGradientColor: check == "weak"
-                    ? widget.weakGradient
-                    : check == "fair"
-                        ? widget.fairGradient
-                        : widget.strongGradient,
-                unselectedColor: widget.unselectedColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: SizedBox(
+              width: deviceW,
+              child: Visibility(
+                visible:
+                    widget.textEditingController.text.isNotEmpty ? true : false,
+                child: StepProgressIndicator(
+                  totalSteps: 9,
+                  currentStep: check == "weak"
+                      ? 3
+                      : check == "fair"
+                          ? 6
+                          : 9,
+                  // size: widget.spacebetween,
+                  size: 10,
+                  selectedGradientColor: check == "weak"
+                      ? widget.weakGradient
+                      : check == "fair"
+                          ? widget.fairGradient
+                          : widget.strongGradient,
+                  unselectedColor: widget.unselectedColor,
+                ),
               ),
             ),
           )

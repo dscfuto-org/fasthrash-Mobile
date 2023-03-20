@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fastrash/auth/regstration_screen.dart';
 import 'package:fastrash/features/education/view/education.dart';
 import 'package:fastrash/features/history/view/collector_history_screen.dart';
 import 'package:fastrash/features/history/view/user_history_screen.dart';
@@ -44,6 +45,7 @@ class _DashboardState extends State<Dashboard> {
       child: DefaultTabController(
         length: 4,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           bottomNavigationBar: Container(
             color: Colors.white54,
             child: const TabBar(

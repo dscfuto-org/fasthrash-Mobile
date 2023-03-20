@@ -42,13 +42,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   Page(
                     id: 1,
                     text1: 'Have Trash? Schedule a Pickup',
-                    text2: 'Select a collector of your choice and preferred time of pickup, take a snapshot and confirm pickup ',
+                    text2: 'Take a snapshot, fill in the required details,  put up a trash collection alert',
                   ),
                   Page(
                       id: 2,
                       text1:
-                          'Choose a Trash Collector',
-                      text2: 'Many Collectors will be available in your location, Select preferred collector'),
+                          'Wait for a Trash Collector',
+                      text2: 'Many Collectors will be available in your location, any of them can pick it up'),
                  Page(id: 3, text1: 'Earn Incentives', text2: 'Earn some incentive for every bottle recycled while keeping the environment in good condition!'),
                 ]),
               ),
