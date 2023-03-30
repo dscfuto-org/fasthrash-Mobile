@@ -67,7 +67,7 @@ dev_dependencies:
 flutter_icons:
   android: "ic_launcher"
   ios: true
-  image_path: "assets/images/fastrash_logo.png"
+  image_path: "assets/images/app_icon.jpg"
   remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the

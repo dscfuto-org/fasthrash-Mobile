@@ -40,7 +40,7 @@ class UserLocationMapState extends State<UserLocationMap> {
       }));
     });
 
-    ResponseData.profileResponseModel!.data!.user!.role == "user" ? getCurrentLocation() :   _loadMarkers();
+    ResponseData.profileResponseModel!.data!.user!.role == "user" ? getCurrentLocation() :   _loadMarkers(); getCurrentLocation() ;
 
     BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(48.w, 20.h)), "assets/images/trash_icon.png").then((onValue) {

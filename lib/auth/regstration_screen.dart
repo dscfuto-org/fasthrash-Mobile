@@ -10,6 +10,7 @@ import 'package:fastrash/utils/loaders.dart';
 import 'package:fastrash/utils/navigators.dart';
 import 'package:fastrash/utils/styles.dart';
 import 'package:fastrash/utils/text_fields.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -43,6 +44,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController lastNameController = TextEditingController();
   bool _obscureText = true;
   RegistrationDto registrationDto = RegistrationDto();
+  bool _acceptTermsAndPrivacy = false;
+
   var isLoading = false;
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -98,6 +101,66 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 )),
             SizedBox(height: 10.h),
             forms(),
+
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: _acceptTermsAndPrivacy,
+                  onChanged: (value) {
+                    setState(() {
+                      _acceptTermsAndPrivacy = value!;
+                    });
+                  },
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: 'I accept the ',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      // fontSize: 18,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Terms',
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                          // fontSize: 18,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            // Do something when the link is clicked
+                            launchInURL(Uri.parse("https://fastrash.vercel.app/legal/terms-of-use"));
+                          },
+                      ),
+                      const TextSpan(
+                        text: ' and.',
+                        style: TextStyle(
+                          color: Colors.black,
+                          //fontSize: 18,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Privacy Policy',
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                          // fontSize: 18,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            // Do something when the link is clicked
+                            launchInURL(Uri.parse("https://fastrash.vercel.app/legal/privacy-policy"));
+                          },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             SizedBox(
               height: 10.h,
             ),
@@ -107,9 +170,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 height: 60,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: ElevatedButton(
-                  child: const Text('Register'),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: _acceptTermsAndPrivacy ? AppColors.green: Colors.white , elevation: 3 ),
+                  child: Text('Register', style: TextStyle(color:  _acceptTermsAndPrivacy ? Colors.white: AppColors.grey ),),
                   onPressed: () {
-                    submitRequest();
+                    _acceptTermsAndPrivacy ? submitRequest() : null;
                   },
                 )),
             SizedBox(

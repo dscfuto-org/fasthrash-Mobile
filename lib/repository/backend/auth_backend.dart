@@ -228,6 +228,7 @@ class AuthBackend {
         },
       ).timeout(const Duration(seconds: 60));
 
+      logger.d(DummyData.accessToken);
       logger.i(httpConnectionApi.body);
       logger.wtf(httpConnectionApi.statusCode);
 
