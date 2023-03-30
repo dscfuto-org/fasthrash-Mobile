@@ -13,12 +13,12 @@ Before proceeding with the steps below, you must have the following installed on
 
 1. Clone the GitHub repository.
 
-```git clone https://github.com/username/repository-name.git```
+```git clone https://github.com/dscfuto-org/fasthrash-Mobile.git```
 
 Replace username and repository-name with the respective username and repository name of the project you want to clone.
 
 2. Navigate to the project directory.
-   ```cd repository-name```
+   ```cd fasthrash-Mobile```
 
 Replace repository-name with the name of the repository you just cloned.
 
