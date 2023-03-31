@@ -304,7 +304,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 
   Widget confirmPasswordField(String title, TextEditingController textEditingController,
-      {bool isPassword = false}) {
+      {bool isPassword = false, required String pwd}) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
@@ -313,6 +313,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           validator: (value) {
             if (value!.isEmpty) {
               return fieldRequired;
+            }
+            if (value != pwd ) {
+              return "Password doesn't match";
             }
             return null;
           },
@@ -394,7 +397,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             //     title: ,
             //     textEditingController: ),
            // _confrimPasswordField('Confirm Password', passwordConfirmController, isPassword: true),
-            confirmPasswordField('Confirm Password', passwordConfirmController, isPassword: true)
+            confirmPasswordField('Confirm Password', passwordConfirmController, isPassword: true,
+            pwd: passwordController.text)
 
           ],
         ));
