@@ -47,7 +47,7 @@ The APK file will be located in the build/app/outputs/flutter-apk directory.
 
 The IPA file will be located in the build/ios/archive/ directory.
 
-Congratulations! You have successfully pulled a Flutter project from GitHub, built it on your machine, and generated the APK and IPA files for installation on Android and iOS devices, respectively.
+Congratulations! You have successfully pulled the Flutter project from GitHub, built it on your machine, and generated the APK and IPA files for installation on Android and iOS devices, respectively.
 
 ## Hot credentials
 ### User account
