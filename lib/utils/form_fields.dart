@@ -340,7 +340,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
                 validator: (value) {
                   if (value!.isNotEmpty) {
                     if (!regExp.hasMatch(value)) {
-                      return "Password should have at least one upper and lower case letter, one symbol @, #, % etc and number";
+                      return "Must contain at least a symbol, number an uppercase and lowercase letter,";
                     } else {
                       return null;
                     }
